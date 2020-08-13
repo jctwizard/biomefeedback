@@ -1,0 +1,513 @@
+@keyframes  moveBackground {
+  0% {background-position:10% 0%}
+  50% {background-position:91% 100%}
+  100% {background-position:10% 0%}
+}
+
+html
+{
+  background: linear-gradient(130deg, #e23b3b, #e15a5b, #B75693);
+  background-size: 200% 200%;
+  /*animation: moveBackground 10s ease infinite;*/
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+@font-face {
+    font-family: "arialRounded";
+    src: url("../fonts/arial-rounded.ttf") format("truetype");
+}
+
+body
+{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: arialRounded;
+  font-size: 1em;
+  color: white;
+}
+
+input
+{
+  font-family: arialRounded;
+  font-size: 1em;
+  color: black;
+  background: #ffffff;
+  font-style: italic;
+}
+
+#header
+{
+  padding-left: 2vw;
+}
+
+#editorPanel
+{
+  overflow: scroll;
+  width: 100%;
+  height: 70%;
+  padding-left: 2vw;
+  padding-bottom: 20vw;
+}
+
+button
+{
+  font-family: arialRounded;
+  font-size: 1em;
+  color: black;
+  background-color: white;
+  border: 2px black;
+  border-color: black;
+  border-width: 0.1vw;
+  border-radius: 100px;
+  border-style: solid;
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
+}
+
+button:active
+{
+  background-color: lightgray;
+  color: black;
+}
+
+button:focus
+{
+  outline: 0;
+}
+
+.exportLink
+{
+  font-family: arialRounded;
+  font-size: 1em;
+  color: black;
+  background-color: white;
+  border: 2px black;
+  border-color: black;
+  border-width: 0.25vw;
+  border-radius: 100px;
+  border-style: solid;
+  padding: 0.25vw;
+}
+
+hr
+{
+  margin-top: 2vw;
+  margin-bottom: 2vw;
+}
+
+.surveyRow
+{
+
+}
+
+.fieldHeader
+{
+  font-size: 1.5em;
+  margin-top: 2vw;
+  text-decoration: underline;
+}
+
+.surveyTitle
+{
+  font-size: 2em;
+  padding: 0.5em;
+}
+
+.surveyEditButton
+{
+
+}
+
+.surveyRunButton
+{
+
+}
+
+.surveyResultsButton
+{
+
+}
+
+.surveyHeader
+{
+  font-size: 2em;
+  padding: 0.5em;
+}
+
+.questionRow
+{
+
+}
+
+.answerResponses
+{
+  font-size: 2em;
+  padding: 1em;
+}
+
+.questionTitle
+{
+  font-size: 1.5em;
+  padding: 0.5em;
+}
+
+.questionEditButton
+{
+
+}
+
+.surveySaveButton
+{
+
+}
+
+.questionHeader
+{
+  font-size: 2em;
+  padding: 0.5em;
+}
+
+.answerPanel
+{
+
+}
+
+.answerRow
+{
+
+}
+
+.answerTitle
+{
+  font-size: 1.5em;
+  padding: 0.5em;
+}
+
+.questionSaveButton
+{
+
+}
+
+.surveyResultsHeader
+{
+  font-size: 2.5em;
+  text-decoration: underline;
+  margin-bottom: 2vw;
+}
+
+.totalResultsResponsesHeader
+{
+  font-size: 1.5em;
+  margin-right: 2vw;
+}
+
+.totalResultsResponses
+{
+  font-size: 1.5em;
+}
+
+.answerResultsResponses
+{
+  font-size: 1.5em;
+  float: right;
+  margin-right: 4vw;
+}
+
+.questionResultsTitle
+{
+  margin-top: 2vw;
+  font-size: 2em;
+  text-decoration: underline;
+}
+
+.answerResultsTitle
+{
+  font-size: 1.5em;
+}
+
+.surveyResultsLocation
+{
+  font-size: 1.5em;
+}
+
+.surveyResultsDate
+{
+  font-size: 1.5em;
+}
+
+#activePanel
+{
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+}
+
+.activeWelcomeMessage
+{
+  position: absolute;
+  width: 70%;
+  text-align: center;
+  margin: auto;
+  font-size: 5.5vw;
+  color: white;
+  top: 50%;
+  left: 15%;
+  transform: translate(0, -50%);
+}
+
+.continueMessage
+{
+  position: absolute;
+  vertical-align: center;
+  width: 70%;
+  text-align: center;
+  margin: auto;
+  font-size: 3.5vw;
+  color: white;
+  bottom: 25%;
+  left: 15%;
+  transform: translate(0, 50%);
+  animation: Pulse 3s infinite ease-in-out;
+}
+
+.imagePanel
+{
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.activeQuestionHeader
+{
+  font-style: normal;
+  position: absolute;
+  width: 70%;
+  text-align: center;
+  margin: auto;
+  font-size: 5.5vw;
+  color: white;
+  top: 25%;
+  left: 15%;
+  transform: translate(0, -50%);
+}
+
+.activeEndMessage
+{
+  position: absolute;
+  vertical-align: center;
+  width: 70%;
+  text-align: center;
+  margin: auto;
+  font-size: 5.5vw;
+  color: white;
+  top: 50%;
+  left: 15%;
+  transform: translate(0, -50%);
+}
+
+.activeAnswerPanel
+{
+  position: absolute;
+  vertical-align: center;
+  width: 90%;
+  margin: auto;
+  bottom: 25%;
+  left: 5%;
+  display: flex;
+  justify-content: space-between;
+  transform: translate(0, 50%);
+}
+
+.answerSelectButton
+{
+  vertical-align: center;
+
+  text-align: center;
+  font-family: arialRounded;
+  font-size: 2.5vw;
+  color: white;
+  background-color: coral;
+  border-radius: 10vw;
+  border-width: 0.5vw;
+  border-color: #FFFFFF;
+  border-style: solid;
+  box-shadow: 0 1vw #663333;
+  width: 17.5vw;
+  height: 17.5vw;
+}
+
+.answerSelectButton.active, .answerSelectButton:active
+{
+  background-color: coral;
+  box-shadow: 0 0.5vw #663333;
+  color: white;
+  transform: translateY(0.5vw);
+}
+
+.inactiveAnswerSelectButton
+{
+  vertical-align: center;
+
+  background-color: lightgrey;
+  border-radius: 10vw;
+  border-width: 0.5vw;
+  border-style: solid;
+  border-color: #FFFFFF;
+  box-shadow: 0 1vw #663333;
+  width: 17.5vw;
+  height: 17.5vw;
+}
+
+.inactiveAnswerSelectButton.active, .inactiveAnswerSelectButton:active
+{
+  box-shadow: 0 0.5vw #663333;
+  transform: translateY(0.5vw);
+}
+
+.gameButton
+{
+  position: absolute;
+  vertical-align: center;
+
+  text-align: center;
+  font-family: arialRounded;
+  font-size: 2.5vw;
+  color: white;
+  background-color: coral;
+  border-radius: 100%;
+  border-width: 0.5vw;
+  border-color: #FFFFFF;
+  border-style: solid;
+  box-shadow: 0 0;
+  width: 20vw;
+  height: 20vw;
+  top: 40%;
+  left: 40%;
+  z-index: 1000;
+}
+
+.gameGoal
+{
+  position: absolute;
+  border-radius: 100%;
+  border-width: 0.5vw;
+  border-color: #FFFFFF;
+  border-style: solid;
+  width: 20vw;
+  height: 20vw;
+  top: 40%;
+  left: 40%;
+  transform: scale(2.5);
+  animation: BorderColorShift 1s infinite ease-in-out;
+  z-index: -1000;
+}
+
+@keyframes BorderColorShift
+{
+  0%    { border-color: #aa3300; }
+  25%   { border-color: #33aa00; }
+  50%   { border-color: #00aa33; }
+  75%   { border-color: #0033aa; }
+  100%  { border-color: #aa3300; }
+}
+
+.gameButton.active, .gameButton:active
+{
+  background-color: coral;
+  box-shadow: 0 0;
+  color: white;
+}
+
+.gameTimer
+{
+  position: absolute;
+  vertical-align: center;
+  width: 70%;
+  text-align: center;
+  margin: auto;
+  font-size: 6vw;
+  color: white;
+  top: 5%;
+  left: 15%;
+  transform: translate(0, -50%);
+  animation: Pulse 1s infinite ease-in-out;
+}
+
+@keyframes MoveUpDown
+{
+  0%    { transform: translateY(30vh); }
+  50%   { transform: translateY(32vh); }
+  100%  { transform: translateY(30vh); }
+}
+
+@keyframes Pulse
+{
+  0%   { transform: scale(1.0); }
+  50%   { transform: scale(1.1); }
+  100%  { transform: scale(1.0); }
+}
+
+@keyframes MoveRightCenter
+{
+  0%   { transform: translateX(100vw); }
+  100%  { transform: translateX(0vw); }
+}
+
+.moveRightCenter
+{
+  will-change: transform;
+  animation: MoveRightCenter 0.5s ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes MoveCenterLeft
+{
+  0%   { transform: translateX(0vw); }
+  100%  { transform: translateX(-100vw); }
+}
+
+.moveCenterLeft
+{
+  will-change: transform;
+  animation: MoveCenterLeft 0.5s ease-in;
+  animation-fill-mode: forwards;
+}
+
+@keyframes Shrink
+{
+  0%   { transform: scale(1.0); }
+  100%  { transform: scale(0.0); }
+}
+
+.shrink
+{
+  will-change: transform;
+  animation: Shrink 0.3s ease-in;
+  animation-fill-mode: forwards;
+}
+
+@keyframes Grow
+{
+  0%   { transform: scale(1.0); }
+  50%   { transform: scale(1.3); }
+  100%  { transform: scale(1.2); }
+}
+
+.grow
+{
+  will-change: transform;
+  animation: Grow 0.3s ease;
+  animation-fill-mode: forwards;
+}

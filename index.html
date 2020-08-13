@@ -1,0 +1,33 @@
+<!doctype html>
+<manifest = "offline.manifest">
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Survey Arcade</title>
+  <meta name="description" content="An arcade cabinet for surveying the games industry">
+  <meta name="author" content="jctwood">
+
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body onload="init()">
+  <div id="header">
+    <h2>Welcome to Survey Arcade!    </h2><span id="status">unknown</span>
+    <hr />
+  </div>
+
+  <div id="editorPanel">loading surveys...</div>
+
+  <hr />
+
+  <div id="activePanel"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-database.js"></script>
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/howler.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

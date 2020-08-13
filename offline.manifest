@@ -1,0 +1,14 @@
+CACHE MANIFEST
+
+CACHE:
+styles/main.css
+scripts/main.js
+index.html
+
+SETTINGS:
+prefer-online
+
+NETWORK:
+*
+http://*
+https://*
