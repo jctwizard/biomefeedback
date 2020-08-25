@@ -30,6 +30,7 @@ body
   font-family: arialRounded;
   font-size: 1em;
   color: white;
+  overflow: hidden;
 }
 
 input
@@ -39,20 +40,14 @@ input
   color: black;
   background: #ffffff;
   font-style: italic;
+  margin-left: 2vw;
 }
 
-#header
-{
-  padding-left: 2vw;
-}
-
-#editorPanel
+#editorPanel 
 {
   overflow: scroll;
   width: 100%;
-  height: 70%;
-  padding-left: 2vw;
-  padding-bottom: 20vw;
+  height: 100%;
 }
 
 button
@@ -66,14 +61,26 @@ button
   border-width: 0.1vw;
   border-radius: 100px;
   border-style: solid;
-  margin-left: 0.5vw;
-  margin-right: 0.5vw;
+  margin-left: 1vw;
 }
 
-button:active
+select 
 {
-  background-color: lightgray;
-  color: black;
+    font-family: arialRounded;
+    font-size: 1em;
+    color: black;
+    background-color: white;
+    border: 2px black;
+    border-color: black;
+    border-width: 0.1vw;
+    border-radius: 100px;
+    border-style: solid;
+    margin-left: 1vw;
+}
+
+button:active {
+    background-color: lightgray;
+    color: black;
 }
 
 button:focus
@@ -106,11 +113,13 @@ hr
 
 }
 
-.fieldHeader
+.fieldHeader 
 {
-  font-size: 1.5em;
-  margin-top: 2vw;
-  text-decoration: underline;
+   font-size: 1.5em;
+   margin-top: 2vw;
+   text-decoration: underline;
+   margin-left: 2vw;
+   margin-bottom: 1vw;
 }
 
 .surveyTitle
@@ -164,13 +173,20 @@ hr
 
 .surveySaveButton
 {
-
+   margin-bottom: 2vw;
 }
 
 .questionHeader
 {
   font-size: 2em;
   padding: 0.5em;
+}
+
+.questionInitialInput 
+{
+  font-size: 1em;
+  padding: 0.5em;
+  margin-bottom: 2vw;
 }
 
 .answerPanel
@@ -219,6 +235,13 @@ hr
   margin-right: 4vw;
 }
 
+.textAnswerResultsResponses 
+{
+  font-size: 1.5em;
+  float: right;
+  margin-right: 4vw;
+}
+
 .questionResultsTitle
 {
   margin-top: 2vw;
@@ -229,6 +252,13 @@ hr
 .answerResultsTitle
 {
   font-size: 1.5em;
+  margin-left: 2em;
+}
+
+.textAnswerResultsTitle 
+{
+  font-size: 1.5em;
+  margin-left: 2em;
 }
 
 .surveyResultsLocation
@@ -330,6 +360,19 @@ hr
   transform: translate(0, 50%);
 }
 
+.activeTextAnswerPanel
+{
+  position: absolute;
+  vertical-align: center;
+  width: 90%;
+  margin: auto;
+  bottom: 25%;
+  left: 5%;
+  display: flex;
+  justify-content: center;
+  transform: translate(0, 50%);
+}
+
 .answerSelectButton
 {
   vertical-align: center;
@@ -346,6 +389,41 @@ hr
   box-shadow: 0 1vw #663333;
   width: 17.5vw;
   height: 17.5vw;
+}
+
+.answerTextInput
+{
+  vertical-align: middle;
+  text-align: center;
+  font-family: arialRounded;
+  font-size: 2em;
+  color: black;
+  background-color: white;
+  border-radius: 0.5vw;
+  border-width: 0.5vw;
+  border-color: #FFFFFF;
+  border-style: solid;
+  box-shadow: 0 1vw #663333;
+  width: 35vw;
+  height: 8vw;
+  margin-right: 5vw;
+}
+
+.answerSubmitButton 
+{
+  vertical-align: center;
+  text-align: center;
+  font-family: arialRounded;
+  font-size: 2.5vw;
+  color: white;
+  background-color: coral;
+  border-radius: 4vw;
+  border-width: 0.2vw;
+  border-color: #FFFFFF;
+  border-style: solid;
+  box-shadow: 0 1vw #663333;
+  width: 12vw;
+  height: 8vw;
 }
 
 .answerSelectButton.active, .answerSelectButton:active
