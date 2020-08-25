@@ -6,8 +6,8 @@ var config = {
   projectId: "biomefeedback"
 };
 
-//var baseURL = "http://jctwizard.github.io/biomefeedback/"
-var baseURL = "file:///C:/Users/James/Documents/Projects/biomefeedback/"
+var baseURL = "http://jctwizard.github.io/biomefeedback/"
+//var baseURL = "file:///C:/Users/James/Documents/Projects/biomefeedback/"
 var editURLExtension = "edit/index.html?survey=";
 var answerURLExtension = "answer/index.html?survey=";
 var visualiseURLExtension = "visualise/index.html?survey=";
