@@ -8,8 +8,7 @@ html
 {
   height: 100%;
   width: 100%;
-  max-width:100%;
-  max-height:100%;
+  background-color: #e14a4b;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -24,8 +23,6 @@ body
 {
   height: 100%;
   width: 100%;
-  max-width:100%;
-  max-height:100%;
   margin: 0;
   padding: 0;
   font-family: arialRounded;
@@ -49,8 +46,6 @@ input
   overflow: scroll;
   width: 100%;
   height: 100%;
-  max-width:100%;
-  max-height:100%;
 }
 
 button
@@ -282,8 +277,6 @@ hr
   top: 0;
   width: 100%;
   height: 100%;
-  max-width:100%;
-  max-height:100%;
   visibility: hidden;
 }
 
@@ -297,7 +290,7 @@ hr
   color: white;
   top: 50%;
   left: 15%;
-  transform: translate(0, -50%);
+  //transform: translate(0, -50%);
 }
 
 .continueMessage
@@ -311,7 +304,7 @@ hr
   color: white;
   bottom: 25%;
   left: 15%;
-  transform: translate(0, 50%);
+  //transform: translate(0, 50%);
   animation: Pulse 3s infinite ease-in-out;
 }
 
@@ -335,7 +328,7 @@ hr
   color: white;
   top: 25%;
   left: 15%;
-  transform: translate(0, -50%);
+  //transform: translate(0, -50%);
 }
 
 .activeEndMessage
@@ -349,7 +342,7 @@ hr
   color: white;
   top: 50%;
   left: 15%;
-  transform: translate(0, -50%);
+  //transform: translate(0, -50%);
 }
 
 .activeAnswerPanel
@@ -362,7 +355,7 @@ hr
   left: 5%;
   display: flex;
   justify-content: space-between;
-  transform: translate(0, 50%);
+  //transform: translate(0, 50%);
 }
 
 .activeTextAnswerPanel
@@ -375,7 +368,7 @@ hr
   left: 5%;
   display: flex;
   justify-content: center;
-  transform: translate(0, 50%);
+  //transform: translate(0, 50%);
 }
 
 .answerSelectButton
@@ -459,44 +452,6 @@ hr
   transform: translateY(0.5vw);
 }
 
-.gameButton
-{
-  position: absolute;
-  vertical-align: center;
-
-  text-align: center;
-  font-family: arialRounded;
-  font-size: 2.5vw;
-  color: white;
-  background-color: coral;
-  border-radius: 100%;
-  border-width: 0.5vw;
-  border-color: #FFFFFF;
-  border-style: solid;
-  box-shadow: 0 0;
-  width: 20vw;
-  height: 20vw;
-  top: 40%;
-  left: 40%;
-  z-index: 1000;
-}
-
-.gameGoal
-{
-  position: absolute;
-  border-radius: 100%;
-  border-width: 0.5vw;
-  border-color: #FFFFFF;
-  border-style: solid;
-  width: 20vw;
-  height: 20vw;
-  top: 40%;
-  left: 40%;
-  transform: scale(2.5);
-  animation: BorderColorShift 1s infinite ease-in-out;
-  z-index: -1000;
-}
-
 @keyframes BorderColorShift
 {
   0%    { border-color: #aa3300; }
@@ -504,28 +459,6 @@ hr
   50%   { border-color: #00aa33; }
   75%   { border-color: #0033aa; }
   100%  { border-color: #aa3300; }
-}
-
-.gameButton.active, .gameButton:active
-{
-  background-color: coral;
-  box-shadow: 0 0;
-  color: white;
-}
-
-.gameTimer
-{
-  position: absolute;
-  vertical-align: center;
-  width: 70%;
-  text-align: center;
-  margin: auto;
-  font-size: 6vw;
-  color: white;
-  top: 5%;
-  left: 15%;
-  transform: translate(0, -50%);
-  animation: Pulse 1s infinite ease-in-out;
 }
 
 @keyframes MoveUpDown
