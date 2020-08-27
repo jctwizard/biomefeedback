@@ -290,13 +290,13 @@ hr
   color: white;
   top: 50%;
   left: 15%;
-  //transform: translate(0, -50%);
+  transform: translate(0, -50%);
 }
 
 .continueMessage
 {
   position: absolute;
-  vertical-align: center;
+  vertical-align: middle;
   width: 70%;
   text-align: center;
   margin: auto;
@@ -304,7 +304,7 @@ hr
   color: white;
   bottom: 25%;
   left: 15%;
-  //transform: translate(0, 50%);
+  transform: translate(0, 50%);
   animation: Pulse 3s infinite ease-in-out;
 }
 
@@ -328,13 +328,13 @@ hr
   color: white;
   top: 25%;
   left: 15%;
-  //transform: translate(0, -50%);
+  transform: translate(0, -50%);
 }
 
 .activeEndMessage
 {
   position: absolute;
-  vertical-align: center;
+  vertical-align: middle;
   width: 70%;
   text-align: center;
   margin: auto;
@@ -342,38 +342,38 @@ hr
   color: white;
   top: 50%;
   left: 15%;
-  //transform: translate(0, -50%);
+  transform: translate(0, -50%);
 }
 
 .activeAnswerPanel
 {
   position: absolute;
-  vertical-align: center;
+  vertical-align: middle;
   width: 90%;
   margin: auto;
   bottom: 25%;
   left: 5%;
   display: flex;
   justify-content: space-between;
-  //transform: translate(0, 50%);
+  transform: translate(0, 50%);
 }
 
 .activeTextAnswerPanel
 {
   position: absolute;
-  vertical-align: center;
+  vertical-align: middle;
   width: 90%;
   margin: auto;
   bottom: 25%;
   left: 5%;
   display: flex;
   justify-content: center;
-  //transform: translate(0, 50%);
+  transform: translate(0, 50%);
 }
 
 .answerSelectButton
 {
-  vertical-align: center;
+  vertical-align: middle;
 
   text-align: center;
   font-family: arialRounded;
@@ -409,7 +409,7 @@ hr
 
 .answerSubmitButton 
 {
-  vertical-align: center;
+  vertical-align: middle;
   text-align: center;
   font-family: arialRounded;
   font-size: 2.5vw;
@@ -434,7 +434,7 @@ hr
 
 .inactiveAnswerSelectButton
 {
-  vertical-align: center;
+  vertical-align: middle;
 
   background-color: lightgrey;
   border-radius: 10vw;
