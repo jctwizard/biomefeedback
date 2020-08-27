@@ -32,7 +32,7 @@ var defaultEndMessage = "Thank you for answering some questions! You can now clo
 var defaultContinueMessageEnd = "You can now close this window!";
 var defaultContinueMessage = "Click a button!";
 
-var transitionTime = 0.5 * 1000;
+var transitionTime = 0; //0.5 * 1000;
 var buttonShrinkTime = 0.4 * 1000;
 
 var pressSound;
