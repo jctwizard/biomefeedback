@@ -313,7 +313,7 @@ hr
 .continueMessage
 {
   position: absolute;
-  vertical-align: middle;
+  vertical-align: center;
   width: 70%;
   text-align: center;
   margin: auto;
@@ -349,7 +349,7 @@ hr
 .activeEndMessage
 {
   position: absolute;
-  vertical-align: middle;
+  vertical-align: center;
   width: 70%;
   text-align: center;
   margin: auto;
@@ -362,7 +362,7 @@ hr
 .activeAnswerPanel
 {
   position: absolute;
-  vertical-align: middle;
+  vertical-align: center;
   width: 90%;
   margin: auto;
   bottom: 25%;
@@ -374,7 +374,7 @@ hr
 .activeTextAnswerPanel
 {
   position: absolute;
-  vertical-align: middle;
+  vertical-align: center;
   width: 90%;
   margin: auto;
   bottom: 25%;
@@ -385,7 +385,7 @@ hr
 
 .answerSelectButton
 {
-  vertical-align: middle;
+  vertical-align: center;
 
   text-align: center;
   font-family: arialRounded;
@@ -421,7 +421,7 @@ hr
 
 .answerSubmitButton 
 {
-  vertical-align: middle;
+  vertical-align: center;
   text-align: center;
   font-family: arialRounded;
   font-size: 2.5vw;
@@ -446,7 +446,7 @@ hr
 
 .inactiveAnswerSelectButton
 {
-  vertical-align: middle;
+  vertical-align: center;
 
   background-color: lightgrey;
   border-radius: 10vw;
