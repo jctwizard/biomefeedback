@@ -295,7 +295,6 @@ hr
   height: 100%;
   min-width: 100%;
   min-height: 100%;
-  visibility: hidden;
 }
 
 .activeWelcomeMessage
@@ -308,7 +307,6 @@ hr
   color: white;
   top: 50%;
   left: 15%;
-  transform: translate(0, -50%);
 }
 
 .continueMessage
@@ -322,7 +320,6 @@ hr
   color: white;
   bottom: 25%;
   left: 15%;
-  transform: translate(0, 50%);
   animation: Pulse 3s infinite ease-in-out;
 }
 
@@ -346,7 +343,6 @@ hr
   color: white;
   top: 25%;
   left: 15%;
-  transform: translate(0, -50%);
 }
 
 .activeEndMessage
@@ -360,7 +356,6 @@ hr
   color: white;
   top: 50%;
   left: 15%;
-  transform: translate(0, -50%);
 }
 
 .activeAnswerPanel
@@ -373,7 +368,6 @@ hr
   left: 5%;
   display: flex;
   justify-content: space-between;
-  transform: translate(0, 50%);
 }
 
 .activeTextAnswerPanel
@@ -386,7 +380,6 @@ hr
   left: 5%;
   display: flex;
   justify-content: center;
-  transform: translate(0, 50%);
 }
 
 .answerSelectButton

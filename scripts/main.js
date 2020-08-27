@@ -923,7 +923,7 @@ function displayActiveQuestion()
     }
   }
 
-  transitionSurveyRightToCenter();
+  //transitionSurveyRightToCenter();
 }
 
 function saveResponse(answerIndex)
@@ -967,7 +967,7 @@ function displayNextQuestion(firstQuestion, answerIndex, textResponse = false)
     transitionDelay = buttonShrinkTime;
   }
 
-  setTimeout(transitionSurveyCenterToLeft, transitionDelay);
+  //setTimeout(transitionSurveyCenterToLeft, transitionDelay);
 
   if (activeQuestionIndex >= getQuestionCount(activeSurveyIndex))
   {
@@ -1008,7 +1008,7 @@ function displayWelcomeMessage()
     activeButtons.push(answerSelectButton);
   }
 
-  transitionSurveyRightToCenter();
+  //transitionSurveyRightToCenter();
 }
 
 function displayEndMessage()
@@ -1034,7 +1034,7 @@ function displayEndMessage()
     activeButtons.push(answerSelectButton);
   }
 
-    transitionSurveyRightToCenter();
+    //transitionSurveyRightToCenter();
 
     syncSurvey(activeSurveyIndex, -1);
 }
