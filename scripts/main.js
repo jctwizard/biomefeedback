@@ -291,10 +291,20 @@ function getTextAnswers(surveyIndex, questionIndex)
 function getTotalResponses(surveyIndex)
 {
   var responses = 0;
-
-  for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, 0); answerIndex++)
+  
+  for (var questionIndex = 0; questionIndex < getQuestionCount(surveyIndex); questionIndex++)
   {
-    responses += getAnswerResponses(surveyIndex, 0, answerIndex);
+    if (getQuestionType(surveyIndex, questionIndex) == "button")
+    {
+      for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
+      {
+        responses += getAnswerResponses(surveyIndex, questionIndex, answerIndex);
+      }
+    }
+    else if (getQuestionType(surveyIndex, questionIndex) == "input")
+    {
+      responses += getTextAnswerCount(surveyIndex, questionIndex);
+    }
   }
 
   return responses;
@@ -1102,24 +1112,27 @@ function viewSurveyResults(surveyIndex)
 
     var answerPanel = makeElement(questionRow, "div", "", "answerPanel", questionIndex.toString())
 
-    for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
+    if (getQuestionType(surveyIndex, questionIndex) == "button")
     {
-      var answerRow = makeElement(answerPanel, "div", "", "answerRow", answerIndex.toString());
+      for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
+      {
+        var answerRow = makeElement(answerPanel, "div", "", "answerRow", answerIndex.toString());
 
-      var answerTitle = makeElement(answerRow, "span", getAnswerName(surveyIndex, questionIndex, answerIndex), "answerResultsTitle", answerIndex.toString());
+        var answerTitle = makeElement(answerRow, "span", getAnswerName(surveyIndex, questionIndex, answerIndex), "answerResultsTitle", answerIndex.toString());
 
-      var answerResponses = makeElement(answerRow, "span", getAnswerResponses(surveyIndex, questionIndex, answerIndex), "answerResultsResponses", answerIndex.toString());
+        var answerResponses = makeElement(answerRow, "span", getAnswerResponses(surveyIndex, questionIndex, answerIndex), "answerResultsResponses", answerIndex.toString());
+      }
     }
-
-    var textAnswers = getTextAnswers(surveyIndex, questionIndex);
-
-    console.log("text answers: " + textAnswers.toString());
-
-    for (var textAnswerIndex = 0; textAnswerIndex < getTextAnswerCount(surveyIndex, questionIndex); textAnswerIndex++)
+    else if (getQuestionType(surveyIndex, questionIndex) == "input")
     {
-      var textAnswerRow = makeElement(answerPanel, "div", "", "answerRow", textAnswerIndex.toString());
+      var textAnswers = getTextAnswers(surveyIndex, questionIndex);
 
-      var textAnswerTitle = makeElement(answerRow, "span", getTextAnswer(surveyIndex, questionIndex, textAnswerIndex), "textAnswerResultsTitle", textAnswerIndex.toString());
+      for (var textAnswerIndex = 0; textAnswerIndex < getTextAnswerCount(surveyIndex, questionIndex); textAnswerIndex++)
+      {
+        var textAnswerRow = makeElement(answerPanel, "div", "", "answerRow", textAnswerIndex.toString());
+
+        var textAnswerTitle = makeElement(textAnswerRow, "div", getTextAnswer(surveyIndex, questionIndex, textAnswerIndex), "textAnswerResultsTitle", textAnswerIndex.toString());
+      }
     }
   }
 
@@ -1189,7 +1202,7 @@ function constructCsv(surveyIndex)
               line += ",";
             }
 
-            line += getTextAnswer(surveyIndex, questionIndex, answerIndex);
+            line += getTextAnswer(surveyIndex, questionIndex, textAnswerIndex);
 
             str += line + "\n";
           }
