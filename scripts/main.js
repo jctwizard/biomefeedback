@@ -978,7 +978,7 @@ function saveTextResponse(elementId)
 
   var textAnswer = document.getElementById(elementId).value;
 
-  var textAnswerCount = getTextAnswerCount();
+  var textAnswerCount = getTextAnswerCount(activeSurveyIndex, activeQuestionIndex);
 
   if (textAnswerCount == 1 && surveys["survey" + activeSurveyIndex.toString()].questions["question" + activeQuestionIndex.toString()].textAnswers["textAnswer0"] == "")
   {
