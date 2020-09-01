@@ -218,6 +218,11 @@ function getAnswerCount(surveyIndex, questionIndex)
   return Object.keys(surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].answers).length;
 }
 
+function getTextAnswerCount(surveyIndex, questionIndex)
+{
+  return Object.keys(surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].textAnswers).length;
+}
+
 function getSurveyName(surveyIndex)
 {
   return surveys["survey" + surveyIndex.toString()].surveyName;
@@ -241,6 +246,11 @@ function getQuestionInitialInput(surveyIndex, questionIndex)
 function getAnswerName(surveyIndex, questionIndex, answerIndex)
 {
   return surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].answers["answer" + answerIndex.toString()].answerName;
+}
+
+function getTextAnswer(surveyIndex, questionIndex, answerIndex)
+{
+  return surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].textAnswers["textAnswer" + answerIndex.toString()];
 }
 
 function getSurvey(surveyIndex)
@@ -642,7 +652,7 @@ function addSurvey()
 {
   console.log(surveys);
 
-  surveys["survey" + getSurveyCount().toString()] = { "surveyName":"new survey", "date":"0/0/0", "location":"Scotland", "buttonColours":{"button0":defaultButtonColours[0], "button1":defaultButtonColours[1], "button2":defaultButtonColours[2], "button3":defaultButtonColours[3]}, "welcomeMessage":defaultWelcomeMessage, "showWelcomeMessage":false, "welcomeImage":"images/default-background.jpg", "showWelcomeImage":false, "endMessage":defaultEndMessage, "questions": {"question0":{"questionName":"new question", "questionType":"button", "questionInitialInput":"enter answer", "answers":{"answer0":{"answerName":"new answer", "responses":0}}, "textAnswers":{"empty":0}}}};
+  surveys["survey" + getSurveyCount().toString()] = { "surveyName":"new survey", "date":"0/0/0", "location":"Scotland", "buttonColours":{"button0":defaultButtonColours[0], "button1":defaultButtonColours[1], "button2":defaultButtonColours[2], "button3":defaultButtonColours[3]}, "welcomeMessage":defaultWelcomeMessage, "showWelcomeMessage":false, "welcomeImage":"images/default-background.jpg", "showWelcomeImage":false, "endMessage":defaultEndMessage, "questions": {"question0":{"questionName":"new question", "questionType":"button", "questionInitialInput":"enter answer", "answers":{"answer0":{"answerName":"new answer", "responses":0}}, "textAnswers":{"textAnswer0":""}}}};
 
   saveAll();
 
@@ -667,7 +677,7 @@ function duplicateSurvey(surveyIndex)
 
 function addQuestion(surveyIndex)
 {
-  surveys["survey" + surveyIndex.toString()].questions["question" + getQuestionCount(surveyIndex).toString()] = { "questionName":"new question", "questionType":"button", "questionInitialInput":"enter answer", "answers":{"answer0":{"answerName":"new answer", "responses":0}}, "textAnswers":{"empty":0}};
+  surveys["survey" + surveyIndex.toString()].questions["question" + getQuestionCount(surveyIndex).toString()] = { "questionName":"new question", "questionType":"button", "questionInitialInput":"enter answer", "answers":{"answer0":{"answerName":"new answer", "responses":0}}, "textAnswers":{"textAnswer0":""}};
 
   editSurvey(surveyIndex);
 }
@@ -963,17 +973,23 @@ function saveTextResponse(elementId)
 {
   if (surveys["survey" + activeSurveyIndex.toString()].questions["question" + activeQuestionIndex.toString()].textAnswers == undefined)
   {
-    surveys["survey" + activeSurveyIndex.toString()].questions["question" + activeQuestionIndex.toString()].textAnswers = { "empty": 0 };
+    surveys["survey" + activeSurveyIndex.toString()].questions["question" + activeQuestionIndex.toString()].textAnswers = { "textAnswer0": "" };
   }
 
   var textAnswer = document.getElementById(elementId).value;
 
-  if (surveys["survey" + activeSurveyIndex.toString()].questions["question" + activeQuestionIndex.toString()].textAnswers[textAnswer] == undefined)
-  {
-    surveys["survey" + activeSurveyIndex.toString()].questions["question" + activeQuestionIndex.toString()].textAnswers[textAnswer] = 0;
-  }
+  var textAnswerCount = getTextAnswerCount();
 
-  surveys["survey" + activeSurveyIndex.toString()].questions["question" + activeQuestionIndex.toString()].textAnswers[textAnswer] += 1;
+  if (textAnswerCount == 1 && surveys["survey" + activeSurveyIndex.toString()].questions["question" + activeQuestionIndex.toString()].textAnswers["textAnswer0"] == "")
+  {
+  // if the default answer is empty add new answer
+    surveys["survey" + activeSurveyIndex.toString()].questions["question" + activeQuestionIndex.toString()].textAnswers["textAnswer0"] = textAnswer;
+  }
+  else
+  {
+  // otherwise add a new answer to the end of the list
+    surveys["survey" + activeSurveyIndex.toString()].questions["question" + activeQuestionIndex.toString()].textAnswers["textAnswer" + textAnswerCount.toString()] = textAnswer;
+  }
 
   displayNextQuestion(false, 0, true);
 }
@@ -1099,13 +1115,11 @@ function viewSurveyResults(surveyIndex)
 
     console.log("text answers: " + textAnswers.toString());
 
-    for (var textAnswerKey in textAnswers)
+    for (var textAnswerIndex = 0; textAnswerIndex < getTextAnswerCount(surveyIndex, questionIndex); textAnswerIndex++)
     {
-      var answerRow = makeElement(answerPanel, "div", "", "answerRow", answerIndex.toString());
+      var textAnswerRow = makeElement(answerPanel, "div", "", "answerRow", textAnswerIndex.toString());
 
-      var answerTitle = makeElement(answerRow, "span", textAnswerKey, "textAnswerResultsTitle", answerIndex.toString());
-
-      var answerResponses = makeElement(answerRow, "span", getTextAnswerResponses(surveyIndex, questionIndex, textAnswerKey), "textAnswerResultsResponses", answerIndex.toString());
+      var textAnswerTitle = makeElement(answerRow, "span", getTextAnswer(surveyIndex, questionIndex, textAnswerIndex), "textAnswerResultsTitle", textAnswerIndex.toString());
     }
   }
 
@@ -1140,22 +1154,45 @@ function constructCsv(surveyIndex)
 
     for (var questionIndex = 0; questionIndex < getQuestionCount(surveyIndex); questionIndex++)
     {
-        for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
+        if (getQuestionType(surveyIndex, questionIndex) == "button")
         {
-          var line = "";
-
-          if (answerIndex == 0)
+          for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
           {
-            line += getQuestionName(surveyIndex, questionIndex) + ",";
+            var line = "";
+
+            if (answerIndex == 0)
+            {
+              line += getQuestionName(surveyIndex, questionIndex) + ",";
+            }
+            else
+            {
+              line += ",";
+            }
+
+            line += getAnswerName(surveyIndex, questionIndex, answerIndex) + "," + getAnswerResponses(surveyIndex, questionIndex, answerIndex);
+
+            str += line + "\n";
           }
-          else
+        }
+        else if (getQuestionType(surveyIndex, questionIndex) == "input")
+        {
+          for (var textAnswerIndex = 0; textAnswerIndex < getTextAnswerCount(surveyIndex, questionIndex); textAnswerIndex++)
           {
-            line += ",";
+            var line = "";
+
+            if (textAnswerIndex == 0)
+            {
+              line += getQuestionName(surveyIndex, questionIndex) + ",";
+            }
+            else
+            {
+              line += ",";
+            }
+
+            line += getTextAnswer(surveyIndex, questionIndex, answerIndex);
+
+            str += line + "\n";
           }
-
-          line += getAnswerName(surveyIndex, questionIndex, answerIndex) + "," + getAnswerResponses(surveyIndex, questionIndex, answerIndex);
-
-          str += line + "\n";
         }
     }
 
