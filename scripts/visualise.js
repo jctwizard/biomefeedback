@@ -29,45 +29,72 @@ function visualiseSurveyResults(surveyIndex)
 
   var radius = (width < height ? width : height) / 4;
  
-  for (var questionIndex = 0; questionIndex < getQuestionCount(surveyIndex); questionIndex++)
+  var questionCount = getQuestionCount(surveyIndex);
+  var segmentSize = Math.PI * 2 / questionCount;
+
+  for (var questionIndex = 0; questionIndex < questionCount; questionIndex++)
   {
-    var questionX = Math.random() * width / 2 + width / 4;
-    var questionY = Math.random() * height / 2 + height / 4;
+    var questionPosition = randomInSegment(centerX, centerY, segmentSize * questionIndex, segmentSize * (questionIndex + 1), radius * 2.5, radius * 3.5);
+    var questionX = questionPosition.x;
+    var questionY = questionPosition.y;
+
     var questionRadius = radius / 2;
     
     drawLine(context, questionX, questionY, questionRadius, centerX, centerY, radius);
 
     if (getQuestionType(surveyIndex, questionIndex) == "button")
     {
-      for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
+      var answerCount = getAnswerCount(surveyIndex, questionIndex);
+      var answerSegmentSize = Math.PI * 2 / answerCount
+
+      for (var answerIndex = 0; answerIndex < answerCount; answerIndex++)
       {
-        var answerX = questionX + Math.random() * radius * 2 - radius;
-        var answerY = questionY + Math.random() * radius * 2 - radius;
-        var answerRadius = radius / 4 + getAnswerResponses(surveyIndex, questionIndex, answerIndex) * radius / 10;
+        var answerPosition = randomInSegment(questionX, questionY, answerSegmentSize * answerIndex, answerSegmentSize * (answerIndex + 1), radius, radius * 1.5);
+        var answerX = answerPosition.x;
+        var answerY = answerPosition.y;
+        var answerRadius = radius / 4 + (getAnswerResponses(surveyIndex, questionIndex, answerIndex) * radius / 15);
+        answerRadius = answerRadius > radius / 2 ? radius / 2 : answerRadius;
         
         drawLine(context, questionX, questionY, questionRadius, answerX, answerY, answerRadius);
       
-        drawBubble(context, answerRadius, getAnswerName(surveyIndex, questionIndex, answerIndex), answerX, answerY, "lightcoral");
+        drawBubble(context, answerRadius, getAnswerName(surveyIndex, questionIndex, answerIndex), answerX, answerY, "aquamarine");
       }
     }
     else if (getQuestionType(surveyIndex, questionIndex) == "input")
     {
-      for (var textAnswerIndex = 0; textAnswerIndex < getTextAnswerCount(surveyIndex, questionIndex); textAnswerIndex++)
+      var answerCount = getTextAnswerCount(surveyIndex, questionIndex);
+      var answerSegmentSize = Math.PI * 2 / answerCount
+
+      for (var textAnswerIndex = 0; textAnswerIndex < answerCount; textAnswerIndex++)
       {
-        var answerX = questionX + Math.random() * radius * 2 - radius;
-        var answerY = questionY + Math.random() * radius * 2 - radius;
+        var answerPosition = randomInSegment(questionX, questionY, answerSegmentSize * textAnswerIndex, answerSegmentSize * (textAnswerIndex + 1), radius, radius * 1.5);
+        var answerX = answerPosition.x;
+        var answerY = answerPosition.y;
         var answerRadius = radius / 4;
         
         drawLine(context, questionX, questionY, questionRadius, answerX, answerY, answerRadius);
 
-        drawBubble(context, answerRadius, getTextAnswer(surveyIndex, questionIndex, textAnswerIndex), answerX, answerY, "lightcoral");
+        drawBubble(context, answerRadius, getTextAnswer(surveyIndex, questionIndex, textAnswerIndex), answerX, answerY, "mint green");
       }
     }
     
     drawBubble(context, questionRadius, getQuestionName(surveyIndex, questionIndex), questionX, questionY, "coral");
   }
   
-  drawBubble(context, radius / 2, getSurveyName(surveyIndex), centerX, centerY, "yellow");
+  drawBubble(context, radius, getSurveyName(surveyIndex), centerX, centerY, "sun yellow");
+}
+
+function randomInSegment(x, y, startAngle, endAngle, minRadius, maxRadius)
+{
+  var position = {};
+
+  var randomAngle = Math.random() * (endAngle - startAngle) + startAngle;
+  var randomRadius = Math.random() * (maxRadius - minRadius) + minRadius;
+
+  position.x = randomRadius * Math.cos(randomAngle);
+  position.y = randomRadius * Math.sin(randomAngle);
+
+  return position;
 }
 
 function drawLine(context, x1, y1, r1, x2, y2, r2)
@@ -98,12 +125,11 @@ function drawBubble(context, radius, text, x, y, colour)
   context.fillStyle = colour;
   context.fill();
   
-  context.font = (radius / 2).toString() + "px arialRounded";
+  context.font = (radius / 3).toString() + "px arialRounded";
   context.fillStyle = "black";
   context.textAlign = "center"; 
-  context.textBaseline = "middle";
 
-  wrapText(context, text, x, y, radius * 1.5, radius / 2);
+  wrapText(context, text, x, y, radius * 2, radius / 3);
 }
 
 function wrapText(context, text, x, y, maxWidth, lineSpacing) 
