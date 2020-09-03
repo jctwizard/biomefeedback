@@ -52,8 +52,8 @@ function visualiseSurveyResults(surveyIndex)
         var answerPosition = randomInSegment(questionX, questionY, answerSegmentSize * answerIndex, answerSegmentSize * (answerIndex + 1), radius * 0.75, radius * 1.25);
         var answerX = answerPosition.x;
         var answerY = answerPosition.y;
-        var answerRadius = radius / 4 + (getAnswerResponses(surveyIndex, questionIndex, answerIndex) * radius / 40);
-        answerRadius = answerRadius > radius / 2 ? radius / 2 : answerRadius;
+        var answerRadius = radius / 4 + (getAnswerResponses(surveyIndex, questionIndex, answerIndex) * radius / 50);
+        answerRadius = answerRadius > radius / 3 ? radius / 3 : answerRadius;
         
         drawLine(context, questionX, questionY, questionRadius, answerX, answerY, answerRadius);
       
