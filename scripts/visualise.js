@@ -29,8 +29,6 @@ function visualiseSurveyResults(surveyIndex)
 
   var radius = (width < height ? width : height) / 4;
  
-  drawBubble(radius / 2, getSurveyName(surveyIndex), centerX, centerY, "yellow");
-
   for (var questionIndex = 0; questionIndex < getQuestionCount(surveyIndex); questionIndex++)
   {
     var questionX = Math.random() * width / 2 + width / 4;
@@ -39,8 +37,6 @@ function visualiseSurveyResults(surveyIndex)
     
     drawLine(context, questionX, questionY, questionRadius, centerX, centerY, radius);
 
-    drawBubble(questionRadius, getQuestionName(surveyIndex, questionIndex), questionX, questionY, "coral");
-    
     if (getQuestionType(surveyIndex, questionIndex) == "button")
     {
       for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
@@ -51,7 +47,7 @@ function visualiseSurveyResults(surveyIndex)
         
         drawLine(context, questionX, questionY, questionRadius, answerX, answerY, answerRadius);
       
-        drawBubble(answerRadius, getAnswerName(surveyIndex, questionIndex, answerIndex), answerX, answerY, "lightcoral");
+        drawBubble(context, answerRadius, getAnswerName(surveyIndex, questionIndex, answerIndex), answerX, answerY, "lightcoral");
       }
     }
     else if (getQuestionType(surveyIndex, questionIndex) == "input")
@@ -64,10 +60,14 @@ function visualiseSurveyResults(surveyIndex)
         
         drawLine(context, questionX, questionY, questionRadius, answerX, answerY, answerRadius);
 
-        drawBubble(answerRadius, getTextAnswer(surveyIndex, questionIndex, textAnswerIndex), answerX, answerY, "lightcoral");
+        drawBubble(context, answerRadius, getTextAnswer(surveyIndex, questionIndex, textAnswerIndex), answerX, answerY, "lightcoral");
       }
     }
+    
+    drawBubble(context, questionRadius, getQuestionName(surveyIndex, questionIndex), questionX, questionY, "coral");
   }
+  
+  drawBubble(context, radius / 2, getSurveyName(surveyIndex), centerX, centerY, "yellow");
 }
 
 function drawLine(context, x1, y1, r1, x2, y2, r2)
@@ -91,7 +91,7 @@ function drawLine(context, x1, y1, r1, x2, y2, r2)
   context.stroke(); 
 }
 
-function drawBubble(radius, text, x, y, colour)
+function drawBubble(context, radius, text, x, y, colour)
 {
   context.beginPath();
   context.arc(x, y, radius, 0, 2 * Math.PI, false);
