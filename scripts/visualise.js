@@ -14,8 +14,11 @@ function visualiseSurveyResults(surveyIndex)
   var canvas = document.getElementById("resultsCanvas");
 
   canvas.style.visibility = "visible";
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
 
   var context = canvas.getContext('2d');
+
   var centerX = canvas.width / 2;
   var centerY = canvas.height / 2;
 
