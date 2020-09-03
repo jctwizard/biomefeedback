@@ -34,7 +34,7 @@ function visualiseSurveyResults(surveyIndex)
 
   for (var questionIndex = 0; questionIndex < questionCount; questionIndex++)
   {
-    var questionPosition = randomInSegment(centerX, centerY, segmentSize * questionIndex, segmentSize * (questionIndex + 1), radius * 2.5, radius * 3.5);
+    var questionPosition = randomInSegment(centerX, centerY, segmentSize * questionIndex, segmentSize * (questionIndex + 1), radius * 1.5, radius * 2);
     var questionX = questionPosition.x;
     var questionY = questionPosition.y;
 
@@ -49,7 +49,7 @@ function visualiseSurveyResults(surveyIndex)
 
       for (var answerIndex = 0; answerIndex < answerCount; answerIndex++)
       {
-        var answerPosition = randomInSegment(questionX, questionY, answerSegmentSize * answerIndex, answerSegmentSize * (answerIndex + 1), radius, radius * 1.5);
+        var answerPosition = randomInSegment(questionX, questionY, answerSegmentSize * answerIndex, answerSegmentSize * (answerIndex + 1), radius * 0.75, radius * 1.25);
         var answerX = answerPosition.x;
         var answerY = answerPosition.y;
         var answerRadius = radius / 4 + (getAnswerResponses(surveyIndex, questionIndex, answerIndex) * radius / 15);
@@ -67,7 +67,7 @@ function visualiseSurveyResults(surveyIndex)
 
       for (var textAnswerIndex = 0; textAnswerIndex < answerCount; textAnswerIndex++)
       {
-        var answerPosition = randomInSegment(questionX, questionY, answerSegmentSize * textAnswerIndex, answerSegmentSize * (textAnswerIndex + 1), radius, radius * 1.5);
+        var answerPosition = randomInSegment(questionX, questionY, answerSegmentSize * textAnswerIndex, answerSegmentSize * (textAnswerIndex + 1), radius * 0.75, radius * 1.25);
         var answerX = answerPosition.x;
         var answerY = answerPosition.y;
         var answerRadius = radius / 4;
@@ -155,13 +155,16 @@ function wrapText(context, text, x, y, maxWidth, lineSpacing)
     }
   }
   
-  lines.push(line);
+  if (line != "" && line != " ")
+  {
+    lines.push(line);
+  }
   
   var lineCount = lines.length;
 
   for (var lineIndex = 0; lineIndex < lineCount; lineIndex++)
   {
-    var lineY = y - (lineSpacing * lineCount) / 2 + lineSpacing * lineIndex;
+    var lineY = y - 0.5 * (lineSpacing * (lineCount - 1)) + lineSpacing * lineIndex;
 
     context.fillText(lines[lineIndex], x, lineY);
   }
