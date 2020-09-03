@@ -137,6 +137,6 @@ function wrapText(context, text, x, y, maxWidth, lineSpacing)
   {
     var lineY = y - (lineSpacing * lineCount) / 2 + lineSpacing * lineIndex;
 
-    fillText(lines[line], x, lineY);
+    context.fillText(lines[line], x, lineY);
   }
 }
