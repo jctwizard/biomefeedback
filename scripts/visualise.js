@@ -27,7 +27,7 @@ function visualiseSurveyResults(surveyIndex)
   context.strokeStyle = "black";
   context.lineWidth = 2;
 
-  var radius = (width < height ? width : height) / 5;
+  var radius = (width < height ? width : height) / 10;
  
   var questionCount = getQuestionCount(surveyIndex);
   var segmentSize = Math.PI * 2 / questionCount;
@@ -52,7 +52,7 @@ function visualiseSurveyResults(surveyIndex)
         var answerPosition = randomInSegment(questionX, questionY, answerSegmentSize * answerIndex, answerSegmentSize * (answerIndex + 1), radius * 0.75, radius * 1.25);
         var answerX = answerPosition.x;
         var answerY = answerPosition.y;
-        var answerRadius = radius / 4 + (getAnswerResponses(surveyIndex, questionIndex, answerIndex) * radius / 15);
+        var answerRadius = radius / 4 + (getAnswerResponses(surveyIndex, questionIndex, answerIndex) * radius / 25);
         answerRadius = answerRadius > radius / 2 ? radius / 2 : answerRadius;
         
         drawLine(context, questionX, questionY, questionRadius, answerX, answerY, answerRadius);
@@ -81,15 +81,15 @@ function visualiseSurveyResults(surveyIndex)
     drawBubble(context, questionRadius, getQuestionName(surveyIndex, questionIndex), questionX, questionY, "coral");
   }
   
-  drawBubble(context, radius, getSurveyName(surveyIndex), centerX, centerY, "gold");
+  drawBubble(context, radius * 0.75, getSurveyName(surveyIndex), centerX, centerY, "gold");
 }
 
 function randomInSegment(x, y, startAngle, endAngle, minRadius, maxRadius)
 {
   var position = {};
 
-  var randomAngle = Math.random() * (endAngle - startAngle) + startAngle;
-  var randomRadius = Math.random() * (maxRadius - minRadius) + minRadius;
+  var randomAngle = startAngle + (endAngle - startAngle) * 0.5; //Math.random() * (endAngle - startAngle) + startAngle;
+  var randomRadius = minRadius + (maxRadius - minRadius) * 0.5; //Math.random() * (maxRadius - minRadius) + minRadius;
 
   position.x = x + randomRadius * Math.cos(randomAngle);
   position.y = y + randomRadius * Math.sin(randomAngle);
