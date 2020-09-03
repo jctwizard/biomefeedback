@@ -74,14 +74,14 @@ function visualiseSurveyResults(surveyIndex)
         
         drawLine(context, questionX, questionY, questionRadius, answerX, answerY, answerRadius);
 
-        drawBubble(context, answerRadius, getTextAnswer(surveyIndex, questionIndex, textAnswerIndex), answerX, answerY, "mint green");
+        drawBubble(context, answerRadius, getTextAnswer(surveyIndex, questionIndex, textAnswerIndex), answerX, answerY, "springgreen");
       }
     }
     
     drawBubble(context, questionRadius, getQuestionName(surveyIndex, questionIndex), questionX, questionY, "coral");
   }
   
-  drawBubble(context, radius, getSurveyName(surveyIndex), centerX, centerY, "sun yellow");
+  drawBubble(context, radius, getSurveyName(surveyIndex), centerX, centerY, "gold");
 }
 
 function randomInSegment(x, y, startAngle, endAngle, minRadius, maxRadius)
@@ -91,8 +91,8 @@ function randomInSegment(x, y, startAngle, endAngle, minRadius, maxRadius)
   var randomAngle = Math.random() * (endAngle - startAngle) + startAngle;
   var randomRadius = Math.random() * (maxRadius - minRadius) + minRadius;
 
-  position.x = randomRadius * Math.cos(randomAngle);
-  position.y = randomRadius * Math.sin(randomAngle);
+  position.x = x + randomRadius * Math.cos(randomAngle);
+  position.y = y + randomRadius * Math.sin(randomAngle);
 
   return position;
 }
