@@ -1175,14 +1175,14 @@ function constructCsv(surveyIndex)
 
             if (answerIndex == 0)
             {
-              line += getQuestionName(surveyIndex, questionIndex) + ",";
+              line += '"' + getQuestionName(surveyIndex, questionIndex) + '",';
             }
             else
             {
               line += ",";
             }
 
-            line += getAnswerName(surveyIndex, questionIndex, answerIndex) + "," + getAnswerResponses(surveyIndex, questionIndex, answerIndex);
+            line += '"' + getAnswerName(surveyIndex, questionIndex, answerIndex) + '",' + getAnswerResponses(surveyIndex, questionIndex, answerIndex);
 
             str += line + "\n";
           }
@@ -1195,14 +1195,14 @@ function constructCsv(surveyIndex)
 
             if (textAnswerIndex == 0)
             {
-              line += getQuestionName(surveyIndex, questionIndex) + ",";
+              line += '"' + getQuestionName(surveyIndex, questionIndex) + '",';
             }
             else
             {
               line += ",";
             }
 
-            line += getTextAnswer(surveyIndex, questionIndex, textAnswerIndex);
+            line += '"' + getTextAnswer(surveyIndex, questionIndex, textAnswerIndex) + '"';
 
             str += line + "\n";
           }
