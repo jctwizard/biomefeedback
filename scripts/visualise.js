@@ -27,7 +27,7 @@ function visualiseSurveyResults(surveyIndex)
   context.strokeStyle = "black";
   context.lineWidth = 2;
 
-  var radius = (width < height ? width : height) / 4;
+  var radius = (width < height ? width : height) / 5;
  
   var questionCount = getQuestionCount(surveyIndex);
   var segmentSize = Math.PI * 2 / questionCount;
