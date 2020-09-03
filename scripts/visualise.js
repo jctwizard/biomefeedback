@@ -25,9 +25,9 @@ function visualiseSurveyResults(surveyIndex)
   var centerY = canvas.height / 2;
 
   context.strokeStyle = "black";
-  context.lineWidth = 2;
+  context.lineWidth = 1;
 
-  var radius = (width < height ? width : height) / 10;
+  var radius = (width < height ? width : height) / 7;
  
   var questionCount = getQuestionCount(surveyIndex);
   var segmentSize = Math.PI * 2 / questionCount;
@@ -40,7 +40,7 @@ function visualiseSurveyResults(surveyIndex)
 
     var questionRadius = radius / 2;
     
-    drawLine(context, questionX, questionY, questionRadius, centerX, centerY, radius);
+    drawLine(context, questionX, questionY, questionRadius, centerX, centerY, radius * 0.75);
 
     if (getQuestionType(surveyIndex, questionIndex) == "button")
     {
@@ -52,7 +52,7 @@ function visualiseSurveyResults(surveyIndex)
         var answerPosition = randomInSegment(questionX, questionY, answerSegmentSize * answerIndex, answerSegmentSize * (answerIndex + 1), radius * 0.75, radius * 1.25);
         var answerX = answerPosition.x;
         var answerY = answerPosition.y;
-        var answerRadius = radius / 4 + (getAnswerResponses(surveyIndex, questionIndex, answerIndex) * radius / 25);
+        var answerRadius = radius / 4 + (getAnswerResponses(surveyIndex, questionIndex, answerIndex) * radius / 40);
         answerRadius = answerRadius > radius / 2 ? radius / 2 : answerRadius;
         
         drawLine(context, questionX, questionY, questionRadius, answerX, answerY, answerRadius);
