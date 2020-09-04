@@ -119,7 +119,15 @@ function displayActiveQuestion()
       {
         answerSelectButton = makeElement(answerPanel, "button", getAnswerName(surveyIndex, questionIndex, buttonIndex), "answerSelectButton", buttonIndex.toString());
         answerSelectButton.setAttribute("onclick", "saveResponse(" + buttonIndex.toString() + ")");
-        answerSelectButton.style.backgroundColor = "#" + buttonColours[buttonIndex];
+        
+        var buttonColour = buttonColours[buttonIndex];
+
+        if (buttonColour.includes("#") == false)
+        {
+          buttonColour = "#" + buttonColour.toString();
+        }
+  
+        answerSelectButton.style.backgroundColor = buttonColour;
       }
       else
       {

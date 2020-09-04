@@ -149,8 +149,19 @@ function editSurvey(surveyIndex)
   {
     var buttonColour = makeElement(editorPanel, "input", "", "buttonColour" + buttonIndex.toString(), surveyIndex.toString());
     buttonColour.setAttribute("type", "color");
-    buttonColour.value = getSurvey(surveyIndex).buttonColours["button" + buttonIndex];
-    buttonColour.style.backgroundColor = "#" + buttonColour.value;
+    
+    var buttonColourValue = getSurvey(surveyIndex).buttonColours["button" + buttonIndex];
+      
+    if (buttonColourValue.includes("#") == false)
+    {
+      buttonColourValue = "#" + buttonColourValue.toString();
+    }
+  
+    buttonColour.value = buttonColourValue;
+    buttonColour.style.backgroundColor = buttonColourValue;
+
+    console.log("set button colour: " + buttonColourValue);
+
     buttonColour.setAttribute("onchange", "setButtonColour('" + buttonColour.id + "', " + buttonIndex + ", " + surveyIndex.toString() + ")");
   }
 
@@ -296,11 +307,16 @@ function setAnswerName(elementId, surveyIndex, questionIndex, answerIndex)
 
 function setButtonColour(elementId, buttonIndex, surveyIndex)
 {
-  document.getElementById(elementId).style.backgroundColor = "#" + document.getElementById(elementId).value;
+  var buttonColour = document.getElementById(elementId).value.toString();
 
-  console.log(document.getElementById(elementId).value);
-
-  surveys["survey" + surveyIndex.toString()].buttonColours["button" + buttonIndex.toString()] = document.getElementById(elementId).value;
+  if (buttonColour.includes("#") == false)
+  {
+    buttonColour = "#" + buttonColour.toString();
+  }
+  
+  document.getElementById(elementId).style.backgroundColor = buttonColour;
+  
+  surveys["survey" + surveyIndex.toString()].buttonColours["button" + buttonIndex.toString()] = buttonColour;
 }
 
 function addSurvey()
