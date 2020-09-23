@@ -320,7 +320,7 @@ function displaySurveys()
     
   var surveyPanel = makeElement(editorPanel, "div", "", "surveyPanel", "");
   
-  var surveyHeader = makeElement(surveyPanel, "div", "Audience Insights Survey Editor", "fieldHeader", "");
+  var surveyHeader = makeElement(surveyPanel, "div", "Kwali - Audience Insights Survey Editor", "fieldHeader", "");
 
   makeElement(surveyPanel, "hr", "", "break", "");
   
