@@ -78,6 +78,7 @@ button
   border-radius: 20px;
   border-style: solid;
   margin-left: 1vw;
+  text-transform: uppercase;
 }
 
 select 
