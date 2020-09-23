@@ -10,7 +10,7 @@ html
   width: 100%;
   min-width: 100%;
   min-height: 100%;
-  background-color: #e14a4b;
+  background-color: #ebebeb;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -26,12 +26,13 @@ html
   text-align: center;
   width: 100%;
   height: 100%;
-  background-color: lightcoral;
+  background-color: #ebebeb;
 }
 
-@font-face {
-    font-family: "arialRounded";
-    src: url("../fonts/arial-rounded.ttf") format("truetype");
+@font-face 
+{
+  font-family: "Helvetica";
+  src: url("../fonts/Helvetica.ttf") format("truetype");
 }
 
 body
@@ -42,18 +43,18 @@ body
   min-height: 100%;
   margin: 0;
   padding: 0;
-  font-family: arialRounded;
+  font-family: Helvetica;
   font-size: 1em;
-  color: white;
+  color: black;
   overflow: hidden;
 }
 
 input
 {
-  font-family: arialRounded;
+  font-family: Helvetica;
   font-size: 1em;
   color: black;
-  background: #ffffff;
+  background: #ebebeb;
   font-style: italic;
   margin-left: 2vw;
 }
@@ -67,24 +68,24 @@ input
 
 button
 {
-  font-family: arialRounded;
+  font-family: Helvetica;
   font-size: 1em;
   color: black;
-  background-color: white;
+  background-color: #ebebeb;
   border: 2px black;
   border-color: black;
   border-width: 0.1vw;
-  border-radius: 100px;
+  border-radius: 20px;
   border-style: solid;
   margin-left: 1vw;
 }
 
 select 
 {
-    font-family: arialRounded;
+    font-family: Helvetica;
     font-size: 1em;
     color: black;
-    background-color: white;
+    background-color: #ebebeb;
     border: 2px black;
     border-color: black;
     border-width: 0.1vw;
@@ -94,7 +95,7 @@ select
 }
 
 button:active {
-    background-color: lightgray;
+    background-color: #ebebeb;
     color: black;
 }
 
@@ -105,10 +106,10 @@ button:focus
 
 .exportLink
 {
-  font-family: arialRounded;
+  font-family: Helvetica;
   font-size: 1em;
   color: black;
-  background-color: white;
+  background-color: #ebebeb;
   border: 2px black;
   border-color: black;
   border-width: 0.25vw;
@@ -285,7 +286,7 @@ hr
   text-align: center;
   width: 100%;
   height: 100%;
-  background-color: aqua;
+  background-color: #ebebeb;
 }
 
 .surveyResultsLocation
@@ -318,7 +319,7 @@ hr
   text-align: center;
   margin: auto;
   font-size: 5.5vw;
-  color: white;
+  color: black;
   top: 50%;
   left: 15%;
 }
@@ -331,7 +332,7 @@ hr
   text-align: center;
   margin: auto;
   font-size: 3.5vw;
-  color: white;
+  color: black;
   bottom: 25%;
   left: 15%;
   animation: Pulse 3s infinite ease-in-out;
@@ -354,7 +355,7 @@ hr
   text-align: center;
   margin: auto;
   font-size: 5.5vw;
-  color: white;
+  color: black;
   top: 25%;
   left: 15%;
 }
@@ -367,7 +368,7 @@ hr
   text-align: center;
   margin: auto;
   font-size: 5.5vw;
-  color: white;
+  color: black;
   top: 50%;
   left: 15%;
 }
@@ -401,15 +402,15 @@ hr
   vertical-align: center;
 
   text-align: center;
-  font-family: arialRounded;
+  font-family: Helvetica;
   font-size: 2.5vw;
-  color: white;
-  background-color: coral;
+  color: black;
+  background-color: #ebebeb;
   border-radius: 10vw;
   border-width: 0.5vw;
-  border-color: #FFFFFF;
+  border-color: black;
   border-style: solid;
-  box-shadow: 0 1vw #663333;
+  box-shadow: 0 1vw #bbbbbb;
   width: 17.5vw;
   height: 17.5vw;
 }
@@ -418,15 +419,15 @@ hr
 {
   vertical-align: middle;
   text-align: center;
-  font-family: arialRounded;
+  font-family: Helvetica;
   font-size: 2em;
   color: black;
-  background-color: white;
+  background-color: #ebebeb;
   border-radius: 0.5vw;
   border-width: 0.5vw;
-  border-color: #FFFFFF;
+  border-color: black;
   border-style: solid;
-  box-shadow: 0 1vw #663333;
+  box-shadow: 0 1vw #bbbbbb;
   width: 35vw;
   height: 8vw;
   margin-right: 5vw;
@@ -436,24 +437,24 @@ hr
 {
   vertical-align: center;
   text-align: center;
-  font-family: arialRounded;
+  font-family: Helvetica;
   font-size: 2.5vw;
-  color: white;
-  background-color: coral;
+  color: black;
+  background-color: #ebebeb;
   border-radius: 4vw;
   border-width: 0.2vw;
-  border-color: #FFFFFF;
+  border-color: black;
   border-style: solid;
-  box-shadow: 0 1vw #663333;
+  box-shadow: 0 1vw #bbbbbb;
   width: 12vw;
   height: 8vw;
 }
 
 .answerSelectButton.active, .answerSelectButton:active
 {
-  background-color: coral;
-  box-shadow: 0 0.5vw #663333;
-  color: white;
+  background-color: #ebebeb;
+  box-shadow: 0 0.5vw #bbbbbb;
+  color: black;
   transform: translateY(0.5vw);
 }
 
@@ -461,19 +462,19 @@ hr
 {
   vertical-align: center;
 
-  background-color: lightgrey;
+  background-color: #bbbbbb;
   border-radius: 10vw;
   border-width: 0.5vw;
   border-style: solid;
-  border-color: #FFFFFF;
-  box-shadow: 0 1vw #663333;
+  border-color: black;
+  box-shadow: 0 1vw #bbbbbb;
   width: 17.5vw;
   height: 17.5vw;
 }
 
 .inactiveAnswerSelectButton.active, .inactiveAnswerSelectButton:active
 {
-  box-shadow: 0 0.5vw #663333;
+  box-shadow: 0 0.5vw #bbbbbb;
   transform: translateY(0.5vw);
 }
 
