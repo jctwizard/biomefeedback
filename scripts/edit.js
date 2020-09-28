@@ -8,6 +8,59 @@ function initNoSurvey()
   displaySurveys();
 }
 
+function displaySurveys()
+{
+  var editorPanel = document.getElementById("editorPanel");
+
+  editorPanel.innerHTML = "";
+
+  document.body.style.cursor = "default";
+    
+  var surveyPanel = makeElement(editorPanel, "div", "", "surveyPanel", "");
+  
+  var editorPanelHeader = makeElement(surveyPanel, "div", "Kwali", "editorPanelHeader", "");
+
+  var editorPanelSubheader = makeElement(surveyPanel, "div", "Audience Insights survey editor", "editorPanelSubheader", "");
+  
+  var surveyPanelHeader = makeElement(surveyPanel, "div", "Surveys", "surveyPanelHeader", "");
+
+  var addSurveyButton = makeElement(surveyPanel, "button", "add", "addSurveyButton", "");
+  addSurveyButton.setAttribute("onclick", "addSurvey()");
+
+  var saveSurveysButton = makeElement(surveyPanel, "button", "save", "saveSurveysButton", "");
+  saveSurveysButton.setAttribute("onclick", "saveAll()");
+
+  for (var surveyIndex = 0; surveyIndex < getSurveyCount(); surveyIndex++)
+  {
+    var surveyRow = makeElement(surveyPanel, "div", "", "surveyRow", surveyIndex.toString());
+
+    var surveyTitle = makeElement(surveyRow, "div", getSurveyName(surveyIndex), "surveyTitle", surveyIndex.toString());
+
+    var surveyEditButton = makeElement(surveyRow, "button", "edit", "surveyEditButton", surveyIndex.toString());
+    surveyEditButton.setAttribute("onclick", "goToEditLink(" + surveyIndex.toString() + ")");
+
+    var surveyDuplicateButton = makeElement(surveyRow, "button", "duplicate", "surveyDuplicateButton", surveyIndex.toString());
+    surveyDuplicateButton.setAttribute("onclick", "duplicateSurvey(" + surveyIndex.toString() + ")");
+
+    var surveyRemoveButton = makeElement(surveyRow, "button", "remove", "surveyRemoveButton", surveyIndex.toString());
+    surveyRemoveButton.setAttribute("onclick", "removeSurvey(" + surveyIndex.toString() + ")");
+    
+    var surveyLinkButton = makeElement(surveyRow, "button", "links...", "surveyLinkButton", surveyIndex.toString());
+    surveyLinkButton.setAttribute("onclick", "copyLinks(" + surveyIndex.toString() + ")");
+    
+    makeElement(surveyRow, "br", "", "break", "");
+
+    var surveyRunButton = makeElement(surveyRow, "button", "run", "surveyRunButton", surveyIndex.toString());
+    surveyRunButton.setAttribute("onclick", "goToSurveyLink(" + surveyIndex.toString() + ")");
+
+    var surveyResultsButton = makeElement(surveyRow, "button", "view results", "surveyResultsButton", surveyIndex.toString());
+    surveyResultsButton.setAttribute("onclick", "goToViewResultsLink(" + surveyIndex.toString() + ")");
+    
+    var surveyVisualiseButton = makeElement(surveyRow, "button", "visualise", "surveyVisualiseButton", surveyIndex.toString());
+    surveyVisualiseButton.setAttribute("onclick", "goToVisualiseLink(" + surveyIndex.toString() + ")");
+  }
+}
+
 function goToEditLink(surveyIndex)
 {
   var editURL = baseURL + editURLExtension + surveyNameURL(getSurveyName(surveyIndex));
@@ -22,11 +75,25 @@ function goToSurveyLink(surveyIndex)
   window.location.href = surveyURL;
 }
 
+function goToViewResultsLink(surveyIndex)
+{
+  var viewResultsURL = baseURL + viewResultsURLExtension + surveyNameURL(getSurveyName(surveyIndex));
+  
+  window.location.href = viewResultsURL;
+}
+
 function goToVisualiseLink(surveyIndex)
 {
   var visualiseURL = baseURL + visualiseURLExtension + surveyNameURL(getSurveyName(surveyIndex));
   
   window.location.href = visualiseURL;
+}
+
+function copyLinks(surveyIndex)
+{
+  var urlList = "EDIT:\t\t\t" + baseURL + editURLExtension + surveyNameURL(getSurveyName(surveyIndex)) + "\n\n" + "ANSWER:\t\t" + baseURL + answerURLExtension + surveyNameURL(getSurveyName(surveyIndex)) + "\n\n" + "RESULTS:\t\t" + baseURL + viewResultsURLExtension + surveyNameURL(getSurveyName(surveyIndex)) + "\n\n" + "VISUALISE:\t\t" + baseURL + visualiseURLExtension + surveyNameURL(getSurveyName(surveyIndex));
+
+  copyToClipboard(urlList);
 }
 
 function copyEditLink(surveyIndex)
@@ -56,24 +123,36 @@ function editSurvey(surveyIndex)
 
   var editorPanel = document.getElementById("editorPanel");
   editorPanel.innerHTML = "";
+  
+  var questionPanel = makeElement(editorPanel, "div", "", "questionPanel", "")
 
-  makeElement(editorPanel, "div", "Survey Name:", "fieldHeader", "");
-  var surveyHeader = makeElement(editorPanel, "input", getSurveyName(surveyIndex), "surveyHeader", surveyIndex.toString());
+  //makeElement(questionPanel, "div", "Survey Name:", "fieldHeader", "");
+  var surveyHeader = makeElement(questionPanel, "input", getSurveyName(surveyIndex), "surveyHeader", surveyIndex.toString());
   surveyHeader.setAttribute("onchange", "setSurveyName('" + surveyHeader.id + "', " + surveyIndex.toString() + ")");
   surveyHeader.focus();
   surveyHeader.select();
+  
+  makeElement(questionPanel, "span", "", "fieldHeader", "");
+  var surveyDate = makeElement(questionPanel, "input", getSurvey(surveyIndex).date, "surveyDate", surveyIndex.toString());
+  surveyDate.setAttribute("onchange", "setSurveyDate('" + surveyDate.id + "', " + surveyIndex.toString() + ")");
 
-  makeElement(editorPanel, "hr", "", "break", "");
+  makeElement(questionPanel, "span", "", "fieldHeader", "");
+  var surveyLocation = makeElement(questionPanel, "input", getSurvey(surveyIndex).location, "surveyLocation", surveyIndex.toString());
+  surveyLocation.setAttribute("onchange", "setSurveyLocation('" + surveyLocation.id + "', " + surveyIndex.toString() + ")");
 
-  makeElement(editorPanel, "div", "Questions:", "fieldHeader", "");
-  var questionPanel = makeElement(editorPanel, "div", "", "questionPanel", "")
+  //makeElement(questionPanel, "hr", "", "break", "");
+
+  //makeElement(questionPanel, "div", "Questions:", "fieldHeader", "");
 
   for (var questionIndex = 0; questionIndex < getQuestionCount(surveyIndex); questionIndex++)
   {
     var questionRow = makeElement(questionPanel, "div", "", "questionRow", questionIndex.toString());
 
-    var questionTitle = makeElement(questionRow, "div", getQuestionName(surveyIndex, questionIndex), "questionTitle", questionIndex.toString());
-    
+    var questionTitle = makeElement(questionRow, "div", (questionIndex + 1).toString() + ". " + getQuestionName(surveyIndex, questionIndex), "questionTitle", questionIndex.toString());
+
+    var questionOffset = makeElement(questionRow, "span", (questionIndex + 1).toString() + ". ", "questionTitle", questionIndex.toString());
+    questionOffset.style.color = "#ebebeb";
+
     var questionType = makeElement(questionRow, "select", "", "questionType", questionIndex.toString());
     questionType.setAttribute("onchange", "setQuestionType('questionType" + questionIndex.toString() + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
     
@@ -88,66 +167,76 @@ function editSurvey(surveyIndex)
       questionType.selectedIndex = 1;
     }
 
-    var questionEditButton = makeElement(questionRow, "button", "edit question", "questionEditButton", questionIndex.toString());
+    var questionEditButton = makeElement(questionRow, "button", "edit", "questionEditButton", questionIndex.toString());
     questionEditButton.setAttribute("onclick", "editQuestion(" + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
 
-    var questionDuplicateButton = makeElement(questionRow, "button", "duplicate question", "questionDuplicateButton", questionIndex.toString());
+    var questionDuplicateButton = makeElement(questionRow, "button", "duplicate", "questionDuplicateButton", questionIndex.toString());
     questionDuplicateButton.setAttribute("onclick", "duplicateQuestion(" + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
 
-    var questionRemoveButton = makeElement(questionRow, "button", "remove question", "questionRemoveButton", questionIndex.toString());
+    var questionRemoveButton = makeElement(questionRow, "button", "remove", "questionRemoveButton", questionIndex.toString());
     questionRemoveButton.setAttribute("onclick", "removeQuestion(" + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
 
-    var questionShiftUpButton = makeElement(questionRow, "button", "shift up", "questionShiftUpButton", questionIndex.toString());
+    var questionShiftUpButton = makeElement(questionRow, "button", "up", "questionShiftUpButton", questionIndex.toString());
     questionShiftUpButton.setAttribute("onclick", "shiftQuestionUp(" + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
 
-    var questionShiftDownButton = makeElement(questionRow, "button", "shift down", "questionShiftDownButton", questionIndex.toString());
+    var questionShiftDownButton = makeElement(questionRow, "button", "down", "questionShiftDownButton", questionIndex.toString());
     questionShiftDownButton.setAttribute("onclick", "shiftQuestionDown(" + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
+    
+    makeElement(questionPanel, "hr", "", "break", "");
   }
 
-  makeElement(editorPanel, "hr", "", "break", "");
+  makeElement(questionPanel, "br", "", "break", "");
 
-  var addQuestionButton = makeElement(editorPanel, "button", "add question", "addQuestionButton", "");
+  var addQuestionButton = makeElement(questionPanel, "button", "add", "addQuestionButton", "");
   addQuestionButton.setAttribute("onclick", "addQuestion(" + surveyIndex.toString() + ")");
 
-  makeElement(editorPanel, "hr", "", "break", "");
+  makeElement(questionPanel, "br", "", "break", "");
+  makeElement(questionPanel, "br", "", "break", "");
 
-  makeElement(editorPanel, "div", "Survey Date:", "fieldHeader", "");
-  var surveyDate = makeElement(editorPanel, "input", getSurvey(surveyIndex).date, "surveyDate", surveyIndex.toString());
-  surveyDate.setAttribute("onchange", "setSurveyDate('" + surveyDate.id + "', " + surveyIndex.toString() + ")");
-
-  makeElement(editorPanel, "div", "Survey Location:", "fieldHeader", "");
-  var surveyLocation = makeElement(editorPanel, "input", getSurvey(surveyIndex).location, "surveyLocation", surveyIndex.toString());
-  surveyLocation.setAttribute("onchange", "setSurveyLocation('" + surveyLocation.id + "', " + surveyIndex.toString() + ")");
-
-  makeElement(editorPanel, "div", "Show Welcome Message?:", "fieldHeader", surveyIndex.toString());
-  var surveyShowWelcomeMessage = makeElement(editorPanel, "input", "", "surveyShowWelcomeMessage", surveyIndex.toString());
+  makeElement(questionPanel, "span", "Show Welcome Message?:", "fieldHeader", surveyIndex.toString());
+  var surveyShowWelcomeMessage = makeElement(questionPanel, "input", "", "surveyShowWelcomeMessage", surveyIndex.toString());
   surveyShowWelcomeMessage.setAttribute("type", "checkbox");
   surveyShowWelcomeMessage.checked = getSurvey(surveyIndex).showWelcomeMessage;
   surveyShowWelcomeMessage.setAttribute("onchange", "setShowWelcomeMessage('" + surveyShowWelcomeMessage.id + "', " + surveyIndex.toString() + ")");
+  
+  makeElement(questionPanel, "br", "", "break", "");
+  makeElement(questionPanel, "br", "", "break", "");
 
-  makeElement(editorPanel, "div", "Welcome Message:", "fieldHeader", surveyIndex.toString());
-  var surveyWelcomeMessage = makeElement(editorPanel, "input", getSurvey(surveyIndex).welcomeMessage, "surveyWelcomeMessage", surveyIndex.toString());
+  makeElement(questionPanel, "span", "Welcome Message:", "fieldHeader", surveyIndex.toString());
+  var surveyWelcomeMessage = makeElement(questionPanel, "input", getSurvey(surveyIndex).welcomeMessage, "surveyWelcomeMessage", surveyIndex.toString());
   surveyWelcomeMessage.setAttribute("onchange", "setSurveyWelcomeMessage('" + surveyWelcomeMessage.id + "', " + surveyIndex.toString() + ")");
+  
+  makeElement(questionPanel, "br", "", "break", "");
+  makeElement(questionPanel, "br", "", "break", "");
 
-  makeElement(editorPanel, "div", "Show Welcome Image?:", "fieldHeader", surveyIndex.toString());
-  var surveyShowWelcomeImage = makeElement(editorPanel, "input", "", "surveyShowWelcomeImage", surveyIndex.toString());
+  makeElement(questionPanel, "span", "Show Welcome Image?:", "fieldHeader", surveyIndex.toString());
+  var surveyShowWelcomeImage = makeElement(questionPanel, "input", "", "surveyShowWelcomeImage", surveyIndex.toString());
   surveyShowWelcomeImage.setAttribute("type", "checkbox");
   surveyShowWelcomeImage.checked = getSurvey(surveyIndex).showWelcomeImage;
   surveyShowWelcomeImage.setAttribute("onchange", "setShowWelcomeImage('" + surveyShowWelcomeImage.id + "', " + surveyIndex.toString() + ")");
+  
+  makeElement(questionPanel, "br", "", "break", "");
+  makeElement(questionPanel, "br", "", "break", "");
 
-  makeElement(editorPanel, "div", "Welcome Image URL:", "fieldHeader", surveyIndex.toString());
-  var surveyWelcomeImage = makeElement(editorPanel, "input", getSurvey(surveyIndex).welcomeImage, "surveyWelcomeImage", surveyIndex.toString());
+  makeElement(questionPanel, "span", "Welcome Image URL:", "fieldHeader", surveyIndex.toString());
+  var surveyWelcomeImage = makeElement(questionPanel, "input", getSurvey(surveyIndex).welcomeImage, "surveyWelcomeImage", surveyIndex.toString());
   surveyWelcomeImage.setAttribute("onchange", "setSurveyWelcomeImage('" + surveyWelcomeImage.id + "', " + surveyIndex.toString() + ")");
+  
+  makeElement(questionPanel, "br", "", "break", "");
+  makeElement(questionPanel, "br", "", "break", "");
 
-  makeElement(editorPanel, "div", "End Message:", "fieldHeader", surveyIndex.toString());
-  var surveyEndMessage = makeElement(editorPanel, "input", getSurvey(surveyIndex).endMessage, "surveyEndMessage", surveyIndex.toString());
+  makeElement(questionPanel, "span", "End Message:", "fieldHeader", surveyIndex.toString());
+  var surveyEndMessage = makeElement(questionPanel, "input", getSurvey(surveyIndex).endMessage, "surveyEndMessage", surveyIndex.toString());
   surveyEndMessage.setAttribute("onchange", "setSurveyEndMessage('" + surveyEndMessage.id + "', " + surveyIndex.toString() + ")");
+  
+  makeElement(questionPanel, "br", "", "break", "");
+  makeElement(questionPanel, "br", "", "break", "");
 
-  makeElement(editorPanel, "div", "Button colours:", "fieldHeader", surveyIndex.toString());
+  makeElement(questionPanel, "span", "Button colours:", "fieldHeader", surveyIndex.toString());
 
   for (var buttonIndex = 0; buttonIndex < buttonCount; buttonIndex++)
   {
-    var buttonColour = makeElement(editorPanel, "input", "", "buttonColour" + buttonIndex.toString(), surveyIndex.toString());
+    var buttonColour = makeElement(questionPanel, "input", "", "buttonColour" + buttonIndex.toString(), surveyIndex.toString());
     buttonColour.setAttribute("type", "color");
     
     var buttonColourValue = getSurvey(surveyIndex).buttonColours["button" + buttonIndex];
@@ -165,9 +254,10 @@ function editSurvey(surveyIndex)
     buttonColour.setAttribute("onchange", "setButtonColour('" + buttonColour.id + "', " + buttonIndex + ", " + surveyIndex.toString() + ")");
   }
 
-  makeElement(editorPanel, "hr", "", "break", "");
+  makeElement(questionPanel, "br", "", "break", "");
+  makeElement(questionPanel, "br", "", "break", "");
 
-  var surveySaveButton = makeElement(editorPanel, "button", "save survey", "surveySaveButton", surveyIndex.toString());
+  var surveySaveButton = makeElement(questionPanel, "button", "save survey", "surveySaveButton", surveyIndex.toString());
   surveySaveButton.setAttribute("onclick", "saveSurvey(" + surveyIndex.toString() + ")");
 }
 
@@ -178,9 +268,11 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
     var editorPanel = document.getElementById("editorPanel");
 
     editorPanel.innerHTML = "";
+    
+    var answerPanel = makeElement(editorPanel, "div", "", "answerPanel", "")
 
-    makeElement(editorPanel, "div", "Question Name:", "fieldHeader", "");
-    var questionHeader = makeElement(editorPanel, "input", getQuestionName(surveyIndex, questionIndex), "questionHeader", questionIndex.toString());
+    //makeElement(answerPanel, "div", "Question Name:", "fieldHeader", "");
+    var questionHeader = makeElement(answerPanel, "input", getQuestionName(surveyIndex, questionIndex), "questionHeader", questionIndex.toString());
     questionHeader.setAttribute("onchange", "setQuestionName('" + questionHeader.id + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
 
     if (highlightIndex == undefined)
@@ -192,9 +284,9 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
     // input question create text box
     if (getQuestionType(surveyIndex, questionIndex) == "input")
     {
-      makeElement(editorPanel, "div", "Initial input text", "fieldHeader", "");
+      makeElement(answerPanel, "div", "Initial input text", "fieldHeader", "");
       
-      var inputDiv = makeElement(editorPanel, "div", "", "", "");
+      var inputDiv = makeElement(answerPanel, "div", "", "", "");
 
       var questionInitialInput = makeElement(inputDiv, "input", "", "questionInitialInput", questionIndex.toString());
       questionInitialInput.setAttribute("onchange", "setQuestionInitialInput('" + questionInitialInput.id + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
@@ -204,27 +296,31 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
     // button question create buttons
     if (getQuestionType(surveyIndex, questionIndex) == "button")
     {
-      makeElement(editorPanel, "div", "Answers (number of responses):", "fieldHeader", "");
-      var answerPanel = makeElement(editorPanel, "div", "", "answerPanel", "")
+     // makeElement(answerPanel, "div", "Answers (number of responses):", "fieldHeader", "");
 
       for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
       {
         var answerRow = makeElement(answerPanel, "div", "", "answerRow", answerIndex.toString());
+        
+        makeElement(answerRow, "span", (answerIndex + 1).toString() + ".", "answerTitle", "");
 
         var answerTitle = makeElement(answerRow, "input", getAnswerName(surveyIndex, questionIndex, answerIndex), "answerTitle", answerIndex.toString());
         answerTitle.setAttribute("onchange", "setAnswerName('" + answerTitle.id.toString() + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
 
-        var answerResponses = makeElement(answerRow, "span", "(" + getAnswerResponses(surveyIndex, questionIndex, answerIndex) + ")", "answerResponses", answerIndex.toString());
+        var answerResponses = makeElement(answerRow, "span", "(" + getAnswerResponses(surveyIndex, questionIndex, answerIndex) + " responses)", "answerResponses", answerIndex.toString());
 
         makeElement(answerRow, "br", "", "", "");
+        
+        var buttonOffset = makeElement(answerRow, "span",  (answerIndex + 1).toString() + ".", "answerTitle", "");
+        buttonOffset.style.color = "#ebebeb";
 
-        var answerRemoveButton = makeElement(answerRow, "button", "remove answer", "answerRemoveButton", answerIndex.toString());
+        var answerRemoveButton = makeElement(answerRow, "button", "remove", "answerRemoveButton", answerIndex.toString());
         answerRemoveButton.setAttribute("onclick", "removeAnswer(" + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
 
-        var answerShiftUpButton = makeElement(answerRow, "button", "shift up", "answerShiftUpButton", answerIndex.toString());
+        var answerShiftUpButton = makeElement(answerRow, "button", "up", "answerShiftUpButton", answerIndex.toString());
         answerShiftUpButton.setAttribute("onclick", "shiftAnswerUp(" + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
 
-        var answerShiftDownButton = makeElement(answerRow, "button", "shift down", "answerShiftDownButton", answerIndex.toString());
+        var answerShiftDownButton = makeElement(answerRow, "button", "down", "answerShiftDownButton", answerIndex.toString());
         answerShiftDownButton.setAttribute("onclick", "shiftAnswerDown(" + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
 
         if (highlightIndex == answerIndex)
@@ -232,15 +328,17 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
           answerTitle.focus();
           answerTitle.select();
         }
+
+        makeElement(answerPanel, "hr", "", "break", "");
       }
+      
+      makeElement(answerPanel, "br", "", "break", "");
 
-      makeElement(editorPanel, "hr", "", "break", "");
-
-      var addAnswerButton = makeElement(editorPanel, "button", "add answer", "addAnswerButton", "");
+      var addAnswerButton = makeElement(answerPanel, "button", "add", "addAnswerButton", "");
       addAnswerButton.setAttribute("onclick", "addAnswer(" + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
     }
 
-    var questionSaveButton = makeElement(editorPanel, "button", "save question", "questionSaveButton", questionIndex.toString());
+    var questionSaveButton = makeElement(answerPanel, "button", "save", "questionSaveButton", questionIndex.toString());
     questionSaveButton.setAttribute("onclick", "saveQuestion(" + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
 }
 

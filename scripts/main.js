@@ -20,6 +20,7 @@ var baseURL = "http://jctwizard.github.io/biomefeedback/"
 //var baseURL = "file:///C:/Users/James/Documents/Projects/biomefeedback/"
 var editURLExtension = "edit/index.html?survey=";
 var answerURLExtension = "answer/index.html?survey=";
+var viewResultsURLExtension = "results/index.html?survey=";
 var visualiseURLExtension = "visualise/index.html?survey=";
 
 var surveys = {};
@@ -310,62 +311,6 @@ function getTotalResponses(surveyIndex)
   return responses;
 }
 
-function displaySurveys()
-{
-  var editorPanel = document.getElementById("editorPanel");
-
-  editorPanel.innerHTML = "";
-
-  document.body.style.cursor = "default";
-    
-  var surveyPanel = makeElement(editorPanel, "div", "", "surveyPanel", "");
-  
-  var surveyHeader = makeElement(surveyPanel, "div", "Kwali - Audience Insights Survey Editor", "fieldHeader", "");
-
-  makeElement(surveyPanel, "hr", "", "break", "");
-  
-  var surveyPanelHeader = makeElement(surveyPanel, "div", "Surveys:", "questionTitle", "");
-
-  for (var surveyIndex = 0; surveyIndex < getSurveyCount(); surveyIndex++)
-  {
-    var surveyRow = makeElement(surveyPanel, "div", "", "surveyRow", surveyIndex.toString());
-
-    var surveyTitle = makeElement(surveyRow, "div", getSurveyName(surveyIndex), "surveyTitle", surveyIndex.toString());
-
-    var surveyEditButton = makeElement(surveyRow, "button", "edit survey", "surveyEditButton", surveyIndex.toString());
-    surveyEditButton.setAttribute("onclick", "goToEditLink(" + surveyIndex.toString() + ")");
-
-    var surveyDuplicateButton = makeElement(surveyRow, "button", "duplicate survey", "surveyDuplicateButton", surveyIndex.toString());
-    surveyDuplicateButton.setAttribute("onclick", "duplicateSurvey(" + surveyIndex.toString() + ")");
-
-    var surveyRemoveButton = makeElement(surveyRow, "button", "remove survey", "surveyRemoveButton", surveyIndex.toString());
-    surveyRemoveButton.setAttribute("onclick", "removeSurvey(" + surveyIndex.toString() + ")");
-
-    var surveyRunButton = makeElement(surveyRow, "button", "run survey", "surveyRunButton", surveyIndex.toString());
-    surveyRunButton.setAttribute("onclick", "goToSurveyLink(" + surveyIndex.toString() + ")");
-
-    var surveyResultsButton = makeElement(surveyRow, "button", "view results", "surveyResultsButton", surveyIndex.toString());
-    surveyResultsButton.setAttribute("onclick", "goToVisualiseLink(" + surveyIndex.toString() + ")");
-    
-    var surveyLinkButton = makeElement(surveyRow, "button", "survey link", "surveyLinkButton", surveyIndex.toString());
-    surveyLinkButton.setAttribute("onclick", "copyAnswerLink(" + surveyIndex.toString() + ")");
-    
-    var editLinkButton = makeElement(surveyRow, "button", "edit link", "editLinkButton", surveyIndex.toString());
-    editLinkButton.setAttribute("onclick", "copyEditLink(" + surveyIndex.toString() + ")");
-    
-    var visualiseLinkButton = makeElement(surveyRow, "button", "visualise link", "visualiseLinkButton", surveyIndex.toString());
-    visualiseLinkButton.setAttribute("onclick", "copyVisualiseLink(" + surveyIndex.toString() + ")");
-  }
-
-  makeElement(editorPanel, "hr", "", "break", "");
-
-  var addSurveyButton = makeElement(editorPanel, "button", "add survey", "addSurveyButton", "");
-  addSurveyButton.setAttribute("onclick", "addSurvey()");
-
-  var saveSurveysButton = makeElement(editorPanel, "button", "save changes", "saveSurveysButton", "");
-  saveSurveysButton.setAttribute("onclick", "saveAll()");
-}
-
 function output(msg)
 {
   console.log(msg);
@@ -405,5 +350,5 @@ function surveyNameURL(surveyName)
 
 function copyToClipboard(text) 
 {
-  window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+  window.alert("Copy link below: \n\n" + text);
 }

@@ -1,556 +1,578 @@
-@keyframes  moveBackground {
-  0% {background-position:10% 0%}
-  50% {background-position:91% 100%}
-  100% {background-position:10% 0%}
+@keyframes moveBackground {
+    0% {
+        background-position: 10% 0%
+    }
+
+    50% {
+        background-position: 91% 100%
+    }
+
+    100% {
+        background-position: 10% 0%
+    }
 }
 
-html
-{
-  height: 100%;
-  width: 100%;
-  min-width: 100%;
-  min-height: 100%;
-  background-color: #ebebeb;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+html {
+    height: 100%;
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    background-color: #ebebeb;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
-#resultsCanvas
-{
-  visibility: hidden;
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  background-color: #ebebeb;
+#resultsCanvas {
+    visibility: hidden;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background-color: #ebebeb;
 }
 
-@font-face 
-{
-  font-family: "Helvetica";
-  src: url("../fonts/Helvetica.ttf") format("truetype");
+@font-face {
+    font-family: "HelveticaBold";
+    src: url("../fonts/HelveticaNeueBold.otf") format("opentype");
 }
 
-body
-{
-  height: 100%;
-  width: 100%;
-  min-width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: Helvetica;
-  font-size: 1em;
-  color: black;
-  overflow: hidden;
+@font-face {
+    font-family: "HelveticaLight";
+    src: url("../fonts/HelveticaNeueLight.otf") format("opentype");
 }
 
-input
-{
-  font-family: Helvetica;
-  font-size: 1em;
-  color: black;
-  background: #ebebeb;
-  font-style: italic;
-  margin-left: 2vw;
-}
-
-#editorPanel 
-{
-  overflow: scroll;
-  width: 100%;
-  height: 100%;
-}
-
-button
-{
-  font-family: Helvetica;
-  font-size: 1em;
-  color: black;
-  background-color: #ebebeb;
-  border: 2px black;
-  border-color: black;
-  border-width: 0.1vw;
-  border-radius: 20px;
-  border-style: solid;
-  margin-left: 1vw;
-  text-transform: uppercase;
-}
-
-select 
-{
-    font-family: Helvetica;
+body {
+    height: 100%;
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: HelveticaBold;
     font-size: 1em;
     color: black;
-    background-color: #ebebeb;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+input {
+    font-family: HelveticaBold;
+    font-size: 1em;
+    color: black;
+    background: #ffffff;
+    border-style: none;
+    border-radius: 0.2em;
+    padding: 0.5em;
+    margin-right: 0.5em;
+}
+
+#editorPanel {
+    overflow: scroll;
+    width: 100%;
+    height: 100%;
+}
+
+hr {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.editorPanelHeader {
+    font-size: 3em;
+}
+
+.editorPanelSubheader {
+    font-size: 2em;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+}
+
+.surveyPanel {
+    margin: 3em;
+}
+
+.surveyPanelHeader {
+    font-size: 2em;
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+}
+
+.surveyRow {
+}
+
+.surveyTitle {
+    font-size: 1.5em;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.fieldHeader {
+    font-size: 1.5em;
+    margin-top: 2em;
+    margin-right: 1em;
+    margin-bottom: 2em;
+}
+
+button {
+    font-family: HelveticaLight;
+    font-size: 1em;
+    font-weight: lighter;
+    color: black;
+    background-color: #ffffff;
     border: 2px black;
-    border-color: black;
-    border-width: 0.1vw;
-    border-radius: 100px;
+    border-radius: 0.75em;
+    margin-bottom: 0.5em;
+    margin-right: 0.5em;
+    padding: 0.5em;
+    text-transform: uppercase;
+}
+
+select {
+    font-family: HelveticaLight;
+    font-size: 1em;
+    font-weight: lighter;
+    color: black;
+    background-color: #ffffff;
+    border: 2px black;
     border-style: solid;
-    margin-left: 1vw;
+    border-color: black;
+    border-width: 0.1em;
+    border-radius: 0.75em;
+    margin-right: 0.5em;
+    padding: 0.3em;
+    text-transform: uppercase;
 }
 
 button:active {
-    background-color: #ebebeb;
+    background-color: #bbbbbb;
+}
+
+button:focus {
+    outline: 0;
+}
+
+.exportLink {
+    font-family: HelveticaLight;
+    font-size: 1.5em;
     color: black;
+    background-color: #ffffff;
+    border: 2px black;
+    border-color: black;
+    border-width: 0.25em;
+    border-radius: 0.6em;
+    border-style: none;
+    padding: 0.3em;
+    text-transform: uppercase;
+    margin-top: 2em;
+    text-decoration: none;
 }
 
-button:focus
-{
-  outline: 0;
+.surveyEditButton {
 }
 
-.exportLink
-{
-  font-family: Helvetica;
-  font-size: 1em;
-  color: black;
-  background-color: #ebebeb;
-  border: 2px black;
-  border-color: black;
-  border-width: 0.25vw;
-  border-radius: 100px;
-  border-style: solid;
-  padding: 0.25vw;
+.surveyRunButton {
 }
 
-hr
-{
-  margin-top: 2vw;
-  margin-bottom: 2vw;
+.surveyResultsButton {
 }
 
-.surveyRow
-{
-
+.surveyHeader {
+    font-size: 3em;
+    margin-bottom: 0.25em;
+    margin-right: 0;
 }
 
-.fieldHeader 
-{
-   font-size: 1.5em;
-   margin-top: 2vw;
-   text-decoration: underline;
-   margin-left: 2vw;
-   margin-bottom: 1vw;
+.questionPanel {
+    margin: 3em;
 }
 
-.surveyTitle
-{
-  font-size: 2em;
-  padding: 0.5em;
+.questionRow {
 }
 
-.surveyEditButton
-{
-
+.answerResponses {
+    font-size: 1em;
 }
 
-.surveyRunButton
-{
-
+.questionTitle {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+    margin-top: 1em;
 }
 
-.surveyResultsButton
-{
-
+.questionEditButton {
 }
 
-.surveyHeader
-{
-  font-size: 2em;
-  padding: 0.5em;
+.surveySaveButton {
+    margin-bottom: 2em;
 }
 
-.questionRow
-{
-
+.questionHeader {
+    font-size: 2em;
+    padding: 0.5em;
 }
 
-.answerResponses
-{
-  font-size: 2em;
-  padding: 1em;
+.questionInitialInput {
+    font-size: 1em;
+    padding: 0.5em;
+    margin-bottom: 2em;
 }
 
-.questionTitle
-{
-  font-size: 1.5em;
-  padding: 0.5em;
+.answerPanel {
+    margin: 3em;
 }
 
-.questionEditButton
-{
-
+.answerRow {
 }
 
-.surveySaveButton
-{
-   margin-bottom: 2vw;
+.answerTitle {
+    font-size: 1.5em;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    margin-top: 1em;
 }
 
-.questionHeader
-{
-  font-size: 2em;
-  padding: 0.5em;
+.questionSaveButton {
 }
 
-.questionInitialInput 
-{
-  font-size: 1em;
-  padding: 0.5em;
-  margin-bottom: 2vw;
+.surveyResultsHeader {
+    font-size: 2.5em;
+    margin-bottom: 1em;
 }
 
-.answerPanel
-{
-
+.totalResultsResponsesHeader {
+    font-size: 1.5em;
+    margin-right: 1em;
 }
 
-.answerRow
-{
-
+.totalResultsResponses {
+    font-size: 1.5em;
 }
 
-.answerTitle
-{
-  font-size: 1.5em;
-  padding: 0.5em;
+.answerResultsResponses {
+    font-size: 1.5em;
+    float: right;
+    margin-right: 4em;
 }
 
-.questionSaveButton
-{
-
+.textAnswerResultsResponses {
+    font-size: 1.5em;
+    float: right;
+    margin-right: 4em;
 }
 
-.surveyResultsHeader
-{
-  font-size: 2.5em;
-  text-decoration: underline;
-  margin-bottom: 2vw;
+.questionResultsTitle {
+    margin-top: 1em;
+    font-size: 2em;
+    text-decoration: underline;
 }
 
-.totalResultsResponsesHeader
-{
-  font-size: 1.5em;
-  margin-right: 2vw;
+.answerResultsTitle {
+    font-size: 1.5em;
 }
 
-.totalResultsResponses
-{
-  font-size: 1.5em;
+.textAnswerResultsTitle {
+    font-size: 1.5em;
 }
 
-.answerResultsResponses
-{
-  font-size: 1.5em;
-  float: right;
-  margin-right: 4vw;
+#testPanel {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background-color: #ebebeb;
 }
 
-.textAnswerResultsResponses 
-{
-  font-size: 1.5em;
-  float: right;
-  margin-right: 4vw;
+.surveyResultsLocation {
+    font-size: 1.5em;
 }
 
-.questionResultsTitle
-{
-  margin-top: 2vw;
-  font-size: 2em;
-  text-decoration: underline;
+.surveyResultsDate {
+    font-size: 1.5em;
 }
 
-.answerResultsTitle
-{
-  font-size: 1.5em;
-  margin-left: 2em;
+#activePanel {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    visibility: hidden;
 }
 
-.textAnswerResultsTitle 
-{
-  font-size: 1.5em;
-  margin-left: 2em;
+.activeWelcomeMessage {
+    position: absolute;
+    width: 70%;
+    text-align: center;
+    margin: auto;
+    font-size: 5.5em;
+    color: black;
+    top: 50%;
+    left: 15%;
 }
 
-#testPanel
-{
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  background-color: #ebebeb;
+.continueMessage {
+    position: absolute;
+    vertical-align: center;
+    width: 70%;
+    text-align: center;
+    margin: auto;
+    font-size: 3.5em;
+    color: black;
+    bottom: 25%;
+    left: 15%;
+    animation: Pulse 3s infinite ease-in-out;
 }
 
-.surveyResultsLocation
-{
-  font-size: 1.5em;
+.imagePanel {
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.surveyResultsDate
-{
-  font-size: 1.5em;
+.activeQuestionHeader {
+    font-style: normal;
+    position: absolute;
+    width: 70%;
+    text-align: center;
+    margin: auto;
+    font-size: 5.5em;
+    color: black;
+    top: 25%;
+    left: 15%;
 }
 
-#activePanel
-{
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  min-width: 100%;
-  min-height: 100%;
-  visibility: hidden;
+.activeEndMessage {
+    position: absolute;
+    vertical-align: center;
+    width: 70%;
+    text-align: center;
+    margin: auto;
+    font-size: 5.5em;
+    color: black;
+    top: 50%;
+    left: 15%;
 }
 
-.activeWelcomeMessage
-{
-  position: absolute;
-  width: 70%;
-  text-align: center;
-  margin: auto;
-  font-size: 5.5vw;
-  color: black;
-  top: 50%;
-  left: 15%;
+.activeAnswerPanel {
+    position: absolute;
+    vertical-align: center;
+    width: 90%;
+    margin: auto;
+    bottom: 25%;
+    left: 5%;
+    display: flex;
+    justify-content: space-between;
 }
 
-.continueMessage
-{
-  position: absolute;
-  vertical-align: center;
-  width: 70%;
-  text-align: center;
-  margin: auto;
-  font-size: 3.5vw;
-  color: black;
-  bottom: 25%;
-  left: 15%;
-  animation: Pulse 3s infinite ease-in-out;
+.activeTextAnswerPanel {
+    position: absolute;
+    vertical-align: center;
+    width: 90%;
+    margin: auto;
+    bottom: 25%;
+    left: 5%;
+    display: flex;
+    justify-content: center;
 }
 
-.imagePanel
-{
-  height: 100%;
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.answerSelectButton {
+    vertical-align: center;
+    text-align: center;
+    font-family: HelveticaLight;
+    font-size: 1.5em;
+    color: black;
+    background-color: #ebebeb;
+    border-radius: 10vw;
+    border-width: 0.5vw;
+    border-color: black;
+    border-style: solid;
+    box-shadow: 0 1em #bbbbbb;
+    width: 17.5vw;
+    height: 17.5vw;
 }
 
-.activeQuestionHeader
-{
-  font-style: normal;
-  position: absolute;
-  width: 70%;
-  text-align: center;
-  margin: auto;
-  font-size: 5.5vw;
-  color: black;
-  top: 25%;
-  left: 15%;
+.answerTextInput {
+    vertical-align: middle;
+    text-align: center;
+    font-family: HelveticaLight;
+    font-size: 1.5em;
+    color: black;
+    background-color: #ebebeb;
+    border-radius: 0.5vw;
+    border-width: 0.5vw;
+    border-color: black;
+    border-style: solid;
+    box-shadow: 0 1em #bbbbbb;
+    width: 35vw;
+    height: 8vw;
+    margin-right: 5vw;
 }
 
-.activeEndMessage
-{
-  position: absolute;
-  vertical-align: center;
-  width: 70%;
-  text-align: center;
-  margin: auto;
-  font-size: 5.5vw;
-  color: black;
-  top: 50%;
-  left: 15%;
+.answerSubmitButton {
+    vertical-align: center;
+    text-align: center;
+    font-family: HelveticaLight;
+    font-size: 1.5em;
+    color: black;
+    background-color: #ebebeb;
+    border-radius: 4vw;
+    border-width: 0.2vw;
+    border-color: black;
+    border-style: solid;
+    box-shadow: 0 1em #bbbbbb;
+    width: 12vw;
+    height: 8vw;
 }
 
-.activeAnswerPanel
-{
-  position: absolute;
-  vertical-align: center;
-  width: 90%;
-  margin: auto;
-  bottom: 25%;
-  left: 5%;
-  display: flex;
-  justify-content: space-between;
+.answerSelectButton.active, .answerSelectButton:active {
+    background-color: #ebebeb;
+    box-shadow: 0 0.5em #bbbbbb;
+    color: black;
+    transform: translateY(0.5em);
 }
 
-.activeTextAnswerPanel
-{
-  position: absolute;
-  vertical-align: center;
-  width: 90%;
-  margin: auto;
-  bottom: 25%;
-  left: 5%;
-  display: flex;
-  justify-content: center;
+.inactiveAnswerSelectButton {
+    vertical-align: center;
+    background-color: #bbbbbb;
+    border-radius: 10vw;
+    border-width: 0.5vw;
+    border-style: solid;
+    border-color: black;
+    box-shadow: 0 1em #bbbbbb;
+    width: 17.5vw;
+    height: 17.5vw;
 }
 
-.answerSelectButton
-{
-  vertical-align: center;
+    .inactiveAnswerSelectButton.active, .inactiveAnswerSelectButton:active {
+        box-shadow: 0 0.5em #bbbbbb;
+        transform: translateY(0.5em);
+    }
 
-  text-align: center;
-  font-family: Helvetica;
-  font-size: 2.5vw;
-  color: black;
-  background-color: #ebebeb;
-  border-radius: 10vw;
-  border-width: 0.5vw;
-  border-color: black;
-  border-style: solid;
-  box-shadow: 0 1vw #bbbbbb;
-  width: 17.5vw;
-  height: 17.5vw;
+@keyframes BorderColorShift {
+    0% {
+        border-color: #aa3300;
+    }
+
+    25% {
+        border-color: #33aa00;
+    }
+
+    50% {
+        border-color: #00aa33;
+    }
+
+    75% {
+        border-color: #0033aa;
+    }
+
+    100% {
+        border-color: #aa3300;
+    }
 }
 
-.answerTextInput
-{
-  vertical-align: middle;
-  text-align: center;
-  font-family: Helvetica;
-  font-size: 2em;
-  color: black;
-  background-color: #ebebeb;
-  border-radius: 0.5vw;
-  border-width: 0.5vw;
-  border-color: black;
-  border-style: solid;
-  box-shadow: 0 1vw #bbbbbb;
-  width: 35vw;
-  height: 8vw;
-  margin-right: 5vw;
+@keyframes MoveUpDown {
+    0% {
+        transform: translateY(30vh);
+    }
+
+    50% {
+        transform: translateY(32vh);
+    }
+
+    100% {
+        transform: translateY(30vh);
+    }
 }
 
-.answerSubmitButton 
-{
-  vertical-align: center;
-  text-align: center;
-  font-family: Helvetica;
-  font-size: 2.5vw;
-  color: black;
-  background-color: #ebebeb;
-  border-radius: 4vw;
-  border-width: 0.2vw;
-  border-color: black;
-  border-style: solid;
-  box-shadow: 0 1vw #bbbbbb;
-  width: 12vw;
-  height: 8vw;
+@keyframes Pulse {
+    0% {
+        transform: scale(1.0);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1.0);
+    }
 }
 
-.answerSelectButton.active, .answerSelectButton:active
-{
-  background-color: #ebebeb;
-  box-shadow: 0 0.5vw #bbbbbb;
-  color: black;
-  transform: translateY(0.5vw);
+@keyframes MoveRightCenter {
+    0% {
+        transform: translateX(100vw);
+    }
+
+    100% {
+        transform: translateX(0vw);
+    }
 }
 
-.inactiveAnswerSelectButton
-{
-  vertical-align: center;
-
-  background-color: #bbbbbb;
-  border-radius: 10vw;
-  border-width: 0.5vw;
-  border-style: solid;
-  border-color: black;
-  box-shadow: 0 1vw #bbbbbb;
-  width: 17.5vw;
-  height: 17.5vw;
+.moveRightCenter {
+    will-change: transform;
+    animation: MoveRightCenter 0.5s ease-out;
+    animation-fill-mode: forwards;
 }
 
-.inactiveAnswerSelectButton.active, .inactiveAnswerSelectButton:active
-{
-  box-shadow: 0 0.5vw #bbbbbb;
-  transform: translateY(0.5vw);
+@keyframes MoveCenterLeft {
+    0% {
+        transform: translateX(0vw);
+    }
+
+    100% {
+        transform: translateX(-100vw);
+    }
 }
 
-@keyframes BorderColorShift
-{
-  0%    { border-color: #aa3300; }
-  25%   { border-color: #33aa00; }
-  50%   { border-color: #00aa33; }
-  75%   { border-color: #0033aa; }
-  100%  { border-color: #aa3300; }
+.moveCenterLeft {
+    will-change: transform;
+    animation: MoveCenterLeft 0.5s ease-in;
+    animation-fill-mode: forwards;
 }
 
-@keyframes MoveUpDown
-{
-  0%    { transform: translateY(30vh); }
-  50%   { transform: translateY(32vh); }
-  100%  { transform: translateY(30vh); }
+@keyframes Shrink {
+    0% {
+        transform: scale(1.0);
+    }
+
+    100% {
+        transform: scale(0.0);
+    }
 }
 
-@keyframes Pulse
-{
-  0%   { transform: scale(1.0); }
-  50%   { transform: scale(1.1); }
-  100%  { transform: scale(1.0); }
+.shrink {
+    will-change: transform;
+    animation: Shrink 0.3s ease-in;
+    animation-fill-mode: forwards;
 }
 
-@keyframes MoveRightCenter
-{
-  0%   { transform: translateX(100vw); }
-  100%  { transform: translateX(0vw); }
+@keyframes Grow {
+    0% {
+        transform: scale(1.0);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1.2);
+    }
 }
 
-.moveRightCenter
-{
-  will-change: transform;
-  animation: MoveRightCenter 0.5s ease-out;
-  animation-fill-mode: forwards;
-}
-
-@keyframes MoveCenterLeft
-{
-  0%   { transform: translateX(0vw); }
-  100%  { transform: translateX(-100vw); }
-}
-
-.moveCenterLeft
-{
-  will-change: transform;
-  animation: MoveCenterLeft 0.5s ease-in;
-  animation-fill-mode: forwards;
-}
-
-@keyframes Shrink
-{
-  0%   { transform: scale(1.0); }
-  100%  { transform: scale(0.0); }
-}
-
-.shrink
-{
-  will-change: transform;
-  animation: Shrink 0.3s ease-in;
-  animation-fill-mode: forwards;
-}
-
-@keyframes Grow
-{
-  0%   { transform: scale(1.0); }
-  50%   { transform: scale(1.3); }
-  100%  { transform: scale(1.2); }
-}
-
-.grow
-{
-  will-change: transform;
-  animation: Grow 0.3s ease;
-  animation-fill-mode: forwards;
+.grow {
+    will-change: transform;
+    animation: Grow 0.3s ease;
+    animation-fill-mode: forwards;
 }
