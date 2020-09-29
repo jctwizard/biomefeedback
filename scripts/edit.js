@@ -132,6 +132,8 @@ function editSurvey(surveyIndex)
   surveyHeader.focus();
   surveyHeader.select();
   
+  makeElement(questionPanel, "br", "", "break", "");
+
   makeElement(questionPanel, "span", "", "fieldHeader", "");
   var surveyDate = makeElement(questionPanel, "input", getSurvey(surveyIndex).date, "surveyDate", surveyIndex.toString());
   surveyDate.setAttribute("onchange", "setSurveyDate('" + surveyDate.id + "', " + surveyIndex.toString() + ")");
