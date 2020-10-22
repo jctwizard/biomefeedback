@@ -43,7 +43,7 @@ function visualiseSurveyResults(surveyIndex)
     
     drawLine(context, questionX, questionY, questionRadius, centerX, centerY, radius * 0.75);
 
-    if (getQuestionType(surveyIndex, questionIndex) == "button")
+    if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "image")
     {
       var answerCount = getAnswerCount(surveyIndex, questionIndex);
       var answerSegmentSize = Math.PI * 2 / answerCount

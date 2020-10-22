@@ -203,6 +203,10 @@ button:focus {
     margin-top: 1em;
 }
 
+.questionFileInput {
+
+}
+
 .questionEditButton {
 }
 
@@ -213,6 +217,12 @@ button:focus {
 .questionHeader {
     font-size: 2em;
     padding: 0.5em;
+}
+
+.questionImage {
+    width: 15em;
+    margin-bottom: 0.5em;
+    margin-top: 1em;
 }
 
 .questionInitialInput {
@@ -231,6 +241,16 @@ button:focus {
 .answerTitle {
     font-size: 1.5em;
     padding: 0.5em;
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+}
+
+.answerFileInput {
+
+}
+
+.answerImage {
+    width: 5em;
     margin-bottom: 0.5em;
     margin-top: 1em;
 }
@@ -348,8 +368,19 @@ button:focus {
     margin: auto;
     font-size: 5.5em;
     color: black;
-    top: 25%;
+    top: 15%;
     left: 15%;
+}
+
+.activeQuestionImage {
+    position: absolute;
+    width: 70%;
+    height: 50%;
+    text-align: center;
+    margin: auto;
+    top: 0%;
+    left: 15%;
+    object-fit: contain;
 }
 
 .activeEndMessage {
@@ -400,6 +431,7 @@ button:focus {
     box-shadow: 0 1em #bbbbbb;
     width: 17.5vw;
     height: 17.5vw;
+    background-size: cover;
 }
 
 .answerTextInput {

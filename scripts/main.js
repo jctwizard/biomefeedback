@@ -13,6 +13,7 @@ var config = {
   apiKey: "AIzaSyD6ebHtW_RPFdr3C9swZJ7Km85FwYsRenk",
   authDomain: "biomefeedback.firebaseapp.com",
   databaseURL: "https://biomefeedback.firebaseio.com",
+  storageBucket: "gs://biomefeedback.appspot.com",
   projectId: "biomefeedback"
 };
 
@@ -22,6 +23,9 @@ var editURLExtension = "edit/index.html?survey=";
 var answerURLExtension = "answer/index.html?survey=";
 var viewResultsURLExtension = "results/index.html?survey=";
 var visualiseURLExtension = "visualise/index.html?survey=";
+
+var storage;
+var storageRef;
 
 var surveys = {};
 
@@ -71,6 +75,9 @@ function init()
       console.log(error.message);
     });
       
+    storage = firebase.storage();
+    storageRef = storage.ref();
+
     // Read survey data
     firebase.database().ref("surveys").once("value").then(function(data) {
       surveys = data.val();
@@ -239,6 +246,11 @@ function getQuestionType(surveyIndex, questionIndex)
   return surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].questionType;
 }
 
+function getQuestionImageUrl(surveyIndex, questionIndex)
+{
+  return surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].imageUrl;
+}
+
 function getQuestionInitialInput(surveyIndex, questionIndex)
 {
   return surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].questionInitialInput;
@@ -247,6 +259,11 @@ function getQuestionInitialInput(surveyIndex, questionIndex)
 function getAnswerName(surveyIndex, questionIndex, answerIndex)
 {
   return surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].answers["answer" + answerIndex.toString()].answerName;
+}
+
+function getAnswerImageUrl(surveyIndex, questionIndex, answerIndex)
+{
+  return surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].answers["answer" + answerIndex.toString()].imageUrl;
 }
 
 function getTextAnswer(surveyIndex, questionIndex, answerIndex)
@@ -295,7 +312,7 @@ function getTotalResponses(surveyIndex)
   
   for (var questionIndex = 0; questionIndex < getQuestionCount(surveyIndex); questionIndex++)
   {
-    if (getQuestionType(surveyIndex, questionIndex) == "button")
+    if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "image")
     {
       for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
       {

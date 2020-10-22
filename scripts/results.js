@@ -29,7 +29,7 @@ function viewSurveyResults(surveyIndex)
 
     var answerPanel = makeElement(questionRow, "div", "", "answerPanel", questionIndex.toString())
 
-    if (getQuestionType(surveyIndex, questionIndex) == "button")
+    if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "image")
     {
       for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
       {
@@ -81,7 +81,7 @@ function constructCsv(surveyIndex)
 
     for (var questionIndex = 0; questionIndex < getQuestionCount(surveyIndex); questionIndex++)
     {
-        if (getQuestionType(surveyIndex, questionIndex) == "button")
+        if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "image")
         {
           for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
           {

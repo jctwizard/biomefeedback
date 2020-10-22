@@ -87,6 +87,12 @@ function displayActiveQuestion()
 
   var activePanel = document.getElementById("activePanel");
   activePanel.innerHTML = "";
+  
+  if (getQuestionType(surveyIndex, questionIndex) == "image")
+  {
+    var questionImage = makeElement(activePanel, "img", "loading image", "activeQuestionImage", questionIndex.toString());
+    questionImage.src = getQuestionImageUrl(surveyIndex, questionIndex);
+  }
 
   var questionHeader = makeElement(activePanel, "div", getQuestionName(surveyIndex, questionIndex), "activeQuestionHeader", questionIndex.toString());
 
@@ -105,7 +111,7 @@ function displayActiveQuestion()
     activeButtons.push(answerSubmitButton);
   }
 
-  if (getQuestionType(surveyIndex, questionIndex) == "button")
+  if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "image")
   {
     var answerPanel = makeElement(activePanel, "div", "", "activeAnswerPanel", "")
   
@@ -120,6 +126,12 @@ function displayActiveQuestion()
         answerSelectButton = makeElement(answerPanel, "button", getAnswerName(surveyIndex, questionIndex, buttonIndex), "answerSelectButton", buttonIndex.toString());
         answerSelectButton.setAttribute("onclick", "saveResponse(" + buttonIndex.toString() + ")");
         
+        if (getQuestionType(surveyIndex, questionIndex) == "image")
+        {
+          answerSelectButton.style.backgroundImage = "url(" + getAnswerImageUrl(surveyIndex, questionIndex, buttonIndex) + ")";
+          answerSelectButton.style
+        }
+
         var buttonColour = buttonColours[buttonIndex];
 
         if (buttonColour.includes("#") == false)

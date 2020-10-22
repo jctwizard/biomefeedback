@@ -164,9 +164,16 @@ function editSurvey(surveyIndex)
     var questionTypeInput = makeElement(questionType, "option", "input", "questionTypeInput", questionIndex.toString());
     questionTypeInput.setAttribute("value", "input");
     
+    var questionTypeImage = makeElement(questionType, "option", "image", "questionTypeImage", questionIndex.toString());
+    questionTypeInput.setAttribute("value", "image");
+    
     if (getQuestionType(surveyIndex, questionIndex) == "input")
     {
       questionType.selectedIndex = 1;
+    }
+    else if (getQuestionType(surveyIndex, questionIndex) == "image")
+    {
+      questionType.selectedIndex = 2;
     }
 
     var questionEditButton = makeElement(questionRow, "button", "edit", "questionEditButton", questionIndex.toString());
@@ -272,8 +279,26 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
     editorPanel.innerHTML = "";
     
     var answerPanel = makeElement(editorPanel, "div", "", "answerPanel", "")
+    
+    // question image show upload button
+    if (getQuestionType(surveyIndex, questionIndex) == "image")
+    {
+      var questionImage = makeElement(answerPanel, "img", "no image uploaded", "questionImage", questionIndex.toString());
+      questionImage.src = getQuestionImageUrl(surveyIndex, questionIndex);
+      
+      makeElement(answerPanel, "br", "", "break", "");
 
-    //makeElement(answerPanel, "div", "Question Name:", "fieldHeader", "");
+      var questionFileInput = makeElement(answerPanel, "input", "upload image", "questionFileInput", questionIndex.toString());
+      questionFileInput.type = "file";
+      questionFileInput.setAttribute("onchange", "uploadQuestionImage('" + questionFileInput.id + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
+
+      var questionFileProgress = makeElement(answerPanel, "span", "no file selected", "questionFileProgress", questionIndex.toString());
+      
+      makeElement(answerPanel, "br", "", "break", "");
+      makeElement(answerPanel, "br", "", "break", "");
+    }
+
+    // input question create text box
     var questionHeader = makeElement(answerPanel, "input", getQuestionName(surveyIndex, questionIndex), "questionHeader", questionIndex.toString());
     questionHeader.setAttribute("onchange", "setQuestionName('" + questionHeader.id + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
 
@@ -295,8 +320,8 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
       questionInitialInput.value = getQuestionInitialInput(surveyIndex, questionIndex).toString();
     }
 
-    // button question create buttons
-    if (getQuestionType(surveyIndex, questionIndex) == "button")
+    // button or image question create buttons
+    if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "image")
     {
      // makeElement(answerPanel, "div", "Answers (number of responses):", "fieldHeader", "");
 
@@ -313,6 +338,24 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
 
         makeElement(answerRow, "br", "", "", "");
         
+        // question image show upload button
+        if (getQuestionType(surveyIndex, questionIndex) == "image")
+        {
+          var answerImage = makeElement(answerPanel, "img", "no image uploaded", "answerImage", answerIndex.toString());
+          answerImage.src = getAnswerImageUrl(surveyIndex, questionIndex, answerIndex);
+      
+          makeElement(answerPanel, "br", "", "break", "");
+
+          var answerFileInput = makeElement(answerPanel, "input", "upload image", "answerFileInput", answerIndex.toString());
+          answerFileInput.type = "file";
+          answerFileInput.setAttribute("onchange", "uploadAnswerImage('" + answerFileInput.id + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
+      
+          var answerFileProgress = makeElement(answerPanel, "span", "no file selected", "answerFileProgress", answerIndex.toString());
+
+          makeElement(answerPanel, "br", "", "break", "");
+          makeElement(answerPanel, "br", "", "break", "");
+        }
+
         var buttonOffset = makeElement(answerRow, "span",  (answerIndex + 1).toString() + ".", "answerTitle", "");
         buttonOffset.style.color = "#ebebeb";
 
@@ -394,6 +437,12 @@ function setQuestionType(elementId, surveyIndex, questionIndex)
   surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].questionType = document.getElementById(elementId).value.toString();
 }
 
+// stores firebase storage url after uploading image in uploadQuestionImage()
+function setQuestionImageUrl(surveyIndex, questionIndex, imageUrl)
+{
+  surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].imageUrl = imageUrl;
+}
+
 function setQuestionInitialInput(elementId, surveyIndex, questionIndex)
 {
 console.log("initial input: " + document.getElementById(elementId).value.toString());
@@ -403,6 +452,12 @@ console.log("initial input: " + document.getElementById(elementId).value.toStrin
 function setAnswerName(elementId, surveyIndex, questionIndex, answerIndex)
 {
   surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].answers["answer" + answerIndex.toString()].answerName = document.getElementById(elementId).value;
+}
+
+// stores firebase storage url after uploading image in uploadAnswerImage()
+function setAnswerImageUrl(surveyIndex, questionIndex, answerIndex, imageUrl)
+{
+  surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].answers["answer" + answerIndex.toString()].imageUrl = imageUrl;
 }
 
 function setButtonColour(elementId, buttonIndex, surveyIndex)
@@ -423,7 +478,7 @@ function addSurvey()
 {
   console.log(surveys);
 
-  surveys["survey" + getSurveyCount().toString()] = { "surveyName":"new survey", "date":"0/0/0", "location":"Scotland", "buttonColours":{"button0":defaultButtonColours[0], "button1":defaultButtonColours[1], "button2":defaultButtonColours[2], "button3":defaultButtonColours[3]}, "welcomeMessage":defaultWelcomeMessage, "showWelcomeMessage":false, "welcomeImage":"images/default-background.jpg", "showWelcomeImage":false, "endMessage":defaultEndMessage, "questions": {"question0":{"questionName":"new question", "questionType":"button", "questionInitialInput":"enter answer", "answers":{"answer0":{"answerName":"new answer", "responses":0}}, "textAnswers":{"textAnswer0":""}}}};
+  surveys["survey" + getSurveyCount().toString()] = { "surveyName":"new survey", "date":"0/0/0", "location":"Scotland", "buttonColours":{"button0":defaultButtonColours[0], "button1":defaultButtonColours[1], "button2":defaultButtonColours[2], "button3":defaultButtonColours[3]}, "welcomeMessage":defaultWelcomeMessage, "showWelcomeMessage":false, "welcomeImage":"images/default-background.jpg", "showWelcomeImage":false, "endMessage":defaultEndMessage, "questions": {"question0":{"questionName":"new question", "questionType":"button", "questionInitialInput":"enter answer", "imageUrl":"", "answers":{"answer0":{"answerName":"new answer", "responses":0, "imageUrl":""}}, "textAnswers":{"textAnswer0":""}}}};
 
   saveAll();
 
@@ -450,7 +505,7 @@ function duplicateSurvey(surveyIndex)
 
 function addQuestion(surveyIndex)
 {
-  surveys["survey" + surveyIndex.toString()].questions["question" + getQuestionCount(surveyIndex).toString()] = { "questionName":"new question", "questionType":"button", "questionInitialInput":"enter answer", "answers":{"answer0":{"answerName":"new answer", "responses":0}}, "textAnswers":{"textAnswer0":""}};
+  surveys["survey" + surveyIndex.toString()].questions["question" + getQuestionCount(surveyIndex).toString()] = { "questionName":"new question", "questionType":"button", "imageUrl":"", "questionInitialInput":"enter answer", "answers":{"answer0":{"answerName":"new answer", "responses":0, "imageUrl":""}}, "textAnswers":{"textAnswer0":""}};
 
   editSurvey(surveyIndex);
 }
@@ -610,4 +665,72 @@ function saveQuestion(surveyIndex, questionIndex)
   syncSurvey(surveyIndex, questionIndex);
 
   editSurvey(surveyIndex);
+}
+
+function uploadQuestionImage(elementId, surveyIndex, questionIndex)
+{
+  var fileInput = document.getElementById(elementId);
+  var fileProgress = document.getElementById("questionFileProgress" + questionIndex.toString());
+
+  var file = fileInput.files[0];
+  
+  var uploadTask = storageRef.child("images/survey" + surveyIndex.toString() + "/question" + questionIndex.toString() + "/question.jpg").put(file);
+  
+  uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, function(snapshot) {
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED:
+          fileProgress.innerHTML = "paused";
+          break;
+        case firebase.storage.TaskState.RUNNING:
+          fileProgress.innerHTML = progress.toString() + "%";
+          break;
+      }
+    }, function(error) {
+      alert(error.toString());
+      fileProgress.innerHTML = "upload image";
+    }, function() {
+      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        document.getElementById("questionImage" + questionIndex.toString()).src = downloadURL;
+        fileProgress.innerHTML = "uploaded!";
+        
+        // store image url for displaying in survey
+        setQuestionImageUrl(surveyIndex, questionIndex, downloadURL);
+      });
+  });
+}
+
+function uploadAnswerImage(elementId, surveyIndex, questionIndex, answerIndex)
+{
+  var fileInput = document.getElementById(elementId);
+  var fileProgress = document.getElementById("answerFileProgress" + answerIndex.toString());
+
+  var file = fileInput.files[0];
+  
+  var uploadTask = storageRef.child("images/survey" + surveyIndex.toString() + "/question" + questionIndex.toString() + "/answer" + answerIndex.toString() + "answer.jpg").put(file);
+  
+  uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, function(snapshot) {
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED:
+          fileProgress.innerHTML = "paused";
+          break;
+        case firebase.storage.TaskState.RUNNING:
+          fileProgress.innerHTML = progress.toString() + "%";
+          break;
+      }
+    }, function(error) {
+      alert(error.toString());
+      fileProgress.innerHTML = "upload image";
+    }, function() {
+      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        document.getElementById("answerImage" + answerIndex.toString()).src = downloadURL;
+        fileProgress.innerHTML = "uploaded!";
+        
+        // store image url for displaying in survey
+        setAnswerImageUrl(surveyIndex, questionIndex, answerIndex, downloadURL);
+      });
+  });
 }
