@@ -708,7 +708,7 @@ function uploadAnswerImage(elementId, surveyIndex, questionIndex, answerIndex)
 
   var file = fileInput.files[0];
   
-  var uploadTask = storageRef.child("images/survey" + surveyIndex.toString() + "/question" + questionIndex.toString() + "/answer" + answerIndex.toString() + "answer.jpg").put(file);
+  var uploadTask = storageRef.child("images/survey" + surveyIndex.toString() + "/question" + questionIndex.toString() + "/answer" + answerIndex.toString() + "/answer.jpg").put(file);
   
   uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, function(snapshot) {
       var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
