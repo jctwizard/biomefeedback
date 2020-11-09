@@ -5,11 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="target-densitydpi=device-dpi" />
   <meta name="HandheldFriendly" content="true" />
-
-  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/new-design.css">
 </head>
-
 <body>
-  <div id="testPanel">hello world</div>
+  <div id="surveyPanel" class="mainPanel">
+    <div id="surveyTitle" class="largeHeader">
+      KWALI
+    </div>
+    <div id="surveySubtitle" class="regularHeader">
+      Audience Insights Surveys
+    </div>
+    <div class="break"></div>
+    <div id="newSurveyHeader" class="smallHeader">
+      MAKE A NEW KWALI
+    </div>
+    <div id="newSurveyButtons" class="buttonPanel">
+      <button id="addSurveyButton" class="regularButton, addButton" onclick="clickButton(this, addSurvey);">
+        <div class="buttonText">Make a new Kwali</div>
+      </button>
+      <button id="helpSurveyButton" class="regularButton, helpButton">
+        <div class="buttonText">Help</div>
+      </button>
+    </div>
+    <div class="break"></div>
+    <div id="recentSurveyHeader" class="smallHeader">
+      OPEN A RECENT KWALI
+    </div>
+    <div id="recentSurveyButtons" class="buttonPanel">
+      <button id="placeholderSurveyButton1" class="regularButton, textQuestionButton">
+        <div class="buttonText">Biome test</div>
+      </button>
+      <button id="placeholderSurveyButton2" class="regularButton, inactiveButton, buttonQuestionButton">
+        <div class="buttonText">Reimagined busses</div>
+      </button>
+      <button id="placeholderSurveyButton3" class="regularButton, inactiveButton, buttonQuestionButton">
+        <div class="buttonText">Reimagined busses</div>
+      </button>
+      <button id="placeholderSurveyButton4" class="regularButton, inactiveButton, buttonQuestionButton">
+        <div class="buttonText">Reimagined busses</div>
+      </button>
+      <button id="placeholderSurveyButton5" class="regularButton, inactiveButton, buttonQuestionButton">
+        <div class="buttonText">Reimagined busses</div>
+      </button>
+      <button id="placeholderSurveyButton6" class="regularButton, inactiveButton, buttonQuestionButton">
+        <div class="buttonText">Reimagined busses</div>
+      </button>
+      <button id="placeholderSurveyButton7" class="regularButton, inactiveButton, buttonQuestionButton">
+        <div class="buttonText">Reimagined busses</div>
+      </button>
+    </div>
+  </div>
 </body>
 </html>
+
+<script>
+function clickButton(element, functionToCall)
+{
+  element.classList.remove('buttonClick');
+  void element.offsetWidth;
+  element.classList.add('buttonClick');
+  element.addEventListener("animationend", functionToCall, false);
+}
+
+function addSurvey()
+{
+  document.body.innerHTML = "";
+}
+</script>

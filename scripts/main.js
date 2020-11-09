@@ -211,6 +211,50 @@ function makeElement(parent, type, content, name, suffix)
   return newElement;
 }
 
+function makeButton(parent, functionToCall, parameter, content, name, suffix)
+{
+  var newElement = makeElement(parent, "button", "", name, suffix);
+
+  var buttonText = makeElement(newElement, "div", content, "buttonText", suffix);
+
+  newElement.classList.add("regularButton");
+  
+  newElement.setAttribute("onclick", "clickButton(this," + functionToCall + "," + parameter + ")");
+
+  return newElement;
+}
+
+function clickButton(element, functionToCall, parameter)
+{
+  element.classList.remove('buttonClick');
+  void element.offsetWidth;
+  element.classList.add('buttonClick');
+
+  console.log(functionToCall);
+
+  if (functionToCall != null)
+  {
+    if (parameter == null)
+    {    
+      element.addEventListener("animationend", () => { functionToCall(); }, false);
+    }
+    else
+    {
+      element.addEventListener("animationend", () => { functionToCall(parameter); }, false);
+    }
+  }
+}
+
+function showElement(element, elementToShow)
+{
+  document.getElementById(elementToShow.id).style.display = "block";
+}
+
+function hideElement(element, elementToHide)
+{
+  document.getElementById(elementToHide.id).style.display = "none";
+}
+
 function getSurveyCount()
 {
   return Object.keys(surveys).length;

@@ -1,0 +1,199 @@
+:root {
+    --backgroundColour: #005A58;
+    --midColour: #B2CDCC;
+    --textColour: #FFFFFF;
+    --highlightColour: #00A89D;
+    --activeColour: #046B6A;
+    --inactiveColour: #046B6A;
+
+    --pagePadding: 48px;
+
+    --breakHeight: 48px;
+
+    --largeFontSize: 48pt;
+    --regularFontSize: 36pt;
+    --smallFontSize: 13pt;
+
+    --headerMarginBottom: 24px;
+
+    --buttonDimension: 224px;
+    --buttonMargin: 12px;
+    --buttonTextInset: 24px;
+    --buttonRadius: 6px;
+}
+
+@font-face {
+    font-family: "HelveticaBold";
+    src: url("../fonts/HelveticaNeueBold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "HelveticaLight";
+    src: url("../fonts/HelveticaNeueLight.otf") format("opentype");
+}
+
+html, body {
+    background-color: var(--backgroundColour);
+    color: var(--textColour);
+
+    font-family: HelveticaBold;
+    font-size: var(--smallFontSize);
+    line-height: var(--smallFontSize);
+
+    height: 100%;
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.break {
+    width: 100%;
+    height: var(--breakHeight);
+}
+
+.mainPanel {
+    width: calc(100% - var(--pagePadding) * 2);
+    height: calc(100% - var(--pagePadding) * 2);
+    padding: var(--pagePadding);
+    overflow-y: scroll;
+}
+
+.largeHeader {
+    user-select: none;
+    font-size: var(--largeFontSize);
+    line-height: var(--largeFontSize);
+    margin-bottom: var(--headerMarginBottom);
+}
+
+.regularHeader {
+    user-select: none;
+    color: var(--midColour);
+    font-size: var(--regularFontSize);
+    line-height: var(--regularFontSize);
+    margin-bottom: var(--headerMarginBottom);
+}
+
+.smallHeader {
+    user-select: none;
+    font-size: var(--smallFontSize);
+    line-height: var(--smallFontSize);
+    text-transform: capitalize;
+    margin-bottom: var(--headerMarginBottom);
+}
+
+.buttonPanel {
+    width: calc(5 * (var(--buttonDimension) + var(--buttonMargin)) - 1px);
+    max-width: calc(5 * (var(--buttonDimension) + var(--buttonMargin)) - 1px);
+    font-size: 0;
+}
+
+input, button, .regularButton {
+    user-select: none;
+    background-color: var(--activeColour);
+    border-style: none;
+    border-radius: var(--buttonRadius);
+    width: var(--buttonDimension);
+    height: var(--buttonDimension);
+    background-repeat: no-repeat;
+    background-size: var(--buttonDimension) var(--buttonDimension);
+    background-position: center;
+    border: none;
+    outline: none;
+    opacity: 1;
+    position: relative;
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: var(--buttonMargin);
+    margin-bottom: var(--buttonMargin); 
+    padding: 0;
+    cursor: pointer;
+    transition: transform ease-in-out 0.33s;
+}
+
+.buttonText {
+    position: absolute;
+    bottom: var(--buttonTextInset);
+    left: 0;
+    width: 100%;
+    text-align: center;
+    vertical-align: bottom;
+    color: var(--textColour);
+    font-family: HelveticaLight;
+    font-size: var(--smallFontSize);
+    text-transform: none;
+}
+
+button:hover, .regularButton:hover {
+    background-color: var(--highlightColour);
+    transform: scale(0.9, 0.9);
+}
+
+.buttonClick {
+    animation-name: button-click-animation;
+    animation-duration: 0.66s;
+    animation-timing-function: ease-in-out;
+    opacity: 1;
+    transform: scale(0.9, 0.9);
+}
+
+@keyframes button-click-animation {
+    0% { opacity: 1; transform: scale(0.9, 0.9); }
+    50% { opacity: 0.5; transform: scale(1, 1); }
+    100% { opacity: 1; transform: scale(0.9, 0.9); }
+}
+
+.inactiveButton {
+    opacity: 0.5;
+}
+
+.inactiveButton:hover {
+    background-color: var(--inactiveColour);
+}
+
+.addButton {
+    background-image: url('../icons/add.png');
+}
+
+.helpButton {
+    background-image: url('../icons/help.png');
+    cursor: help;
+}
+
+.saveButton {
+    background-image: url('../icons/sensor.png');
+}
+
+.textQuestionButton {
+    background-image: url('../icons/text-q.png');
+}
+
+.buttonQuestionButton {
+    background-image: url('../icons/buttons.png');
+}
+
+.deleteButton {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: 12px;
+    top: 12px;
+    border-radius: 6px;
+    background-color: var(--inactiveColour);
+    opacity: 1;
+    color: var(--activeColour);
+    background-image: url('../icons/delete.png');
+    background-repeat: no-repeat;
+    background-size: 112px 112px;
+    background-position: center;
+    display: none;
+}
+
+.deleteButton:hover {
+    background-color: red;
+    color: var(--textColour);
+}

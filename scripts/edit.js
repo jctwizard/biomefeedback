@@ -16,23 +16,40 @@ function displaySurveys()
 
   document.body.style.cursor = "default";
     
-  var surveyPanel = makeElement(editorPanel, "div", "", "surveyPanel", "");
+  var surveyPanel = makeElement(editorPanel, "div", "", "mainPanel", "");
   
-  var editorPanelHeader = makeElement(surveyPanel, "div", "Kwali", "editorPanelHeader", "");
+  var editorPanelHeader = makeElement(surveyPanel, "div", "KWALI", "largeHeader", "");
 
-  var editorPanelSubheader = makeElement(surveyPanel, "div", "Audience Insights survey editor", "editorPanelSubheader", "");
+  var editorPanelSubheader = makeElement(surveyPanel, "div", "Audience Insights Surveys", "regularHeader", "");
   
-  var surveyPanelHeader = makeElement(surveyPanel, "div", "Surveys", "surveyPanelHeader", "");
+  makeElement(surveyPanel, "div", "", "break", "");
 
-  var addSurveyButton = makeElement(surveyPanel, "button", "add", "addSurveyButton", "");
-  addSurveyButton.setAttribute("onclick", "addSurvey()");
+  var surveyPanelHeader = makeElement(surveyPanel, "div", "MAKE A NEW KWALI", "smallHeader", "");
 
-  var saveSurveysButton = makeElement(surveyPanel, "button", "save", "saveSurveysButton", "");
-  saveSurveysButton.setAttribute("onclick", "saveAll()");
+  var newSurveyButtonPanel = makeElement(surveyPanel, "div", "", "buttonPanel", "");
+
+  var addSurveyButton = makeButton(newSurveyButtonPanel, "addSurvey", null, "Make a new Kwali", "addButton", "");
+  
+  var helpSurveyButton = makeButton(newSurveyButtonPanel, "surveyHelp", null, "Help", "helpButton", "");
+  
+  makeElement(surveyPanel, "div", "", "break", "");
+  
+  var surveyPanelHeader = makeElement(surveyPanel, "div", "OPEN A RECENT KWALI", "smallHeader", "");
+  
+  var recentSurveyButtonPanel = makeElement(surveyPanel, "div", "", "buttonPanel", "");
 
   for (var surveyIndex = 0; surveyIndex < getSurveyCount(); surveyIndex++)
   {
-    var surveyRow = makeElement(surveyPanel, "div", "", "surveyRow", surveyIndex.toString());
+    var editSurveyButton = makeButton(recentSurveyButtonPanel, "goToEditLink", surveyIndex, getSurveyName(surveyIndex).toString(), "buttonQuestionButton", surveyIndex);
+
+    var deleteSurveyButton = makeElement(editSurveyButton, "div", "X", "deleteButton", surveyIndex);
+    deleteSurveyButton.setAttribute("onclick", "removeSurvey(" + surveyIndex.toString() + ")");
+    
+    // make delete button appear when mouse hovers over survey button
+    editSurveyButton.setAttribute("onmouseenter", "showElement(this," + deleteSurveyButton.id + ")");
+    editSurveyButton.setAttribute("onmouseleave", "hideElement(this," + deleteSurveyButton.id + ")");
+
+    /*var surveyRow = makeElement(surveyPanel, "div", "", "surveyRow", surveyIndex.toString());
 
     var surveyTitle = makeElement(surveyRow, "div", getSurveyName(surveyIndex), "surveyTitle", surveyIndex.toString());
 
@@ -57,8 +74,13 @@ function displaySurveys()
     surveyResultsButton.setAttribute("onclick", "goToViewResultsLink(" + surveyIndex.toString() + ")");
     
     var surveyVisualiseButton = makeElement(surveyRow, "button", "visualise", "surveyVisualiseButton", surveyIndex.toString());
-    surveyVisualiseButton.setAttribute("onclick", "goToVisualiseLink(" + surveyIndex.toString() + ")");
+    surveyVisualiseButton.setAttribute("onclick", "goToVisualiseLink(" + surveyIndex.toString() + ")");*/
   }
+}
+
+function surveyHelp()
+{
+  alert("there is currently no help available, please ask someone for assistance");
 }
 
 function goToEditLink(surveyIndex)
@@ -478,11 +500,13 @@ function addSurvey()
 {
   console.log(surveys);
 
-  surveys["survey" + getSurveyCount().toString()] = { "surveyName":"new survey", "date":"0/0/0", "location":"Scotland", "buttonColours":{"button0":defaultButtonColours[0], "button1":defaultButtonColours[1], "button2":defaultButtonColours[2], "button3":defaultButtonColours[3]}, "welcomeMessage":defaultWelcomeMessage, "showWelcomeMessage":false, "welcomeImage":"images/default-background.jpg", "showWelcomeImage":false, "endMessage":defaultEndMessage, "questions": {"question0":{"questionName":"new question", "questionType":"button", "questionInitialInput":"enter answer", "imageUrl":"", "answers":{"answer0":{"answerName":"new answer", "responses":0, "imageUrl":""}}, "textAnswers":{"textAnswer0":""}}}};
+  var newSurveyIndex = getSurveyCount();
+
+  surveys["survey" + newSurveyIndex.toString()] = { "surveyName":"new survey", "date":"0/0/0", "location":"Scotland", "buttonColours":{"button0":defaultButtonColours[0], "button1":defaultButtonColours[1], "button2":defaultButtonColours[2], "button3":defaultButtonColours[3]}, "welcomeMessage":defaultWelcomeMessage, "showWelcomeMessage":false, "welcomeImage":"images/default-background.jpg", "showWelcomeImage":false, "endMessage":defaultEndMessage, "questions": {"question0":{"questionName":"new question", "questionType":"button", "questionInitialInput":"enter answer", "imageUrl":"", "answers":{"answer0":{"answerName":"new answer", "responses":0, "imageUrl":""}}, "textAnswers":{"textAnswer0":""}}}};
 
   saveAll();
 
-  displaySurveys();
+  goToEditLink(newSurveyIndex);
 }
 
 function duplicateSurvey(surveyIndex)
@@ -603,9 +627,11 @@ function removeSurvey(surveyIndex)
     }
 
     delete surveys["survey" + (getSurveyCount() - 1).toString()];
-  }
 
-  displaySurveys();
+    saveAll();
+
+    displaySurveys();
+  }
 }
 
 function removeQuestion(surveyIndex, questionIndex)
