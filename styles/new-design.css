@@ -109,9 +109,10 @@ input, button, .regularButton {
     margin-left: 0;
     margin-top: 0;
     margin-right: var(--buttonMargin);
-    margin-bottom: var(--buttonMargin); 
+    margin-bottom: var(--buttonMargin);
     padding: 0;
     cursor: pointer;
+    transform: scale(1, 1);
     transition: transform ease-in-out 0.33s;
 }
 
@@ -130,7 +131,7 @@ input, button, .regularButton {
 
 button:hover, .regularButton:hover {
     background-color: var(--highlightColour);
-    transform: scale(0.9, 0.9);
+    transform: scale(1.05, 1.05);
 }
 
 .buttonClick {
@@ -138,13 +139,13 @@ button:hover, .regularButton:hover {
     animation-duration: 0.66s;
     animation-timing-function: ease-in-out;
     opacity: 1;
-    transform: scale(0.9, 0.9);
+    transform: scale(1.05, 1.05);
 }
 
 @keyframes button-click-animation {
-    0% { opacity: 1; transform: scale(0.9, 0.9); }
-    50% { opacity: 0.5; transform: scale(1, 1); }
-    100% { opacity: 1; transform: scale(0.9, 0.9); }
+    0% { opacity: 1; transform: scale(1.05, 1.05); }
+    50% { opacity: 0.5; transform: scale(0.9, 0.9); }
+    100% { opacity: 1; transform: scale(1, 1); }
 }
 
 .inactiveButton {
