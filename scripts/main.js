@@ -17,8 +17,8 @@ var config = {
   projectId: "biomefeedback"
 };
 
-var baseURL = "http://jctwizard.github.io/biomefeedback/"
-//var baseURL = "file:///C:/Users/James/Documents/Projects/biomefeedback/"
+//var baseURL = "http://jctwizard.github.io/biomefeedback/"
+var baseURL = "http://127.0.0.1:8887/";
 var editURLExtension = "edit/index.html?survey=";
 var answerURLExtension = "answer/index.html?survey=";
 var viewResultsURLExtension = "results/index.html?survey=";
@@ -211,36 +211,96 @@ function makeElement(parent, type, content, name, suffix)
   return newElement;
 }
 
-function makeButton(parent, functionToCall, parameter, content, name, suffix)
+function makeButton(parent, functionToCall, parameters, content, name, suffix)
 {
+  if (parameters != null && Array.isArray(parameters))
+  {
+    parameters = JSON.stringify(parameters);
+  }
+
   var newElement = makeElement(parent, "button", "", name, suffix);
 
   var buttonText = makeElement(newElement, "div", content, "buttonText", suffix);
 
   newElement.classList.add("regularButton");
   
-  newElement.setAttribute("onclick", "clickButton(this," + functionToCall + "," + parameter + ")");
+  newElement.setAttribute("onclick", "clickButton(event, this," + functionToCall + "," + parameters + ")");
 
   return newElement;
 }
 
-function clickButton(element, functionToCall, parameter)
+function makeInnerButton(parent, functionToCall, parameters, content, name, suffix)
 {
+  var newElement = makeElement(parent, "div", "", name, suffix);
+  
+  newElement.classList.add("innerButton");
+  
+  newElement.setAttribute("onclick", "clickButton(event, this," + functionToCall + "," + parameters + ")");
+
+  return newElement;
+}
+
+function makeModal(content)
+{
+  var modalBackground = document.createElement("div");
+  modalBackground.id = "modalBackground";
+  modalBackground.className = "modalBackground";
+
+  var modalContent = document.createElement("div");
+  modalContent.className = "modalContent";
+  modalContent.innerHTML = content;
+
+  var modalClose = document.createElement("div");
+  modalClose.className = "modalClose";
+  modalClose.setAttribute("onclick", "removeElementById('modalBackground')");
+  
+  modalContent.appendChild(modalClose);
+  modalBackground.appendChild(modalContent);
+  document.body.appendChild(modalBackground);
+}
+
+function removeElementById(id) 
+{
+  document.getElementById(id).remove();
+}
+
+function clickButton(event, element, functionToCall, parameters)
+{
+  if (parameters != null && typeof parameters === 'string' && parameters.includes("["))
+  {
+    parameters = JSON.parse(parameters);
+  }
+
+  event.stopPropagation();
+
   element.classList.remove('buttonClick');
   void element.offsetWidth;
   element.classList.add('buttonClick');
-
-  console.log(functionToCall);
-
+  
   if (functionToCall != null)
   {
-    if (parameter == null)
+    if (parameters != null)
     {    
-      element.addEventListener("animationend", () => { functionToCall(); }, false);
+      if (Array.isArray(parameters))
+      {
+        switch(parameters.length)
+        {
+        case 2:
+          element.addEventListener("animationend", clickEvent = function() { functionToCall(parameters[0], parameters[1]); element.classList.remove('buttonClick'); element.removeEventListener("animationend", clickEvent); }, false);
+        break;
+        case 3:
+          element.addEventListener("animationend", clickEvent = function() { functionToCall(parameters[0], parameters[1], parameters[2]); element.classList.remove('buttonClick'); element.removeEventListener("animationend", clickEvent); }, false);
+        break;
+        }
+      }
+      else
+      {
+        element.addEventListener("animationend", clickEvent = function() { functionToCall(parameters); element.classList.remove('buttonClick'); element.removeEventListener("animationend", clickEvent); }, false);
+      }
     }
     else
     {
-      element.addEventListener("animationend", () => { functionToCall(parameter); }, false);
+      element.addEventListener("animationend", clickEvent = function() { functionToCall(); element.classList.remove('buttonClick'); element.removeEventListener("animationend", clickEvent); }, false);
     }
   }
 }
@@ -262,6 +322,11 @@ function getSurveyCount()
 
 function getQuestionCount(surveyIndex)
 {
+  if (jQuery.isEmptyObject(surveys["survey" + surveyIndex.toString()].questions))
+  {
+    return 0;
+  }
+
   return Object.keys(surveys["survey" + surveyIndex.toString()].questions).length;
 }
 

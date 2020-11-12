@@ -1,21 +1,19 @@
 :root {
     --backgroundColour: #005A58;
     --midColour: #B2CDCC;
+    --darkColour: #7FACAB;
     --textColour: #FFFFFF;
     --highlightColour: #00A89D;
     --activeColour: #046B6A;
     --inactiveColour: #046B6A;
-
     --pagePadding: 48px;
-
     --breakHeight: 48px;
-
     --largeFontSize: 48pt;
     --regularFontSize: 36pt;
+    --mediumFontSize: 18pt;
     --smallFontSize: 13pt;
-
     --headerMarginBottom: 24px;
-
+    --smallMarginBottom: 12px;
     --buttonDimension: 224px;
     --buttonMargin: 12px;
     --buttonTextInset: 24px;
@@ -49,6 +47,8 @@ html, body {
 
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
+
+    cursor: auto;
 }
 
 .break {
@@ -68,6 +68,14 @@ html, body {
     font-size: var(--largeFontSize);
     line-height: var(--largeFontSize);
     margin-bottom: var(--headerMarginBottom);
+}
+
+.largeHeaderDark {
+    user-select: none;
+    color: var(--darkColour);
+    font-size: var(--largeFontSize);
+    line-height: var(--largeFontSize);
+    margin-bottom: var(--smallMarginBottom);
 }
 
 .regularHeader {
@@ -92,8 +100,67 @@ html, body {
     font-size: 0;
 }
 
-input, button, .regularButton {
-    user-select: none;
+.innerButtonPanel {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    display: none;
+}
+
+.editableSurveyName {
+    background: none;
+    background-color: none;
+    border-style: none;
+    color: var(--textColour);
+    border-radius: 0;
+    font-size: var(--regularFontSize);
+    line-height: var(--regularFontSize);
+    border: none;
+    outline: none;
+    opacity: 1;
+    position: relative;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: var(--smallMarginBottom);
+    padding: 0;
+    cursor: text;
+}
+
+.editableSurveyInfo {
+    background: none;
+    background-color: none;
+    border-style: none;
+    color: var(--darkColour);
+    border-radius: 0;
+    font-size: var(--mediumFontSize);
+    line-height: var(--mediumFontSize);
+    border: none;
+    outline: none;
+    opacity: 1;
+    position: relative;
+    margin: 0;
+    width: 228px;
+    max-width: 228px;
+    margin-right: 12px;
+    margin-bottom: var(--headerMarginBottom);
+    padding: 0;
+    cursor: text;
+}
+
+.fakeButton {
+    width: var(--buttonDimension);
+    height: var(--buttonDimension);
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: var(--buttonMargin);
+    margin-bottom: var(--buttonMargin);
+    padding: 0;
+    position: relative;
+    display: inline-block;
+}
+
+.regularButton {
     background-color: var(--activeColour);
     border-style: none;
     border-radius: var(--buttonRadius);
@@ -129,14 +196,20 @@ input, button, .regularButton {
     text-transform: none;
 }
 
-button:hover, .regularButton:hover {
+.regularButton:hover:enabled {
     background-color: var(--highlightColour);
     transform: scale(1.05, 1.05);
 }
 
+.regularButton:disabled {
+    opacity: 0.5;
+    background-color: var(--inactiveColour);
+    cursor: auto;
+}
+
 .buttonClick {
     animation-name: button-click-animation;
-    animation-duration: 0.66s;
+    animation-duration: 0.2s;
     animation-timing-function: ease-in-out;
     opacity: 1;
     transform: scale(1.05, 1.05);
@@ -146,14 +219,6 @@ button:hover, .regularButton:hover {
     0% { opacity: 1; transform: scale(1.05, 1.05); }
     50% { opacity: 0.5; transform: scale(0.9, 0.9); }
     100% { opacity: 1; transform: scale(1, 1); }
-}
-
-.inactiveButton {
-    opacity: 0.5;
-}
-
-.inactiveButton:hover {
-    background-color: var(--inactiveColour);
 }
 
 .addButton {
@@ -177,24 +242,109 @@ button:hover, .regularButton:hover {
     background-image: url('../icons/buttons.png');
 }
 
+.imageQuestionButton {
+    background-image: url('../icons/image-q.png');
+}
+
+.sensorQuestionButton {
+    background-image: url('../icons/sensor.png');
+}
+
+.visualiseButton {
+    background-image: url('../icons/visualise.png');
+}
+
+.resultsButton {
+    background-image: url('../icons/sensor.png');
+}
+
+.saveButton {
+    background-image: url('../icons/upload.png');
+}
+
+.runButton {
+    background-image: url('../icons/run.png');
+}
+
+.shareButton {
+    background-image: url('../icons/share.png');
+}
+
 .deleteButton {
-    position: absolute;
+    background-image: url('../icons/delete.png');
+}
+
+.deleteButton:hover {
+    background-color: indianred;
+}
+
+.innerButton {
     width: 24px;
     height: 24px;
-    right: 12px;
-    top: 12px;
     border-radius: 6px;
     background-color: var(--inactiveColour);
     opacity: 1;
     color: var(--activeColour);
-    background-image: url('../icons/delete.png');
     background-repeat: no-repeat;
     background-size: 112px 112px;
     background-position: center;
-    display: none;
+    margin-right: 6px;
+    margin-top: 6px;
+    float: right;
+    transform: scale(1, 1);
+    transition: transform ease-in-out 0.33s;
 }
 
-.deleteButton:hover {
-    background-color: red;
+.innerButton:hover {
+    transform: scale(1.1, 1.1);
     color: var(--textColour);
+}
+
+.modalBackground {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modalContent {
+    position: absolute;
+    background-color: var(--activeColour);
+    color: var(--textColour);
+    font-family: HelveticaLight;
+    margin: 0;
+    padding: 48px;
+    border-radius: var(--buttonRadius);
+    width: 448px;
+    height: 224px;
+    left: calc((100% - 544px) / 2);
+    top: calc((100% - 320px) / 2);
+    cursor: text;
+}
+
+.modalClose {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    top: 12px;
+    right: 12px;
+    background-image: url('../icons/delete.png');
+    background-repeat: no-repeat;
+    background-size: 224px 224px;
+    background-position: center;
+    transform: scale(1, 1);
+    transition-property: transform, opacity;
+    transition: all ease-in-out 0.33s;
+    cursor: pointer;
+    opacity: 0.75;
+}
+
+.modalClose:hover {
+    transform: scale(1.2, 1.2);
+    opacity: 1.0;
 }
