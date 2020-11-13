@@ -51,6 +51,21 @@ html, body {
     cursor: auto;
 }
 
+#loadingText {
+    font-family: HelveticaBold;
+    font-size: var(--regularFontSize);
+    line-height: var(--regularFontSize);
+    color: var(--activeColour);
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 100%;
+    height: 50%;
+    text-align: center;
+    vertical-align: central;
+}
+
 .break {
     width: 100%;
     height: var(--breakHeight);
@@ -95,8 +110,8 @@ html, body {
 }
 
 .buttonPanel {
-    width: calc(5 * (var(--buttonDimension) + var(--buttonMargin)) - 1px);
-    max-width: calc(5 * (var(--buttonDimension) + var(--buttonMargin)) - 1px);
+    width: calc(4.5 * (var(--buttonDimension) + var(--buttonMargin)));
+    max-width: calc(4.5 * (var(--buttonDimension) + var(--buttonMargin)));
     font-size: 0;
 }
 
@@ -146,6 +161,209 @@ html, body {
     margin-bottom: var(--headerMarginBottom);
     padding: 0;
     cursor: text;
+}
+
+.editableQuestionPanel {
+    position: relative;
+    padding: 24px;
+    padding-left: 48px;
+    width: calc(var(--buttonDimension) * 4);
+    max-width: calc(var(--buttonDimension) * 4);
+    height: calc(var(--buttonDimension) * 1);
+    max-height: calc(var(--buttonDimension) * 1);
+    margin: 0;
+    padding: 0;
+    margin-bottom: var(--buttonMargin);
+    background-color: var(--inactiveColour);
+    border-style: none;
+    border-radius: var(--buttonRadius);
+    border: none;
+    outline: none;
+    margin-right: var(--buttonMargin);
+}
+
+.editableQuestionField {
+    width: calc(var(--buttonDimension) * 3.5 - 24px);
+    height: calc(var(--buttonDimension) * 1 - 48px);
+    opacity: 1;
+    position: absolute;
+    left: calc(var(--buttonDimension) / 2);
+    top: 24px;
+    bottom: 24px;
+    right: 24px;
+    margin: 0;
+    padding: 0;
+    cursor: text;
+    text-align: left;
+    vertical-align: top;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: var(--largeFontSize);
+    line-height: var(--largeFontSize);
+    font-family: HelveticaBold;
+    color: var(--darkColour);
+    resize: none;
+}
+
+.editableButtonFieldIcon {
+    position: absolute;
+    left: calc(-1 * var(--buttonDimension) / 4);
+    top: calc(-1 * var(--buttonDimension) / 4);
+    width: var(--buttonDimension);
+    height: var(--buttonDimension);
+    min-width: var(--buttonDimension);
+    min-height: var(--buttonDimension);
+    margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-size: var(--buttonDimension) var(--buttonDimension);
+    background-position: center;
+    background-image: url('../icons/text-mc.png');
+}
+
+.editableQuestionFieldIconLetter {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    width: 48px;
+    height: 48px;
+    margin: 0;
+    padding: 0;
+    font-size: var(--largeFontSize);
+    line-height: var(--largeFontSize);
+    color: var(--textColour);
+    user-select: none;
+}
+
+.editableAnswerPanel {
+    position: relative;
+    padding: 24px;
+    padding-left: 48px;
+    width: calc(var(--buttonDimension) * 4);
+    max-width: calc(var(--buttonDimension) * 4);
+    height: calc(var(--buttonDimension) * 1);
+    max-height: calc(var(--buttonDimension) * 1);
+    margin: 0;
+    padding: 0;
+    margin-bottom: var(--buttonMargin);
+    background-color: var(--inactiveColour);
+    border-style: none;
+    border-radius: var(--buttonRadius);
+    border: none;
+    outline: none;
+    margin-right: var(--buttonMargin);
+}
+
+.editableAnswerField {
+    width: calc(var(--buttonDimension) * 3.5 - 24px);
+    height: calc(var(--buttonDimension) * 1 - 48px);
+    opacity: 1;
+    position: absolute;
+    left: calc(var(--buttonDimension) / 2);
+    top: 24px;
+    bottom: 24px;
+    right: 24px;
+    margin: 0;
+    padding: 0;
+    cursor: text;
+    text-align: left;
+    vertical-align: top;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: var(--regularFontSize);
+    line-height: var(--regularFontSize);
+    font-family: HelveticaLight;
+    color: var(--darkColour);
+    resize: none;
+}
+
+.editableAnswerFieldIcon {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    width: 48px;
+    height: 48px;
+    margin: 0;
+    padding: 0;
+    font-size: var(--regularFontSize);
+    line-height: var(--regularFontSize);
+    color: var(--textColour);
+    user-select: none;
+}
+
+editableQuestionHeader:focus {
+    color: var(--textColour);
+    background-color: var(--activeColour);
+}
+
+.editableObservationPanel {
+    position: relative;
+    padding: 24px;
+    padding-left: 48px;
+    width: calc(var(--buttonDimension) * 4);
+    max-width: calc(var(--buttonDimension) * 4);
+    height: calc(var(--buttonDimension) * 2);
+    max-height: calc(var(--buttonDimension) * 2);
+    margin: 0;
+    padding: 0;
+    margin-bottom: var(--buttonMargin);
+    background-color: var(--inactiveColour);
+    border-style: none;
+    border-radius: var(--buttonRadius);
+    border: none;
+    outline: none;
+    margin-right: var(--buttonMargin);
+}
+
+.editableObservationPanel:focus {
+    color: var(--textColour);
+    background-color: var(--activeColour);
+}
+
+.editableObservationField {
+    width: calc(var(--buttonDimension) * 3.5 - 24px);
+    height: calc(var(--buttonDimension) * 2 - 48px);
+    opacity: 1;
+    position: absolute;
+    left: calc(var(--buttonDimension) / 2);
+    top: 24px;
+    bottom: 24px;
+    right: 24px;
+    margin: 0;
+    padding: 0;
+    cursor: text;
+    text-align: left;
+    vertical-align: top;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: var(--regularFontSize);
+    line-height: var(--regularFontSize);
+    font-family: HelveticaLight;
+    color: var(--darkColour);
+    resize: none;
+}
+
+editableObservationField:focus {
+    color: var(--textColour);
+}
+
+.editableObservationFieldIcon {
+    position: absolute;
+    left: calc(-1 * var(--buttonDimension) / 4);
+    top: calc(-1 * var(--buttonDimension) / 4);
+    width: var(--buttonDimension);
+    height: var(--buttonDimension);
+    min-width: var(--buttonDimension);
+    min-height: var(--buttonDimension);
+    margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-size: var(--buttonDimension) var(--buttonDimension);
+    background-position: center;
+    background-image: url('../icons/text-obs.png');
 }
 
 .fakeButton {
