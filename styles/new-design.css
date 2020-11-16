@@ -378,6 +378,128 @@ editableObservationField:focus {
     display: inline-block;
 }
 
+.answerFileInput, .questionFileInput {
+    opacity: 0;
+    position: absolute;
+    z-index: -10;
+    display: none;
+}
+
+.uploadFileButton {
+    background-color: var(--activeColour);
+    border-style: none;
+    border-radius: var(--buttonRadius);
+    width: var(--buttonDimension);
+    height: var(--buttonDimension);
+    background-repeat: no-repeat;
+    background-size: var(--buttonDimension) var(--buttonDimension);
+    background-position: center;
+    border: none;
+    outline: none;
+    opacity: 1;
+    position: relative;
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: var(--buttonMargin);
+    margin-bottom: var(--buttonMargin);
+    padding: 0;
+    cursor: pointer;
+    transform: scale(1, 1);
+    transition: transform ease-in-out 0.33s;
+    background-image: url('../icons/upload.png');
+    display: inline-flex;
+    font-size: 0;
+}
+
+.answerFileProgress, .questionFileProgress {
+    position: absolute;
+    top: var(--buttonTextInset);
+    left: 0;
+    width: 100%;
+    text-align: center;
+    vertical-align: bottom;
+    color: var(--textColour);
+    font-family: HelveticaLight;
+    font-size: var(--smallFontSize);
+    text-transform: none;
+}
+
+label:hover, label:active, input:hover + label, input:active + label {
+    background-color: var(--highlightColour);
+    transform: scale(1.05, 1.05);
+}
+
+.imageButton {
+    background-color: var(--inactiveColour);
+    border-style: solid;
+    border-width: 6px;
+    border-radius: var(--buttonRadius);
+    border-color: var(--inactiveColour);
+    width: calc(var(--buttonDimension) * 2);
+    height: calc(var(--buttonDimension) - 12px);
+    outline: none;
+    opacity: 1;
+    position: relative;
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: var(--buttonMargin);
+    margin-bottom: var(--buttonMargin);
+    padding: 0;
+    transform: scale(1, 1);
+    transition: transform ease-in-out 0.33s;
+    display: inline-flex;
+    font-size: 0;
+}
+
+.surveyImage {
+    background-color: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--buttonRadius);
+    border: none;
+    outline: none;
+}
+
+.answerImage {
+    object-fit: cover;
+    border: none;
+    outline: none;
+    background-color: var(--inactiveColour);
+    border-radius: var(--buttonRadius);
+    width: var(--buttonDimension);
+    height: var(--buttonDimension);
+    border: none;
+    outline: none;
+    opacity: 1;
+    position: relative;
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: var(--buttonMargin);
+    margin-bottom: var(--buttonMargin);
+    padding: 0;
+    transform: scale(1, 1);
+    transition: transform ease-in-out 0.33s;
+    display: inline-flex;
+    font-size: 0;
+}
+
+.questionImage {
+    background-color: var(--backgroundColour);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--buttonRadius);
+    border: none;
+    outline: none;
+}
+
 .regularButton {
     background-color: var(--activeColour);
     border-style: none;
@@ -464,8 +586,20 @@ editableObservationField:focus {
     background-image: url('../icons/image-q.png');
 }
 
+.imageAnswerButton {
+    background-image: url('../icons/image-mc.png');
+}
+
+.imageQuestionAndAnswerButton {
+    background-image: url('../icons/image-choose.png');
+}
+
 .sensorQuestionButton {
     background-image: url('../icons/sensor.png');
+}
+
+.mapQuestionButton {
+    background-image: url('../icons/map.png');
 }
 
 .visualiseButton {

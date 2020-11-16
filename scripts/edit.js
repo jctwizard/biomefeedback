@@ -163,7 +163,7 @@ function editSurvey(surveyIndex)
   
   var helpSurveyButton = makeButton(surveyButtonPanel, "surveyHelp", null, "Help", "helpButton", "");
   
-  var saveSurveyButton = makeButton(surveyButtonPanel, "saveSurveyDontGoBack", surveyIndex, "Save Changes", "saveButton", "");
+  var saveSurveyButton = makeButton(surveyButtonPanel, "saveSurvey", surveyIndex, "Save and go back", "saveButton", "");
   
   makeElement(surveyButtonPanel, "span", "", "fakeButton", "");
   
@@ -187,8 +187,6 @@ function editSurvey(surveyIndex)
   
   var questionButtonPanel = makeElement(surveyPanel, "div", "", "buttonPanel", "");
   
-  var addQuestionButton = makeButton(questionButtonPanel, "addQuestion", surveyIndex, "Add Question", "addButton", "");
-  
   for (var questionIndex = 0; questionIndex < getQuestionCount(surveyIndex); questionIndex++)
   {
     var questionType = getQuestionType(surveyIndex, questionIndex);
@@ -203,13 +201,25 @@ function editSurvey(surveyIndex)
     {
       editQuestionButton = makeButton(questionButtonPanel, "editQuestion", [surveyIndex, questionIndex], getQuestionName(surveyIndex, questionIndex), "textQuestionButton", "");
     }
-    else if (questionType == "image")
+    else if (questionType == "imageQuestionAndAnswer")
     {
-      editQuestionButton = makeButton(questionButtonPanel, "editQuestion", [surveyIndex, questionIndex], getQuestionName(surveyIndex, questionIndex), "imageQuestionButton", "");
+      editQuestionButton = makeButton(questionButtonPanel, "editQuestion", [surveyIndex, questionIndex], "Question " + (questionIndex + 1).toString(), "imageQuestionAndAnswerButton", "");
+      var questionImage = makeElement(editQuestionButton, "img", "", "surveyImage", questionIndex.toString());
+      questionImage.src = getQuestionImageUrl(surveyIndex, questionIndex);
+    }
+    else if (questionType == "imageQuestion")
+    {
+      editQuestionButton = makeButton(questionButtonPanel, "editQuestion", [surveyIndex, questionIndex], "Question " + (questionIndex + 1).toString(), "imageQuestionButton", "");
+      var questionImage = makeElement(editQuestionButton, "img", "", "surveyImage", questionIndex.toString());
+      questionImage.src = getQuestionImageUrl(surveyIndex, questionIndex);
+    }
+    else if (questionType == "imageAnswer")
+    {
+      editQuestionButton = makeButton(questionButtonPanel, "editQuestion", [surveyIndex, questionIndex], getQuestionName(surveyIndex, questionIndex), "imageAnswerButton", "");
     }
     
-    var innerQuestionButtonPanel = makeElement(editQuestionButton, "div", "", "innerButtonPanel", surveyIndex);
-
+    var innerQuestionButtonPanel = makeElement(editQuestionButton, "div", "", "innerButtonPanel", questionIndex);
+    
     // make inner button panel appear when mouse hovers over survey button
     editQuestionButton.setAttribute("onmouseenter", "showElement(this," + innerQuestionButtonPanel.id + ")");
     editQuestionButton.setAttribute("onmouseleave", "hideElement(this," + innerQuestionButtonPanel.id + ")");
@@ -227,6 +237,10 @@ function editSurvey(surveyIndex)
     questionShiftDownButton.setAttribute("onclick", "shiftQuestionDown(" + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
     */
   }
+  
+  makeElement(questionButtonPanel, "div", "", "", "");
+
+  var addQuestionButton = makeButton(questionButtonPanel, "addQuestion", surveyIndex, "Add Question", "addButton", "");
   
 /*
   makeElement(surveyPanel, "span", "Show Welcome Message?:", "fieldHeader", surveyIndex.toString());
@@ -294,30 +308,30 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
   var surveyButtonPanel = makeElement(surveyPanel, "div", "", "buttonPanel", "");
   
   // question image show upload button
-  if (getQuestionType(surveyIndex, questionIndex) == "image")
+  if (getQuestionType(surveyIndex, questionIndex) == "imageQuestion" || getQuestionType(surveyIndex, questionIndex) == "imageQuestionAndAnswer")
   {
-    var questionImage = makeButton(surveyButtonPanel, "uploadQuestionImage", ["", surveyIndex, questionIndex], "Get an image from the options below", "imageQuestionButton", "");
-    
-    makeElement(surveyButtonPanel, "span", "", "fakeButton", "");
-  
-    makeElement(surveyButtonPanel, "span", "", "fakeButton", "");
+    var questionImageButton = makeElement(surveyButtonPanel, "div", "", "imageButton", questionIndex.toString());
+    var questionImage = makeElement(questionImageButton, "img", "", "questionImage", questionIndex.toString());
+    questionImage.src = getQuestionImageUrl(surveyIndex, questionIndex);
 
-    makeElement(surveyButtonPanel, "span", "", "fakeButton", "");
-  
-    /*questionImage.src = getQuestionImageUrl(surveyIndex, questionIndex);
+    var questionFileButton = makeElement(surveyButtonPanel, "label", "", "uploadFileButton", questionIndex.toString());
+    questionImage.src = getQuestionImageUrl(surveyIndex, questionIndex);
     
-    makeElement(surveyPanel, "br", "", "break", "");
+    var questionFileText = makeElement(questionFileButton, "div", "Upload image", "buttonText", questionIndex.toString());
+    
+    var questionFileProgress = makeElement(questionFileButton, "div", "no image selected", "questionFileProgress", questionIndex.toString());
 
-    var questionFileInput = makeElement(surveyPanel, "input", "upload image", "questionFileInput", questionIndex.toString());
+    var questionFileInput = makeElement(surveyButtonPanel, "input", "", "questionFileInput", questionIndex.toString());
     questionFileInput.type = "file";
     questionFileInput.setAttribute("onchange", "uploadQuestionImage('" + questionFileInput.id + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ")");
 
-    var questionFileProgress = makeElement(surveyPanel, "span", "no file selected", "questionFileProgress", questionIndex.toString());
-      */
+    questionFileButton.setAttribute("for", questionFileInput.id.toString());
+    
+    makeElement(surveyButtonPanel, "span", "", "fakeButton", "");
   }
   else 
   {
-    // input question create text box
+    // text question
     var questionHeaderPanel = makeElement(surveyButtonPanel, "div", "", "editableQuestionPanel", questionIndex);
 
     var questionHeader = makeElement(questionHeaderPanel, "textarea", getQuestionName(surveyIndex, questionIndex), "editableQuestionField", questionIndex.toString());
@@ -340,8 +354,8 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
     }
   }
  
-  // button or image question create buttons
-  if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "image")
+  // Text answers
+  if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "imageQuestion")
   {
     for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
     {
@@ -352,24 +366,8 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
 
       var answerField = makeElement(answerFieldPanel, "textarea", getAnswerName(surveyIndex, questionIndex, answerIndex), "editableAnswerField", answerIndex.toString());
       answerField.setAttribute("onchange", "setAnswerName('" + answerField.id + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
-      /*
-      // question image show upload button
-      if (getQuestionType(surveyIndex, questionIndex) == "image")
-      {
-        var answerImage = makeElement(surveyPanel, "img", "no image uploaded", "answerImage", answerIndex.toString());
-        answerImage.src = getAnswerImageUrl(surveyIndex, questionIndex, answerIndex);
-      
-        var answerFileInput = makeElement(surveyPanel, "input", "upload image", "answerFileInput", answerIndex.toString());
-        answerFileInput.type = "file";
-        answerFileInput.setAttribute("onchange", "uploadAnswerImage('" + answerFileInput.id + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
-      
-        var answerFileProgress = makeElement(surveyPanel, "span", "no file selected", "answerFileProgress", answerIndex.toString());
-      }*/
 
       /*
-      var answerRemoveButton = makeElement(answerRow, "button", "remove", "answerRemoveButton", answerIndex.toString());
-      answerRemoveButton.setAttribute("onclick", "removeAnswer(" + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
-
       var answerShiftUpButton = makeElement(answerRow, "button", "up", "answerShiftUpButton", answerIndex.toString());
       answerShiftUpButton.setAttribute("onclick", "shiftAnswerUp(" + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
 
@@ -377,15 +375,43 @@ function editQuestion(surveyIndex, questionIndex, highlightIndex)
       answerShiftDownButton.setAttribute("onclick", "shiftAnswerDown(" + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
       */
     }
+  }
+  // Image answers
+  else if (getQuestionType(surveyIndex, questionIndex) == "imageAnswer" || getQuestionType(surveyIndex, questionIndex) == "imageQuestionAndAnswer")
+  {
+    var answerPanelHeader = makeElement(surveyButtonPanel, "div", "ANSWERS", "smallHeader", "");
+  
+    for (var answerIndex = 0; answerIndex < getAnswerCount(surveyIndex, questionIndex); answerIndex++)
+    {
+      var answerFileButton = makeElement(surveyButtonPanel, "label", "", "uploadFileButton", answerIndex.toString());
 
-    var addAnswerButton = makeButton(surveyButtonPanel, "addAnswer", [surveyIndex, questionIndex], "Add a question", "addButton", "");
+      var answerImage = makeElement(answerFileButton, "img", "", "answerImage", answerIndex.toString());
+      answerImage.src = getAnswerImageUrl(surveyIndex, questionIndex, answerIndex);
+
+      var answerFileText = makeElement(answerFileButton, "div", "Answer " + (answerIndex + 1).toString(), "buttonText", answerIndex.toString());
+    
+      var answerFileProgress = makeElement(answerFileButton, "div", "no image selected", "answerFileProgress", answerIndex.toString());
+
+      var answerFileInput = makeElement(surveyButtonPanel, "input", "", "answerFileInput", answerIndex.toString());
+      answerFileInput.type = "file";
+      answerFileInput.setAttribute("onchange", "uploadAnswerImage('" + answerFileInput.id + "', " + surveyIndex.toString() + ", " + questionIndex.toString() + ", " + answerIndex.toString() + ")");
+
+      answerFileButton.setAttribute("for", answerFileInput.id.toString());
+    }
+
+    var answerButtonBreak = makeElement(surveyButtonPanel, "div", "", "", "");
+  }
+
+  if (getQuestionType(surveyIndex, questionIndex) != "input")
+  {
+    var addAnswerButton = makeButton(surveyButtonPanel, "addAnswer", [surveyIndex, questionIndex], "Add an answer", "addButton", "");
 
     if (getAnswerCount(surveyIndex, questionIndex) >= 4)
     {
       addAnswerButton.setAttribute("disabled", false);
     }
 
-    var removeAnswerButton = makeButton(surveyButtonPanel, "removeAnswer", [surveyIndex, questionIndex, getAnswerCount(surveyIndex, questionIndex) - 1], "Remove last question", "deleteButton", "");
+    var removeAnswerButton = makeButton(surveyButtonPanel, "removeAnswer", [surveyIndex, questionIndex, getAnswerCount(surveyIndex, questionIndex) - 1], "Remove last answer", "deleteButton", "");
     
     if (getAnswerCount(surveyIndex, questionIndex) <= 1)
     {
@@ -543,12 +569,16 @@ function addQuestion(surveyIndex)
   
   var questionTypeButtonPanel = makeElement(surveyPanel, "div", "", "buttonPanel", "");
   
-  var textQuestionButton = makeButton(questionTypeButtonPanel, "setQuestionTypeAndEdit", [surveyIndex, questionIndex, "input"], "Text", "textQuestionButton", ""); 
-  var buttonQuestionButton = makeButton(questionTypeButtonPanel, "setQuestionTypeAndEdit", [surveyIndex, questionIndex, "button"], "Button", "buttonQuestionButton", "");
-  var imageQuestionButton = makeButton(questionTypeButtonPanel, "setQuestionTypeAndEdit", [surveyIndex, questionIndex, "image"], "Image", "imageQuestionButton", "");
+  var textQuestionButton = makeButton(questionTypeButtonPanel, "setQuestionTypeAndEdit", [surveyIndex, questionIndex, "input"], "Text observation", "textQuestionButton", ""); 
+  var buttonQuestionButton = makeButton(questionTypeButtonPanel, "setQuestionTypeAndEdit", [surveyIndex, questionIndex, "button"], "Text buttons", "buttonQuestionButton", "");
+  var imageQuestionButton = makeButton(questionTypeButtonPanel, "setQuestionTypeAndEdit", [surveyIndex, questionIndex, "imageQuestionAndAnswer"], "Image question and answer", "imageQuestionAndAnswerButton", "");
+  var imageQuestionButton = makeButton(questionTypeButtonPanel, "setQuestionTypeAndEdit", [surveyIndex, questionIndex, "imageQuestion"], "Image question", "imageQuestionButton", "");
+  var imageAnswerButton = makeButton(questionTypeButtonPanel, "setQuestionTypeAndEdit", [surveyIndex, questionIndex, "imageAnswer"], "Image answer", "imageAnswerButton", "");
   var sensorQuestionButton = makeButton(questionTypeButtonPanel, "setQuestionTypeAndEdit", [surveyIndex, questionIndex, "sensor"], "Sensor", "sensorQuestionButton", "");
+  var mapQuestionButton = makeButton(questionTypeButtonPanel, "setQuestionTypeAndEdit", [surveyIndex, questionIndex, "map"], "Map", "mapQuestionButton", "");
   
   sensorQuestionButton.setAttribute("disabled", true);
+  mapQuestionButton.setAttribute("disabled", true);
 }
 
 function setQuestionTypeAndEdit(surveyIndex, questionIndex, questionType)
@@ -627,7 +657,7 @@ function addAnswer(surveyIndex, questionIndex)
 
   if (newAnswerIndex < buttonCount)
   {
-    surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].answers["answer" + newAnswerIndex.toString()] = { "answerName":"Type in answer here", "responses":0 };
+    surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].answers["answer" + newAnswerIndex.toString()] = { "answerName":"Type in answer here", "responses":0, "imageUrl":"" };
 
     editQuestion(surveyIndex, questionIndex, newAnswerIndex);
   }
@@ -735,7 +765,7 @@ function uploadQuestionImage(elementId, surveyIndex, questionIndex)
           fileProgress.innerHTML = "paused";
           break;
         case firebase.storage.TaskState.RUNNING:
-          fileProgress.innerHTML = progress.toString() + "%";
+          fileProgress.innerHTML = (Math.trunc(progress)).toString() + "%";
           break;
       }
     }, function(error) {
@@ -769,7 +799,7 @@ function uploadAnswerImage(elementId, surveyIndex, questionIndex, answerIndex)
           fileProgress.innerHTML = "paused";
           break;
         case firebase.storage.TaskState.RUNNING:
-          fileProgress.innerHTML = progress.toString() + "%";
+          fileProgress.innerHTML = (Math.trunc(progress)).toString() + "%";
           break;
       }
     }, function(error) {

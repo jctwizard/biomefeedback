@@ -357,7 +357,16 @@ function getQuestionType(surveyIndex, questionIndex)
 
 function getQuestionImageUrl(surveyIndex, questionIndex)
 {
-  return surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].imageUrl;
+  var imageUrl = surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].imageUrl;
+  
+  if (imageUrl == "")
+  {
+    return "../icons/placeholder.png";
+  }
+  else
+  {
+    return imageUrl;
+  }
 }
 
 function getQuestionInitialInput(surveyIndex, questionIndex)
@@ -372,7 +381,16 @@ function getAnswerName(surveyIndex, questionIndex, answerIndex)
 
 function getAnswerImageUrl(surveyIndex, questionIndex, answerIndex)
 {
-  return surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].answers["answer" + answerIndex.toString()].imageUrl;
+  var imageUrl = surveys["survey" + surveyIndex.toString()].questions["question" + questionIndex.toString()].answers["answer" + answerIndex.toString()].imageUrl;
+
+  if (imageUrl == "")
+  {
+    return "../icons/placeholder.png";
+  }
+  else
+  {
+    return imageUrl;
+  }
 }
 
 function getTextAnswer(surveyIndex, questionIndex, answerIndex)
