@@ -17,8 +17,8 @@ var config = {
   projectId: "biomefeedback"
 };
 
-//var baseURL = "http://jctwizard.github.io/biomefeedback/"
-var baseURL = "http://127.0.0.1:8887/";
+var baseURL = "http://jctwizard.github.io/biomefeedback/"
+//var baseURL = "http://127.0.0.1:8887/";
 var editURLExtension = "edit/index.html?survey=";
 var answerURLExtension = "answer/index.html?survey=";
 var viewResultsURLExtension = "results/index.html?survey=";
