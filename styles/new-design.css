@@ -78,6 +78,11 @@ html, body {
     overflow-y: scroll;
 }
 
+.activePanel {
+    background-color: #C9855D;
+    color: #E3C1AD;
+}
+
 .largeHeader {
     user-select: none;
     font-size: var(--largeFontSize);

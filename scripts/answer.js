@@ -88,13 +88,15 @@ function displayActiveQuestion()
   var activePanel = document.getElementById("activePanel");
   activePanel.innerHTML = "";
   
-  if (getQuestionType(surveyIndex, questionIndex) == "image")
+  if (getQuestionType(surveyIndex, questionIndex) == "imageQuestion" || getQuestionType(surveyIndex, questionIndex) == "imageQuestionAndAnswer")
   {
     var questionImage = makeElement(activePanel, "img", "loading image", "activeQuestionImage", questionIndex.toString());
     questionImage.src = getQuestionImageUrl(surveyIndex, questionIndex);
   }
-
-  var questionHeader = makeElement(activePanel, "div", getQuestionName(surveyIndex, questionIndex), "activeQuestionHeader", questionIndex.toString());
+  else
+  {
+    var questionHeader = makeElement(activePanel, "div", getQuestionName(surveyIndex, questionIndex), "activeQuestionHeader", questionIndex.toString());
+  }
 
   if (getQuestionType(surveyIndex, questionIndex) == "input")
   {
@@ -111,7 +113,7 @@ function displayActiveQuestion()
     activeButtons.push(answerSubmitButton);
   }
 
-  if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "image")
+  if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "imageQuestion" || getQuestionType(surveyIndex, questionIndex) == "imageAnswer" || getQuestionType(surveyIndex, questionIndex) == "imageQuestionAndAnswer")
   {
     var answerPanel = makeElement(activePanel, "div", "", "activeAnswerPanel", "")
   
@@ -123,14 +125,20 @@ function displayActiveQuestion()
 
       if (buttonIndex < getAnswerCount(surveyIndex, questionIndex))
       {
-        answerSelectButton = makeElement(answerPanel, "button", getAnswerName(surveyIndex, questionIndex, buttonIndex), "answerSelectButton", buttonIndex.toString());
-        answerSelectButton.setAttribute("onclick", "saveResponse(" + buttonIndex.toString() + ")");
-        
-        if (getQuestionType(surveyIndex, questionIndex) == "image")
+        var answerSelectButton = null;
+
+        if (getQuestionType(surveyIndex, questionIndex) == "button" || getQuestionType(surveyIndex, questionIndex) == "imageQuestion")
         {
+          answerSelectButton = makeElement(answerPanel, "button", getAnswerName(surveyIndex, questionIndex, buttonIndex), "answerSelectButton", buttonIndex.toString());
+        }
+        else
+        {
+          answerSelectButton = makeElement(answerPanel, "button", "", "answerSelectButton", buttonIndex.toString());
           answerSelectButton.style.backgroundImage = "url(" + getAnswerImageUrl(surveyIndex, questionIndex, buttonIndex) + ")";
           answerSelectButton.style
         }
+        
+        answerSelectButton.setAttribute("onclick", "saveResponse(" + buttonIndex.toString() + ")");
 
         var buttonColour = buttonColours[buttonIndex];
 

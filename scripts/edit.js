@@ -40,7 +40,41 @@ function displaySurveys()
 
   for (var surveyIndex = 0; surveyIndex < getSurveyCount(); surveyIndex++)
   {
-    var editSurveyButton = makeButton(recentSurveyButtonPanel, "goToEditLink", surveyIndex, getSurveyName(surveyIndex).toString(), "buttonQuestionButton", surveyIndex);
+    var editSurveyButton = null;
+
+    var questionType = "button";
+
+    if (getQuestionCount(surveyIndex) > 0)
+    {
+      questionType = getQuestionType(surveyIndex, 0);
+    }
+    
+    console.log(questionType);
+
+    if (questionType == "button")
+    {
+      editSurveyButton = makeButton(recentSurveyButtonPanel, "goToEditLink", surveyIndex, getSurveyName(surveyIndex).toString(), "buttonQuestionButton", surveyIndex);
+    }
+    else if (questionType == "input")
+    {
+      editSurveyButton = makeButton(recentSurveyButtonPanel, "goToEditLink", surveyIndex, getSurveyName(surveyIndex).toString(), "textQuestionButton", surveyIndex);
+    }
+    else if (questionType == "imageQuestionAndAnswer")
+    {
+      editSurveyButton = makeButton(recentSurveyButtonPanel, "goToEditLink", surveyIndex, getSurveyName(surveyIndex).toString(), "imageQuestionAndAnswerButton", surveyIndex);
+    }
+    else if (questionType == "imageQuestion")
+    {
+      editSurveyButton = makeButton(recentSurveyButtonPanel, "goToEditLink", surveyIndex, getSurveyName(surveyIndex).toString(), "imageQuestionButton", surveyIndex);
+    }
+    else if (questionType == "imageAnswer")
+    {
+      editSurveyButton = makeButton(recentSurveyButtonPanel, "goToEditLink", surveyIndex, getSurveyName(surveyIndex).toString(), "imageAnswerButton", surveyIndex);
+    }
+    else
+    {
+      editSurveyButton = makeButton(recentSurveyButtonPanel, "goToEditLink", surveyIndex, getSurveyName(surveyIndex).toString(), "buttonQuestionButton", surveyIndex);
+    }
 
     var innerSurveyButtonPanel = makeElement(editSurveyButton, "div", "", "innerButtonPanel", surveyIndex);
 
@@ -519,6 +553,11 @@ function addSurvey()
   console.log(surveys);
 
   var newSurveyIndex = getSurveyCount();
+
+  if (newSurveyIndex == 0)
+  {
+    surveys = {};
+  }
 
   surveys["survey" + newSurveyIndex.toString()] = { "surveyName":"Give me a name", "date":"A date from...", "dateTo":"A date to...", "location":"Where am I?", "buttonColours":{"button0":defaultButtonColours[0], "button1":defaultButtonColours[1], "button2":defaultButtonColours[2], "button3":defaultButtonColours[3]}, "welcomeMessage":defaultWelcomeMessage, "showWelcomeMessage":false, "welcomeImage":"images/default-background.jpg", "showWelcomeImage":false, "endMessage":defaultEndMessage, "questions":{}};
 
