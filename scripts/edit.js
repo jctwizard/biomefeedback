@@ -169,6 +169,8 @@ function copyVisualiseLink(surveyIndex)
 function displaySurveyHeader(surveyPanel, surveyIndex)
 {
   var editorPanelHeader = makeElement(surveyPanel, "div", "KWALI", "largeHeaderDark", "");
+  editorPanelHeader.setAttribute("onclick", "displaySurveys()");
+  editorPanelHeader.style.cursor = "pointer";
   
   var surveyHeader = makeElement(surveyPanel, "input", getSurveyName(surveyIndex), "editableSurveyName", surveyIndex.toString());
   surveyHeader.setAttribute("onchange", "setSurveyName('" + surveyHeader.id + "', " + surveyIndex.toString() + ")");
