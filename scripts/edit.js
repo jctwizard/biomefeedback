@@ -79,8 +79,15 @@ function displaySurveys()
     var innerSurveyButtonPanel = makeElement(editSurveyButton, "div", "", "innerButtonPanel", surveyIndex);
 
     // make inner button panel appear when mouse hovers over survey button
-    editSurveyButton.setAttribute("onmouseenter", "showElement(this," + innerSurveyButtonPanel.id + ")");
-    editSurveyButton.setAttribute("onmouseleave", "hideElement(this," + innerSurveyButtonPanel.id + ")");
+    if (isMobile == false)
+    {
+      editSurveyButton.setAttribute("onmouseenter", "showElement(this," + innerSurveyButtonPanel.id + ")");
+      editSurveyButton.setAttribute("onmouseleave", "hideElement(this," + innerSurveyButtonPanel.id + ")");
+    }
+    else
+    {
+      editSurveyButton.style.display = "block";
+    }
     
     var deleteSurveyButton = makeInnerButton(innerSurveyButtonPanel, "removeSurvey", surveyIndex, "", "deleteButton", surveyIndex);
     var shareSurveyButton = makeInnerButton(innerSurveyButtonPanel, "copyLinks", surveyIndex, "", "shareButton", surveyIndex);
@@ -202,9 +209,9 @@ function editSurvey(surveyIndex)
   makeElement(surveyButtonPanel, "span", "", "fakeButton", "");
   
   var runButton = makeButton(surveyButtonPanel, "goToSurveyLink", surveyIndex, "Run", "runButton", ""); 
-  var visualiseButton = makeButton(surveyButtonPanel, "goToVisualiseLink", surveyIndex, "Visualise", "visualiseButton", "");
-  var resultsButton = makeButton(surveyButtonPanel, "goToViewResultsLink", surveyIndex, "View Results", "resultsButton", "");
   var shareButton = makeButton(surveyButtonPanel, "copyLinks", surveyIndex, "Share", "shareButton", "");
+  var resultsButton = makeButton(surveyButtonPanel, "goToViewResultsLink", surveyIndex, "View Results", "resultsButton", "");
+  var visualiseButton = makeButton(surveyButtonPanel, "goToVisualiseLink", surveyIndex, "Visualise", "visualiseButton", "");
 
   if (getQuestionCount(surveyIndex) <= 0)
   {
@@ -254,9 +261,16 @@ function editSurvey(surveyIndex)
     
     var innerQuestionButtonPanel = makeElement(editQuestionButton, "div", "", "innerButtonPanel", questionIndex);
     
-    // make inner button panel appear when mouse hovers over survey button
-    editQuestionButton.setAttribute("onmouseenter", "showElement(this," + innerQuestionButtonPanel.id + ")");
-    editQuestionButton.setAttribute("onmouseleave", "hideElement(this," + innerQuestionButtonPanel.id + ")");
+    if (isMobile == false)
+    {
+      // make inner button panel appear when mouse hovers over survey button
+      editQuestionButton.setAttribute("onmouseenter", "showElement(this," + innerQuestionButtonPanel.id + ")");
+      editQuestionButton.setAttribute("onmouseleave", "hideElement(this," + innerQuestionButtonPanel.id + ")");
+    }
+    else
+    {
+      editQuestionButton.style.display = "block";
+    }
     
     var deleteSurveyButton = makeInnerButton(innerQuestionButtonPanel, "removeQuestion", [surveyIndex, questionIndex], "", "deleteButton", surveyIndex);
 

@@ -88,6 +88,33 @@ function displayActiveQuestion()
   var activePanel = document.getElementById("activePanel");
   activePanel.innerHTML = "";
   
+  var surveyHeader = makeElement(document.body, "div", getSurveyName(surveyIndex), "activeSurveyHeader", questionIndex.toString());
+
+  var questionIcon = makeElement(document.body, "div", "", "activeQuestionIcon", questionIndex.toString());
+  
+  var questionType = getQuestionType(surveyIndex, questionIndex);
+
+  if (questionType == "button")
+  {
+    var questionIconImage = makeElement(questionIcon, "div", "", "buttonQuestionButton", questionIndex.toString());
+  }
+  else if (questionType == "input")
+  {
+    var questionIconImage = makeElement(questionIcon, "div", "", "textQuestionButton", questionIndex.toString());
+  }
+  else if (questionType == "imageQuestionAndAnswer")
+  {
+    var questionIconImage = makeElement(questionIcon, "div", "", "imageQuestionAndAnswerButton", questionIndex.toString());
+  }
+  else if (questionType == "imageQuestion")
+  {
+    var questionIconImage = makeElement(questionIcon, "div", "", "imageQuestionButton", questionIndex.toString());
+  }
+  else if (questionType == "imageAnswer")
+  {
+    var questionIconImage = makeElement(questionIcon, "div", "", "imageAnswerButton", questionIndex.toString());
+  }
+
   if (getQuestionType(surveyIndex, questionIndex) == "imageQuestion" || getQuestionType(surveyIndex, questionIndex) == "imageQuestionAndAnswer")
   {
     var questionImage = makeElement(activePanel, "img", "loading image", "activeQuestionImage", questionIndex.toString());
@@ -107,8 +134,9 @@ function displayActiveQuestion()
     var answerTextInput = makeElement(textAnswerPanel, "textarea", "", "answerTextInput", "0");
     answerTextInput.value = getQuestionInitialInput(surveyIndex, questionIndex).toString();
 
-    var answerSubmitButton = makeElement(textAnswerPanel, "button", "submit", "answerSubmitButton", "0");
+    var answerSubmitButton = makeElement(textAnswerPanel, "button", "", "answerSubmitButton", "0");
     answerSubmitButton.setAttribute("onclick", "saveTextResponse('" + answerTextInput.id + "')");
+    var answerSubmitButtonText = makeElement(answerSubmitButton, "div", "submit", "activeButtonText", "0");
       
     activeButtons.push(answerSubmitButton);
   }
@@ -135,7 +163,6 @@ function displayActiveQuestion()
         {
           answerSelectButton = makeElement(answerPanel, "button", "", "answerSelectButton", buttonIndex.toString());
           answerSelectButton.style.backgroundImage = "url(" + getAnswerImageUrl(surveyIndex, questionIndex, buttonIndex) + ")";
-          answerSelectButton.style
         }
         
         answerSelectButton.setAttribute("onclick", "saveResponse(" + buttonIndex.toString() + ")");
@@ -147,11 +174,12 @@ function displayActiveQuestion()
           buttonColour = "#" + buttonColour.toString();
         }
   
-        answerSelectButton.style.backgroundColor = buttonColour;
+        //answerSelectButton.style.backgroundColor = buttonColour;
       }
       else
       {
         answerSelectButton = makeElement(answerPanel, "button", "", "inactiveAnswerSelectButton", buttonIndex.toString());
+        answerSelectButton.style.display = "none";
       }
 
       activeButtons.push(answerSelectButton);
@@ -261,7 +289,7 @@ function displayEndMessage()
     
   var endMessage = makeElement(activePanel, "div", getSurvey(activeSurveyIndex).endMessage, "activeEndMessage", "")
 
-  var continueMessage = makeElement(activePanel, "div", defaultContinueMessageEnd, "continueMessage", "")
+  //var continueMessage = makeElement(activePanel, "div", defaultContinueMessageEnd, "continueMessage", "")
 
   var answerPanel = makeElement(activePanel, "div", "", "activeAnswerPanel", "")
 

@@ -18,6 +18,10 @@
     --buttonMargin: 12px;
     --buttonTextInset: 24px;
     --buttonRadius: 6px;
+    --activePanelBackgroundColour: #C9845D;
+    --activePanelTextDarkColour: #E3C1AD;
+    --activePanelHighlightColour: #FCA574;
+    --activePanelHighlightTextDarkColour: #FDD1B9;
 }
 
 @font-face {
@@ -31,8 +35,8 @@
 }
 
 html, body {
-    background-color: var(--backgroundColour);
-    color: var(--textColour);
+    background-color: var(--activePanelBackgroundColour);
+    color: var(--activePanelTextDarkColour);
 
     font-family: HelveticaBold;
     font-size: var(--smallFontSize);
@@ -49,6 +53,201 @@ html, body {
     -webkit-font-smoothing: antialiased;
 
     cursor: auto;
+}
+
+#activePanel {
+    background-color: var(--activePanelBackgroundColour);
+    color: var(--activePanelTextDarkColour);
+    user-select: none;
+}
+
+.activeSurveyHeader {
+    position: fixed;
+    left: 25%;
+    top: var(--buttonMargin);
+    color: var(--activePanelTextDarkColour);
+    font-family: HelveticaBold;
+    font-size: var(--regularFontSize);
+    line-height: var(--regularFontSize);
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.activeQuestionIcon {
+    position: absolute;
+    right: 25%;
+    top: var(--buttonMargin);
+    height: var(--regularFontSize);
+    width: var(--regularFontSize);
+    background-repeat: no-repeat;
+    background-size: calc(var(--buttonDimension) - var(--buttonMargin)) calc(var(--buttonDimension) - var(--buttonMargin));
+    background-position: center;
+    background-image: url('../icons/text-mc.png');
+    user-select: none;
+}
+
+
+.activeEndMessage, .activeContinueMessage, .activeQuestionHeader {
+    color: var(--textColour);
+    font-family: HelveticaBold;
+    width: 50%;
+    left: 25%;
+    top: calc(var(--regularFontSize) + var(--buttonMargin) * 3);
+    height: calc(var(--buttonDimension) * 0.75);
+    opacity: 1;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--buttonRadius);
+    border: none;
+    outline: none;
+    background-color: var(--activePanelHighlightColour);
+    font-size: var(--regularFontSize);
+    line-height: var(--regularFontSize);
+    font-family: HelveticaBold;
+    vertical-align: central;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.activeContinueMessage {
+    top: calc(var(--regularFontSize) + var(--buttonMargin) * 4 + var(--buttonDimension) * 0.75);
+}
+
+.activeQuestionImage {
+    width: 50%;
+    left: 25%;
+    top: calc(var(--regularFontSize) + var(--buttonMargin) * 3);
+    height: calc(var(--buttonDimension) * 1.5);
+    opacity: 1;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: var(--buttonRadius);
+    outline: none;
+    object-fit: cover;
+}
+
+.activeTextAnswerPanel {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 50%;
+    left: 25%;
+    top: calc(var(--regularFontSize) + var(--buttonMargin) * 4 + var(--buttonDimension) * 0.75);
+    height: calc(100% - (var(--regularFontSize) + var(--buttonMargin) * 5 + var(--buttonDimension) * 0.75));
+}
+
+.answerTextInput {
+    color: var(--activePanelHighlightTextDarkColour);
+    font-family: HelveticaLight;
+    position: absolute;
+    width: calc(100% - var(--buttonMargin) * 2);
+    left: 0;
+    top: 0;
+    height: calc(100% - var(--buttonDimension) * 0.75 - var(--buttonMargin) * 2);
+    opacity: 1;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--buttonRadius);
+    border: var(--buttonMargin) solid var(--activePanelHighlightColour);
+    outline: none;
+    background-color: var(--activePanelHighlightColour);
+    font-size: var(--regularFontSize);
+    line-height: var(--regularFontSize);
+    vertical-align: central;
+    display: block;
+    box-shadow: none;
+    resize: none;
+}
+
+.activeButtonText {
+    position: absolute;
+    bottom: calc(var(--buttonTextInset) * 0.5);
+    left: 0;
+    width: 100%;
+    text-align: center;
+    vertical-align: bottom;
+    color: var(--activePanelHighlightTextDarkColour);
+    font-family: HelveticaLight;
+    font-size: var(--smallFontSize);
+    text-transform: none;
+}
+
+.answerSubmitButton {
+    color: var(--activePanelHighlightTextDarkColour);
+    background-color: var(--activePanelHighlightColour);
+    background: var(--activePanelHighlightColour);
+    width: calc(var(--buttonDimension) * 0.5);
+    max-width: calc(var(--buttonDimension) * 0.5);
+    height: calc(var(--buttonDimension) * 0.5);
+    max-height: calc(var(--buttonDimension) * 0.5);
+    background-repeat: no-repeat;
+    background-size: var(--buttonDimension) var(--buttonDimension);
+    background-position: center;
+    background-image: url('../icons/run.png');
+    box-shadow: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% - var(--buttonDimension) * 0.75 + var(--buttonMargin));
+    outline: none;
+    border: none;
+    border-radius: var(--buttonRadius);
+    margin: 0;
+    padding: 0;
+    display: block;
+    transform: scale(1, 1);
+    transition: transform ease-in-out;
+    cursor: pointer;
+}
+
+.answerSubmitButton:hover {
+    transform: scale(1.1, 1.1);
+}
+
+.activeAnswerPanel {
+    width: 50%;
+    left: 25%;
+    bottom: calc(var(--buttonMargin) * 2);
+}
+
+.inactiveAnswerSelectButton, .answerSelectButton {
+    display: flex;
+    box-shadow: none;
+    border-radius: var(--buttonRadius);
+    color: var(--textColour);
+    background-color: var(--activePanelHighlightColour);
+    background: var(--activePanelHighlightColour);
+    box-shadow: none;
+    outline: none;
+    border: none;
+    border-radius: var(--buttonRadius);
+    margin: var(--buttonMargin);
+    padding: 0;
+    display: block;
+    text-transform: none;
+    transform: scale(1, 1);
+    transition: transform ease-in-out;
+    cursor: pointer;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.answerSelectButton:hover {
+    transform: scale(1.1, 1.1);
+}
+
+.answerSelectButton.active, .answerSelectButton:active {
+    background-color: var(--activePanelHighlightColour);
+    box-shadow: none;
+    color: var(--textColour);
+    transform: translateY(0);
+}
+
+.inactiveAnswerSelectButton {
+    background-color: var(--activePanelTextDarkColour);
+    cursor: none;
 }
 
 #loadingText {
